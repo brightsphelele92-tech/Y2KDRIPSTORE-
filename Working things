@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Y2KDripstore</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="bg-black text-white p-4">
+    <h1 class="text-3xl font-bold">Y2KDripstore</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="cart.html">Cart</a>
+      <a href="login.html">Login</a>
+      <a href="admin.html">Admin Dashboard</a>
+    </nav>
+  </header>  <main class="p-4">
+    <section id="products">
+      <h2 class="text-xl font-semibold mb-2">Our Products</h2>
+      <div id="product-list"></div>
+    </section><section id="delivery-info" class="mt-6">
+  <h3>Delivery Information</h3>
+  <p>Our addresses are in Gauteng, Johannesburg, Anderson Street. We deliver nationwide and worldwide to all countries.</p>
+</section>
+
+<section id="reviews" class="mt-6">
+  <h3>Customer Reviews</h3>
+  <video width="100%" controls>
+    <source src="review.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+</section>
+
+<section id="upload-payment" class="mt-6">
+  <h3>Upload Payment Proof</h3>
+  <form id="upload-form">
+    <input type="file" name="payment" accept="image/*" required>
+    <button type="submit">Submit</button>
+  </form>
+  <p id="upload-message"></p>
+</section>
+
+  </main>  <footer class="bg-gray-800 text-white p-4 text-center">
+    <p>Website created by brightsphelele92</p>
+    <p>Partnered with THE BOSS TECH for delivery service and parcel holders</p>
+  </footer>  <script>
+    const products = [
+      { id: 1, name: "Air Max Sneakers", price: 1200, size: "1-12", category: "shoes" },
+      { id: 2, name: "Kids Jordans", price: 900, size: "1-16", category: "shoes" },
+      { id: 3, name: "Oversized Hoodie", price: 450, size: "XS-XXL", category: "clothing" },
+      { id: 4, name: "iPhone 13 Pro", price: 500, monthly: "R600/month", category: "phones" },
+      { id: 5, name: "MacBook Air", price: 1200, monthly: "R500/month", category: "laptops" }
+    ];
+
+    const list = document.getElementById('product-list');
+    products.forEach(product => {
+      const div = document.createElement('div');
+      div.innerHTML = `<strong>${product.name}</strong><br>
+                       Price: R${product.price}<br>
+                       ${product.size ? `Size: ${product.size}<br>` : ''}
+                       ${product.monthly ? `Lay-buy: ${product.monthly}<br>` : ''}
+                       <button onclick="addToCart(${product.id})">Add to Cart</button>`;
+      list.appendChild(div);
+    });
+
+    function addToCart(id) {
+      alert(`Product ${id} added to cart!`);
+    }
+
+    document.getElementById('upload-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      document.getElementById('upload-message').innerText = 'Bank systems unavailable. Use Cash Send, eWallet, or Money Market.';
+    });
+  </script></body>
+</html>

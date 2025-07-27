@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Y2KDripstore</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-[#f8f8f8] to-[#ffffff] text-gray-800">
+
+  <!-- Navbar -->
+  <nav class="bg-black text-white px-6 py-4 flex justify-between items-center shadow-md">
+    <h1 class="text-2xl font-bold">Y2KDripstore</h1>
+    <div>
+      <input type="text" placeholder="Search..." class="px-2 py-1 rounded text-black">
+      <button class="ml-2 px-4 py-1 bg-white text-black rounded">Login</button>
+      <button class="ml-2 px-4 py-1 bg-white text-black rounded">Sign Up</button>
+    </div>
+  </nav>
+
+  <!-- Products -->
+  <section class="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="border rounded-2xl p-4 shadow bg-white">
+      <img src="https://via.placeholder.com/300" alt="Product" class="w-full h-60 object-cover rounded-xl">
+      <h2 class="mt-4 text-xl font-bold">iPhone 13</h2>
+      <p class="text-sm text-gray-600">R600/month - Lay-buy while using</p>
+      <button class="mt-2 px-4 py-2 bg-black text-white rounded">Add to Cart</button>
+    </div>
+  </section>
+
+  <!-- Payment -->
+  <section class="p-6">
+    <h2 class="text-xl font-bold mb-4">Payment Simulation</h2>
+    <p class="text-sm mb-2">Bank systems are currently unavailable. Use Cash Send, eWallet, or Money Market.</p>
+    <input type="text" placeholder="Payment Reference" class="border p-2 rounded w-full mb-2">
+    <input type="password" placeholder="Payment Password" class="border p-2 rounded w-full mb-2">
+    <label class="block mb-2">Upload proof of payment:</label>
+    <input type="file" class="mb-4">
+    <button class="px-4 py-2 bg-black text-white rounded">Submit Payment</button>
+  </section>
+
+  <!-- Admin -->
+  <section class="p-6 bg-gray-100">
+    <h2 class="text-xl font-bold mb-4">Admin Dashboard</h2>
+    <p class="text-sm">Admin confirms payments & orders. Customers are auto-notified when confirmed.</p>
+  </section>
+
+  <!-- Delivery Info -->
+  <section class="p-6">
+    <h2 class="text-xl font-bold mb-4">Delivery Information</h2>
+    <p class="text-sm">We deliver from Johannesburg (Anderson Street) to all countries worldwide.</p>
+  </section>
+
+  <!-- Reviews -->
+  <section class="p-6">
+    <h2 class="text-xl font-bold mb-4">Customer Review Videos</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <iframe class="w-full h-48 rounded-xl" src="https://www.youtube.com/embed/example1" allowfullscreen></iframe>
+      <iframe class="w-full h-48 rounded-xl" src="https://www.youtube.com/embed/example2" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="p-6 bg-black text-white text-center mt-10">
+    <p>Website created by <strong>brightsphelele92</strong></p>
+    <p>Partnered with <strong>THE BOSS TECH</strong> for delivery services and parcel holders</p>
+    <p class="text-sm mt-2">&copy; 2025 Y2KDripstore. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>

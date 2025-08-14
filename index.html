@@ -1,4 +1,4 @@
-                <!DOCTYPE html><html lang="en">
+        <!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +7,35 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #00ff7f, #00994c, #000);
+            background: linear-gradient(-45deg, #064d2f, #4d0606, #032a1c, #260202);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
             color: #fff;
         }
+        @keyframes gradientBG {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
         header {
-            background-color: #000;
-            padding: 10px 20px;
+            background-color: rgba(0,0,0,0.9);
+            padding: 15px 30px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 3px solid #ff0000;
+            border-bottom: 3px solid #8b0000;
         }
-        .logo {
-            display: flex;
-            align-items: center;
-        }
-        .logo-circle {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(to right, green 50%, red 50%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 18px;
+        header h1 {
+            font-size: 28px;
+            color: #064d2f;
+            margin: 0;
         }
         nav ul {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
+            gap: 20px;
         }
         nav ul li a {
             text-decoration: none;
@@ -50,15 +45,17 @@
             transition: 0.3s;
         }
         nav ul li a:hover {
-            background-color: #00ff7f;
-            color: #000;
+            background-color: #064d2f;
+            color: #fff;
             border-radius: 4px;
         }
         .search-bar {
             padding: 15px;
             display: flex;
             justify-content: center;
-            background-color: #111;
+            background: linear-gradient(90deg, #064d2f, #4d0606);
+            background-size: 200% 200%;
+            animation: gradientBG 6s ease infinite;
         }
         .search-bar input {
             width: 60%;
@@ -69,77 +66,63 @@
         .search-bar button {
             padding: 10px;
             border: none;
-            background: linear-gradient(90deg, #ff0000, #00ff7f, #000);
+            background: linear-gradient(90deg, #4d0606, #064d2f);
             color: #fff;
             cursor: pointer;
             border-radius: 0 4px 4px 0;
+            animation: gradientBG 6s ease infinite;
         }
-        .hero {
+        .banner {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        .hero-image {
-            flex: 1 1 40%;
             min-height: 300px;
-            background: url('https://via.placeholder.com/400x300?text=Drip+Model') center/cover no-repeat;
+            text-align: center;
         }
-        .hero-text {
+        .banner .image {
+            flex: 1 1 40%;
+            background: url('https://via.placeholder.com/500x300?text=Drip+Image') center/cover no-repeat;
+            min-height: 300px;
+        }
+        .banner .text {
             flex: 1 1 40%;
             padding: 20px;
         }
-        .hero-text h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        .categories {
+        .banner .logo {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, darkgreen 50%, darkred 50%);
             display: flex;
-            flex-wrap: wrap;
+            align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 20px;
-            background-color: rgba(0,0,0,0.6);
-        }
-        .category {
-            background-color: #111;
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
-            flex: 1 1 calc(33.33% - 20px);
-            min-width: 150px;
-            transition: transform 0.3s;
-        }
-        .category:hover {
-            transform: scale(1.05);
-            background-color: #00ff7f;
-            color: #000;
+            font-weight: bold;
+            color: #fff;
+            margin: 0 auto 10px;
+            animation: gradientBG 8s ease infinite;
         }
         .about {
             padding: 20px;
-            background-color: #111;
+            background-color: rgba(0,0,0,0.8);
             line-height: 1.6;
         }
         .about h2 {
-            color: #00ff7f;
+            color: #064d2f;
         }
         footer {
-            background-color: #000;
+            background-color: rgba(0,0,0,0.9);
             padding: 20px;
             text-align: center;
             font-size: 14px;
             color: #ccc;
-            border-top: 3px solid #ff0000;
+            border-top: 3px solid #8b0000;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">
-            <div class="logo-circle">Y2K</div>
-        </div>
+        <h1>Y2K Drip Store</h1>
         <nav>
             <ul>
                 <li><a href="#">Mens Clothing</a></li>
@@ -158,27 +141,17 @@
         <input type="text" placeholder="Search for products...">
         <button>Search</button>
     </div>
-    <div class="hero">
-        <div class="hero-image"></div>
-        <div class="hero-text">
-            <h1>Welcome to Y2KDRIPSTORE</h1>
+    <div class="banner">
+        <div class="image"></div>
+        <div class="text">
+            <div class="logo">Y2K</div>
+            <h2>Welcome to Y2KDRIPSTORE</h2>
         </div>
-    </div>
-    <div class="categories">
-        <div class="category">Mens Clothing</div>
-        <div class="category">Women Clothing</div>
-        <div class="category">Kids Clothing</div>
-        <div class="category">Boys Clothing</div>
-        <div class="category">Girls Clothing</div>
-        <div class="category">Sneakers</div>
-        <div class="category">iPhones</div>
-        <div class="category">Laptops</div>
-        <div class="category">Jewelry</div>
     </div>
     <div class="about">
         <h2>Know About Us</h2>
         <p>WhatsApp Contact: 0685270789</p>
-        <p>Facebook Page: <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" style="color:#00ff7f;">Visit our Facebook</a></p>
+        <p>Facebook Page: <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" style="color:#064d2f;">Visit our Facebook</a></p>
         <p>Y2KDRIPSTORE Website help created by Brightsphelele92 Company in partnership with THE BOSS TECH, IMILE, BUFFALO, and many more delivery services across the world.</p>
         <p>We deliver to every country.</p>
         <p>Delivery takes 2 to 7 days after payment has been made. Delivery is free for orders above R100. Any currency payments allowed.</p>
@@ -187,4 +160,4 @@
         &copy; Y2KDRIPSTORE 2025 @ Reserved
     </footer>
 </body>
-                        </html>
+      </html>

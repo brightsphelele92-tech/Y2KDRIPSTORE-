@@ -1,4 +1,4 @@
-        <!DOCTYPE html><html lang="en">
+                <!DOCTYPE html><html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,23 +12,35 @@
         }
         header {
             background-color: #000;
-            padding: 15px 30px;
+            padding: 10px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border-bottom: 3px solid #ff0000;
         }
-        header h1 {
-            font-size: 28px;
-            color: #00ff7f;
-            margin: 0;
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(to right, green 50%, red 50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
         }
         nav ul {
             list-style: none;
             margin: 0;
             padding: 0;
             display: flex;
-            gap: 20px;
+            gap: 15px;
+            flex-wrap: wrap;
         }
         nav ul li a {
             text-decoration: none;
@@ -57,21 +69,53 @@
         .search-bar button {
             padding: 10px;
             border: none;
-            background-color: #ff0000;
+            background: linear-gradient(90deg, #ff0000, #00ff7f, #000);
             color: #fff;
             cursor: pointer;
             border-radius: 0 4px 4px 0;
         }
-        .banner {
-            height: 300px;
-            background: url('https://via.placeholder.com/1200x300?text=Y2K+Drip+Store+Banner') center/cover no-repeat;
+        .hero {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            font-size: 36px;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+            text-align: center;
+            padding: 20px;
+        }
+        .hero-image {
+            flex: 1 1 40%;
+            min-height: 300px;
+            background: url('https://via.placeholder.com/400x300?text=Drip+Model') center/cover no-repeat;
+        }
+        .hero-text {
+            flex: 1 1 40%;
+            padding: 20px;
+        }
+        .hero-text h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .categories {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 20px;
+            background-color: rgba(0,0,0,0.6);
+        }
+        .category {
+            background-color: #111;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            flex: 1 1 calc(33.33% - 20px);
+            min-width: 150px;
+            transition: transform 0.3s;
+        }
+        .category:hover {
+            transform: scale(1.05);
+            background-color: #00ff7f;
+            color: #000;
         }
         .about {
             padding: 20px;
@@ -93,7 +137,9 @@
 </head>
 <body>
     <header>
-        <h1>Y2K Drip Store</h1>
+        <div class="logo">
+            <div class="logo-circle">Y2K</div>
+        </div>
         <nav>
             <ul>
                 <li><a href="#">Mens Clothing</a></li>
@@ -112,8 +158,22 @@
         <input type="text" placeholder="Search for products...">
         <button>Search</button>
     </div>
-    <div class="banner">
-        Welcome to Y2K Drip Store
+    <div class="hero">
+        <div class="hero-image"></div>
+        <div class="hero-text">
+            <h1>Welcome to Y2KDRIPSTORE</h1>
+        </div>
+    </div>
+    <div class="categories">
+        <div class="category">Mens Clothing</div>
+        <div class="category">Women Clothing</div>
+        <div class="category">Kids Clothing</div>
+        <div class="category">Boys Clothing</div>
+        <div class="category">Girls Clothing</div>
+        <div class="category">Sneakers</div>
+        <div class="category">iPhones</div>
+        <div class="category">Laptops</div>
+        <div class="category">Jewelry</div>
     </div>
     <div class="about">
         <h2>Know About Us</h2>
@@ -127,4 +187,4 @@
         &copy; Y2KDRIPSTORE 2025 @ Reserved
     </footer>
 </body>
-                          </html>
+                        </html>

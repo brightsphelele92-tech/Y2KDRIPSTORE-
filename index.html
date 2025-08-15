@@ -1,129 +1,257 @@
-<!DOCTYPE html><html lang="en">
+            <!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Y2K Drip Store</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(270deg, #064420, #4e0000, #064420);
-            background-size: 600% 600%;
-            animation: gradientShift 3s ease infinite;
-            color: #fff;
-            max-width: 100%;
-            overflow-x: hidden;
-        }
-        @keyframes gradientShift {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
-        }
-        header {
-            background-color: #000;
-            padding: 15px 30px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 3px solid #ff0000;
-            flex-wrap: wrap;
-        }
-        header h1 {
-            font-size: 28px;
-            color: #00ff7f;
-            margin: 0;
-        }
-        nav ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-        nav ul li a {
-            text-decoration: none;
-            color: #fff;
-            font-weight: bold;
-            padding: 5px 10px;
-            transition: 0.3s;
-        }
-        nav ul li a:hover {
-            background-color: #00ff7f;
-            color: #000;
-            border-radius: 4px;
-        }
-        .search-bar {
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            background-color: rgba(0,0,0,0.6);
-            flex-wrap: wrap;
-        }
-        .search-bar input {
-            width: 60%;
-            max-width: 300px;
-            padding: 10px;
-            border: none;
-            border-radius: 4px 0 0 4px;
-        }
-        .search-bar button {
-            padding: 10px;
-            border: none;
-            background-color: #ff0000;
-            color: #fff;
-            cursor: pointer;
-            border-radius: 0 4px 4px 0;
-        }
-        .banner {
-            height: 300px;
-            background: url('https://via.placeholder.com/1200x300?text=Drip+Style') center/cover no-repeat;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 36px;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
-            text-align: center;
-        }
-        footer {
-            background-color: #000;
-            padding: 20px;
-            text-align: center;
-            font-size: 14px;
-            color: #ccc;
-            border-top: 3px solid #ff0000;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Y2K Drip Store</title>
+  <style>
+    :root{--accent:#10b981;--danger:#ef4444;--dark:#0b0b0b;--muted:#222;--light:#f8f8f8}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0e0f10;color:#fff}
+    header{position:sticky;top:0;z-index:50;background:#0a0a0a;border-bottom:1px solid #1f1f1f}
+    .wrap{max-width:1100px;margin:0 auto;padding:12px 16px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .brand h1{margin:0;font-size:22px;color:var(--accent)}
+    nav{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+    nav a{color:#fff;text-decoration:none;background:#121212;border:1px solid #1f1f1f;padding:6px 10px;border-radius:999px;font-size:13px}
+    .topbar{display:flex;align-items:center;gap:10px;margin-top:10px}
+    .search{flex:1;display:flex}
+    .search input{flex:1;padding:12px;border-radius:10px 0 0 10px;border:1px solid #1f1f1f;background:#111;color:#fff}
+    .search button{padding:12px 14px;border:none;border-radius:0 10px 10px 0;background:#ef4444;color:#fff}
+    .cartBtn{position:relative;border:1px solid #1f1f1f;background:#121212;color:#fff;border-radius:10px;padding:10px 12px}
+    .cartCount{position:absolute;top:-8px;right:-8px;background:var(--accent);color:#000;border-radius:999px;padding:2px 6px;font-size:12px;border:1px solid #000}.hero{padding:28px 16px;text-align:center;background:linear-gradient(120deg,#0f1311,#141b15,#111317)}
+.hero h2{margin:0 0 6px;font-size:28px}
+.hero p{margin:0;color:#cfcfcf}
+
+/* Ad banner (10% viewport height max) */
+.ad{height:min(10vh,90px);display:flex;align-items:center;justify-content:center;margin:12px auto;border:1px dashed #2b2b2b;border-radius:12px;background:#121212;color:#bbb;max-width:1100px}
+.ad a{color:#bbb;text-decoration:none}
+
+main{max-width:1100px;margin:0 auto;padding:0 16px 90px}
+.sectionTitle{margin:16px 4px 8px;font-size:18px}
+
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+@media (min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+.card{background:#111;border:1px solid #1f1f1f;border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.card img{width:100%;aspect-ratio:1/1;object-fit:cover;background:#0b0b0b}
+.card .info{padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.name{font-size:14px;line-height:1.2}
+.price{font-weight:700;color:#e5e5e5}
+.desc{font-size:12px;color:#b7b7b7;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.actions{margin-top:auto;display:flex;gap:8px}
+.btn{flex:1;padding:10px 12px;border:none;border-radius:10px;background:var(--accent);color:#000;font-weight:700}
+.btn.secondary{background:#1a1a1a;color:#fff;border:1px solid #2a2a2a}
+
+footer{position:fixed;bottom:0;left:0;right:0;background:#0b0b0c;border-top:1px solid #1f1f1f}
+.footerWrap{max-width:1100px;margin:0 auto;padding:8px 16px;display:flex;gap:10px;justify-content:space-between;align-items:center}
+.links{display:flex;gap:10px}
+.links a{display:inline-flex;align-items:center;gap:8px;background:#101010;border:1px solid #1f1f1f;color:#fff;padding:8px 12px;border-radius:10px;text-decoration:none;font-size:14px}
+.note{font-size:12px;color:#9ca3af}
+
+.toast{position:fixed;left:50%;bottom:80px;transform:translateX(-50%);background:#111;border:1px solid #2a2a2a;padding:10px 14px;border-radius:10px;color:#fff;opacity:0;pointer-events:none;transition:opacity .3s,transform .3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(-8px)}
+
+  </style>
 </head>
 <body>
-    <header>
+  <header>
+    <div class="wrap">
+      <div class="brand">
         <h1>Y2K Drip Store</h1>
-        <nav>
-            <ul>
-                <li><a href="#">Men's Clothing</a></li>
-                <li><a href="#">Women's Clothing</a></li>
-                <li><a href="#">Kids Clothing</a></li>
-                <li><a href="#">Boys Clothing</a></li>
-                <li><a href="#">Girls Clothing</a></li>
-                <li><a href="#">Sneakers</a></li>
-                <li><a href="#">iPhones</a></li>
-                <li><a href="#">Laptops</a></li>
-                <li><a href="#">Jewelry</a></li>
-            </ul>
-        </nav>
-    </header>
-    <div class="search-bar">
-        <input type="text" placeholder="Search for products...">
-        <button>Search</button>
+      </div>
+      <nav>
+        <a href="#">Men's Clothing</a>
+        <a href="#">Women's Clothing</a>
+        <a href="#">Kids</a>
+        <a href="#">Sneakers</a>
+        <a href="#">iPhones</a>
+        <a href="#">Laptops</a>
+        <a href="#">Jewelry</a>
+      </nav>
+      <div class="topbar">
+        <div class="search">
+          <input id="searchInput" placeholder="Search for products..." />
+          <button id="searchBtn">Search</button>
+        </div>
+        <button class="cartBtn" id="openCart" title="Cart">
+          🛒 <span class="cartCount" id="cartCount">0</span>
+        </button>
+      </div>
     </div>
-    <div class="banner">
-        Welcome to Y2KDRIPSTORE
+  </header>  <section class="hero">
+    <h2>Welcome to Y2KDRIPSTORE</h2>
+    <p>Fresh fits, phones & laptops. SA + international ordering.</p>
+  </section>  <!-- 10% viewport-height ad slot -->  <div class="ad">
+    <!-- Replace with your AdSense/Adsterra snippet when approved -->
+    <span>Ad Space (10% height). Place your ad code here.</span>
+  </div>  <main>
+    <h3 class="sectionTitle">New Arrivals</h3>
+    <div id="products" class="grid" aria-live="polite"></div><div class="ad"><span>Ad Space</span></div>
+
+<h3 class="sectionTitle">All Products</h3>
+<div id="allProducts" class="grid" aria-live="polite"></div>
+
+  </main>  <footer>
+    <div class="footerWrap">
+      <div class="links">
+        <a href="https://wa.me/27685270789" target="_blank" rel="noopener">💬 WhatsApp</a>
+        <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">📘 Facebook: Y2kdripncoupledrip</a>
+      </div>
+      <span class="note">© 2025 Y2KDRIPSTORE</span>
     </div>
-    <footer>
-        &copy; 2025 Y2KDRIPSTORE. All rights reserved.
-    </footer>
-</body>
+  </footer>  <div id="toast" class="toast">Added to cart</div>  <!-- Firebase SDKs -->  <script type="module">
+    /* =========================
+       0) HOW TO USE THIS FILE
+       -------------------------
+       A. Make a Google Sheet with columns:
+          Name | Price | ImageURL | Category | Description | SKU
+       B. Click: File → Share → Publish to web (entire sheet)
+       C. Copy the SHEET_ID from the sheet URL:
+          https://docs.google.com/spreadsheets/d/THIS_IS_YOUR_SHEET_ID/edit
+       D. Put the SHEET tab name (e.g., Sheet1) below.
+       E. Add your Firebase config.
+       F. Upload this file to your site. Done! When you add rows to the sheet,
+          the products appear automatically here.
+       ========================= */
+
+    /* 1) CONFIG: GOOGLE SHEET SOURCE */
+    const SHEET_ID = "PUT_YOUR_SHEET_ID_HERE";      // <-- replace
+    const SHEET_NAME = "Sheet1";                     // <-- replace if different
+    // Free JSON proxy for published sheets (no keys needed)
+    const SHEET_JSON = `https://opensheet.elk.sh/${SHEET_ID}/${encodeURIComponent(SHEET_NAME)}`;
+
+    /* 2) CONFIG: FIREBASE */
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, increment, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // Simple toast helper
+    const toast = (msg) => { const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); };
+
+    // Cart count badge
+    const cartCountEl = document.getElementById('cartCount');
+    function setCartCount(n){ cartCountEl.textContent = n; }
+
+    // LocalStorage fallback for guests
+    const LS_KEY = 'y2k_cart';
+    function readGuestCart(){ try{ return JSON.parse(localStorage.getItem(LS_KEY))||{} }catch{ return {} } }
+    function writeGuestCart(obj){ localStorage.setItem(LS_KEY, JSON.stringify(obj)); setCartCount(Object.values(obj).reduce((a,b)=>a+(b?.quantity||0),0)); }
+
+    // Track auth state just to know if we can save to Firestore
+    let currentUser = null;
+    onAuthStateChanged(auth, (u)=>{ currentUser = u || null; refreshCartCount(); });
+
+    async function refreshCartCount(){
+      if(currentUser){
+        // Count from Firestore
+        const snap = await getDocs(collection(db, 'users', currentUser.uid, 'cart'));
+        let total = 0; snap.forEach(d=> total += (d.data().quantity||0));
+        setCartCount(total);
+      } else {
+        const g = readGuestCart();
+        setCartCount(Object.values(g).reduce((a,b)=>a+(b?.quantity||0),0));
+      }
+    }
+
+    /* 3) FETCH PRODUCTS FROM GOOGLE SHEET */
+    const productsGrid = document.getElementById('products');
+    const allGrid = document.getElementById('allProducts');
+    const searchInput = document.getElementById('searchInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    let PRODUCTS = [];
+
+    async function loadProducts(){
+      try{
+        const res = await fetch(SHEET_JSON, { cache: 'no-store' });
+        const rows = await res.json();
+        // Normalize & coerce price to number
+        PRODUCTS = rows.map((r,i)=>({
+          id: r.SKU?.trim() || `sku_${i+1}`,
+          name: r.Name?.trim() || 'Untitled',
+          price: Number(String(r.Price||'0').replace(/[^\d.]/g,'')) || 0,
+          image: r.ImageURL?.trim() || '',
+          category: r.Category?.trim() || 'General',
+          description: r.Description?.trim() || ''
+        }));
+        render(PRODUCTS, productsGrid, 8); // New arrivals (first 8)
+        render(PRODUCTS, allGrid);
+      }catch(e){
+        console.error('Sheet load error', e);
+        productsGrid.innerHTML = `<div class="card"><div class="info">Failed to load products. Check SHEET_ID and publishing.</div></div>`;
+      }
+    }
+
+    function render(list, container, limit){
+      container.innerHTML = '';
+      const slice = typeof limit==='number'? list.slice(0,limit) : list;
+      slice.forEach(p=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <img src="${p.image}" alt="${p.name}">
+          <div class="info">
+            <div class="name">${p.name}</div>
+            <div class="price">R ${p.price.toLocaleString()}</div>
+            <div class="desc">${p.description}</div>
+            <div class="actions">
+              <button class="btn" data-id="${p.id}">Add to Cart</button>
+              <button class="btn secondary" data-view="${p.id}">View</button>
+            </div>
+          </div>`;
+        container.appendChild(card);
+      });
+      container.querySelectorAll('button.btn').forEach(btn=>{
+        if(btn.dataset.id){ btn.addEventListener('click', ()=> addToCart(btn.dataset.id)); }
+      });
+    }
+
+    // Search
+    function doSearch(){
+      const q = searchInput.value.trim().toLowerCase();
+      const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+      render(filtered, allGrid);
+    }
+    searchBtn.addEventListener('click', doSearch);
+    searchInput.addEventListener('keydown', e=>{ if(e.key==='Enter') doSearch(); });
+
+    /* 4) ADD TO CART: Firestore if logged-in, else LocalStorage */
+    async function addToCart(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p){ toast('Item not found'); return; }
+
+      if(currentUser){
+        const ref = doc(db, 'users', currentUser.uid, 'cart', id);
+        const snap = await getDoc(ref);
+        if(snap.exists()){
+          await updateDoc(ref, { quantity: increment(1) });
+        } else {
+          await setDoc(ref, { name:p.name, price:p.price, image:p.image, quantity:1, addedAt: Date.now() });
+        }
+        toast('Added to cart ✅');
+        refreshCartCount();
+      } else {
+        const cart = readGuestCart();
+        cart[id] = cart[id] || { name:p.name, price:p.price, image:p.image, quantity:0 };
+        cart[id].quantity += 1;
+        writeGuestCart(cart);
+        toast('Added (login to sync) ✅');
+      }
+    }
+
+    // Initial load
+    loadProducts();
+  </script></body>
                 </html>

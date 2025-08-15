@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Y2K Drip Store</title>
 <style>
 :root{
@@ -11,9 +11,8 @@
   --white:#fff;
   --accent:#00ff7f;
 }
-html,body{
-  height:100%; margin:0; font-family:Arial,sans-serif; color:var(--white);
-  background: linear-gradient(270deg,var(--dark-green),var(--dark-red),var(--dark-green));
+html,body{height:100%; margin:0; font-family: Arial, sans-serif; color: var(--white);
+  background: linear-gradient(270deg, var(--dark-green), var(--dark-red), var(--dark-green));
   background-size: 600% 600%;
   animation: gradientShift 3s ease infinite;
   overflow-x:hidden;
@@ -26,239 +25,192 @@ header h1{font-size:24px; color:var(--accent); margin:0;}
 nav ul{list-style:none; margin:0; padding:0; display:flex; gap:10px; flex-wrap:wrap;}
 nav a{color:#fff; text-decoration:none; font-weight:bold; padding:6px 10px; border-radius:6px;}
 nav a:hover{background:var(--accent); color:#000;}
-.search-bar{padding:12px; display:flex; justify-content:center; gap:8px; background:rgba(0,0,0,.55);}
+.search-bar{padding:12px; display:flex; justify-content:center; gap:8px; background: rgba(0,0,0,.55);} 
 .search-bar input{width:60%; max-width:320px; padding:10px; border:0; border-radius:8px;}
 .search-bar button{padding:10px 14px; border:0; border-radius:8px; cursor:pointer;
-  background:linear-gradient(90deg,var(--dark-red),var(--dark-green));
-  background-size:200% 200%; animation:gradientShift 3s ease infinite; color:#fff;}
+  background: linear-gradient(90deg, var(--dark-red), var(--dark-green));
+  background-size:200% 200%; animation: gradientShift 3s ease infinite; color:#fff;}
 .banner{height:260px; display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:16px; font-size:28px; font-weight:800; text-shadow:2px 2px 6px rgba(0,0,0,.5); background:rgba(0,0,0,.15);}
+  padding:16px; font-size:28px; font-weight:800; text-shadow:2px 2px 6px rgba(0,0,0,.5); background: rgba(0,0,0,.15);}
 .tabs{margin:12px auto 0; padding:0 12px;}
 .tab-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center;}
 .tab{background:#000; border:1px solid rgba(255,255,255,.15); padding:8px 12px; border-radius:20px; font-size:13px; cursor:pointer;}
-.tab.active{background:var(--accent); color:#000;}
-.grid{display:flex; flex-direction:column; gap:10px; padding:12px;}
-.grid-row{display:flex; gap:10px; flex-wrap:wrap;}
-.card{background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden; flex:1 1 calc(50% - 10px);}
+.tab.active{background: var(--accent); color:#000;}
+.grid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; padding:12px;}
+@media(min-width:700px){.grid{grid-template-columns: repeat(3, minmax(0,1fr));}}
+@media(min-width:1024px){.grid{grid-template-columns: repeat(4, minmax(0,1fr));}}
+.card{background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden;}
 .thumb{width:100%; aspect-ratio:1/1; background:#111; object-fit:cover; display:block;}
 .info{padding:10px;}
 .name{font-weight:700; font-size:14px; margin:0 0 6px;}
 .sizes{font-size:12px; opacity:.85;}
 .price{margin-top:8px; font-weight:800;}
-.add-cart{margin-top:8px;padding:6px 10px;width:100%;border:none;border-radius:6px;background:var(--accent);color:#000;font-weight:bold;cursor:pointer;}
-.add-cart:hover{background:#00cc66;}
-.ad-banner{width:100%; height:10vh; background:linear-gradient(90deg,#ff0000,#ff7f00); display:flex; justify-content:center; align-items:center; color:#fff; font-weight:bold; margin:10px 0; border-radius:12px;}
-.loading,.error{padding:20px; text-align:center; font-weight:700;}
+.ad-block{background:#111; color:#00ff7f; display:flex; align-items:center; justify-content:center; text-align:center; height:10vh; font-size:20px; font-weight:700; border:2px dashed #00ff7f; margin:6px 0;}
+.loading, .error{padding:20px; text-align:center; font-weight:700;}
 footer{background:#000; border-top:3px solid #8b0000; padding:18px; text-align:center; color:#ccc;}
-#cartBtn{position:fixed; bottom:20px; right:20px; width:60px; height:60px; background:var(--accent);
-  color:#000; border-radius:50%; display:flex; justify-content:center; align-items:center;
-  font-weight:bold; font-size:18px; cursor:pointer; box-shadow:0 4px 8px rgba(0,0,0,0.3); z-index:9999;}
-#cartPanel{position:fixed; bottom:90px; right:20px; width:300px; max-height:400px; overflow-y:auto;
-  background:rgba(0,0,0,0.9); color:#fff; border-radius:12px; padding:12px; display:none; z-index:9998;}
-#cartPanel h3{margin-top:0;}
-.cart-item{border-bottom:1px solid #555; padding:6px 0;}
+.about{background: rgba(0,0,0,.55); padding:20px; border-radius:12px; margin:20px 12px; text-align:left;}
+.about h2{color:var(--accent);}
+.about p{line-height:1.6;}
 </style>
 </head>
 <body>
 
 <header class="wrap">
-<h1>Y2K Drip Store</h1>
-<nav>
-<ul>
-<li><a href="#">Men's Clothing</a></li>
-<li><a href="#">Women's Clothing</a></li>
-<li><a href="#">Kids Clothing</a></li>
-<li><a href="#">Boys Clothing</a></li>
-<li><a href="#">Girls Clothing</a></li>
-<li><a href="#">Sneakers</a></li>
-<li><a href="#">iPhones</a></li>
-<li><a href="#">Laptops</a></li>
-<li><a href="#">Jewelry</a></li>
-</ul>
-</nav>
+  <h1>Y2K Drip Store</h1>
+  <nav>
+    <ul>
+      <li><a href="#">Men's Clothing</a></li>
+      <li><a href="#">Women's Clothing</a></li>
+      <li><a href="#">Kids Clothing</a></li>
+      <li><a href="#">Boys Clothing</a></li>
+      <li><a href="#">Girls Clothing</a></li>
+      <li><a href="#">Sneakers</a></li>
+      <li><a href="#">iPhones</a></li>
+      <li><a href="#">Laptops</a></li>
+      <li><a href="#">Jewelry</a></li>
+    </ul>
+  </nav>
 </header>
 
 <div class="search-bar wrap">
-<input id="search" type="text" placeholder="Search for products..."/>
-<button id="searchBtn">Search</button>
+  <input id="search" type="text" placeholder="Search for products..."/>
+  <button id="searchBtn">Search</button>
 </div>
 
 <div class="banner wrap">Welcome to Y2KDRIPSTORE</div>
-<div class="ad-banner" id="topAd">Advertisement</div>
 
-<section class="tabs wrap">
-<div class="tab-row" id="tabRow"></div>
+<!-- About Us Section -->
+<section class="about wrap">
+  <h2>About Us</h2>
+  <p>Welcome to <strong>Y2K Drip Store</strong>, your ultimate destination for the freshest fashion, sneakers, and top-tier gadgets. We bring style and technology together for a seamless shopping experience. Shop our exclusive collection and stay ahead of the trends!</p>
+  <p><strong>Contact us:</strong> WhatsApp: <a href="https://wa.me/0685270789" target="_blank">0685270789</a> | <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">Join our WhatsApp group</a> | <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Facebook Page</a></p>
+  <p><strong>Delivery:</strong> 2 to 7 days nationwide. <strong>Lay-buy:</strong> Get iPhones now for R600 per month while using the device.</p>
+  <p><strong>Location:</strong> GAUTENG, JOHANNESBURG, ANDERSON STREET 001.</p>
 </section>
 
+<!-- Category Tabs -->
+<section class="tabs wrap">
+  <div class="tab-row" id="tabRow"></div>
+</section>
+
+<!-- Products & Ads Grid -->
 <main class="wrap" id="content">
-<div id="status" class="loading">Loading products…</div>
-<div id="grid" class="grid" hidden></div>
+  <div id="status" class="loading">Loading products…</div>
+  <div id="grid" class="grid" hidden></div>
 </main>
 
-<div id="cartBtn">Cart 🛒</div>
-<div id="cartPanel">
-<h3>Your Cart</h3>
-<div id="cartItems">No items yet</div>
-</div>
+<footer>
+  &copy; Y2KDRIPSTORE 2025 @ Reserved
+</footer>
 
-<footer>&copy; Y2KDRIPSTORE 2025 @ Reserved</footer>
-
+<!-- Firebase Analytics -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 const firebaseConfig = {
-apiKey: "AIzaSyCCf-NoeTqAd2ZMUxH118WTVkHfWtwybno",
-authDomain: "y2kdripstore-cf955.firebaseapp.com",
-projectId: "y2kdripstore-cf955",
-storageBucket: "y2kdripstore-cf955.firebasestorage.app",
-messagingSenderId: "463524157257",
-appId: "1:463524157257:web:d385bf676cbbb77f042c98",
-measurementId: "G-DYK3Y1Z492"
+  apiKey: "AIzaSyCCf-NoeTqAd2ZMUxH118WTVkHfWtwybno",
+  authDomain: "y2kdripstore-cf955.firebaseapp.com",
+  projectId: "y2kdripstore-cf955",
+  storageBucket: "y2kdripstore-cf955.appspot.com",
+  messagingSenderId: "463524157257",
+  appId: "1:463524157257:web:d385bf676cbbb77f042c98",
+  measurementId: "G-DYK3Y1Z492"
 };
 const app = initializeApp(firebaseConfig);
 getAnalytics(app);
-const db = getFirestore(app);
+</script>
 
+<!-- Google Sheet Products + Currency Conversion -->
+<script>
 const SHEET_ID = '1K3RwSQVH2x60mFaNo5DCFY8jtncU2CaVOjovTtuB4dU';
 const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
 const FX_KEY = '88d799cb628598ac17f47565';
 const FX_URL = `https://v6.exchangerate-api.com/v6/${FX_KEY}/latest/ZAR`;
 
-function guessCurrency(){
-  const locale = (navigator.languages && navigator.languages[0]) || navigator.language || 'en-ZA';
-  const region = (locale.split('-')[1] || 'ZA').toUpperCase();
-  const map = { ZA:'ZAR', US:'USD', GB:'GBP', EU:'EUR', DE:'EUR', FR:'EUR', IT:'EUR', ES:'EUR', PT:'EUR', IE:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', FI:'EUR', GR:'EUR', SK:'EUR', SI:'EUR', EE:'EUR', LV:'EUR', LT:'EUR', CY:'EUR', LU:'EUR', MT:'EUR',
-  CA:'CAD', AU:'AUD', NZ:'NZD', JP:'JPY', CN:'CNY', HK:'HKD', SG:'SGD', IN:'INR', NG:'NGN', KE:'KES', TZ:'TZS', MZ:'MZN', BW:'BWP', NA:'NAD', ZM:'ZMW', ZW:'ZWL',
-  AE:'AED', SA:'SAR', QA:'QAR', KW:'KWD', BH:'BHD'};
-  return map[region]||'ZAR';
+let fxRates = { ZAR:1 };
+fetch(FX_URL).then(r=>r.json()).then(d=>{ fxRates = d.conversion_rates; });
+
+const visitorCurrency = (navigator.languages && navigator.languages[0])?.split('-')[1] || 'ZAR';
+
+function csvToArray(str, delimiter=','){
+  const lines = str.split('\n');
+  const headers = lines.shift().split(delimiter);
+  return lines.map(l=>{
+    const obj = {};
+    l.split(delimiter).forEach((v,i)=>obj[headers[i]]=v);
+    return obj;
+  });
 }
 
-let TARGET_CCY = guessCurrency();
-let rates = {ZAR:1};
-const CATEGORIES = ['MENS CLOTHING','WOMEN CLOTHING','KIDS CLOTHING','BOYS CLOTHING','GIRLS CLOTHING','SNEAKERS','IPHONES','LAPTOPS','JEWELRY'];
+let allProducts = [];
+const categories = ['MENS CLOTHING','WOMEN CLOTHING','KIDS CLOTHING','BOYS CLOTHING','GIRLS CLOTHING','SNEAKERS','IPHONES','LAPTOPS','JEWELRY'];
 const tabRow = document.getElementById('tabRow');
 const grid = document.getElementById('grid');
 const statusEl = document.getElementById('status');
-let allRows = [];
-let byCat = {};
 
-function formatMoney(amount, ccy){
-  try{ return new Intl.NumberFormat(undefined,{style:'currency',currency:ccy}).format(amount);}
-  catch(e){ return amount.toFixed(2)+' '+ccy;}
-}
-
-function buildTabs(active){
+function buildTabs(activeCat){
   tabRow.innerHTML='';
-  CATEGORIES.forEach(cat=>{
-    const b=document.createElement('button');
-    b.className='tab'+(cat===active?' active':'');
-    b.textContent=cat;
-    b.addEventListener('click',()=>selectCategory(cat));
-    tabRow.appendChild(b);
+  categories.forEach(cat=>{
+    const btn = document.createElement('button');
+    btn.className='tab'+(cat===activeCat?' active':'');
+    btn.textContent=cat;
+    btn.addEventListener('click',()=>{ renderCategory(cat); });
+    tabRow.appendChild(btn);
   });
 }
 
-function renderProductsWithAds(items){
+function renderWithAds(items){
   grid.innerHTML='';
-  const chunkSize=2;
-  for(let i=0;i<items.length;i+=chunkSize){
-    const chunk=items.slice(i,i+chunkSize);
-    const rowDiv=document.createElement('div');
-    rowDiv.className='grid-row';
-    chunk.forEach(p=>{
-      const card=document.createElement('div'); card.className='card';
-      const img=document.createElement('img'); img.className='thumb'; img.loading='lazy'; img.alt=p.Name; img.src=p.Image;
-      const info=document.createElement('div'); info.className='info';
-      const name=document.createElement('p'); name.className='name'; name.textContent=p.Name;
-      const sizes=document.createElement('p'); sizes.className='sizes'; sizes.textContent=p.Sizes ? `Sizes: ${p.Sizes}` : '';
-      const price=document.createElement('div'); price.className='price';
-      const zar=Number(p.Price||0); const fx=rates[TARGET_CCY]||1;
-      price.textContent=formatMoney(zar*fx,TARGET_CCY);
-      const addBtn=document.createElement('button'); addBtn.className='add-cart'; addBtn.textContent='Add to Cart';
-      addBtn.addEventListener('click',()=>addToCart(p));
-      info.appendChild(name); info.appendChild(sizes); info.appendChild(price); info.appendChild(addBtn);
-      card.appendChild(img); card.appendChild(info);
-      rowDiv.appendChild(card);
-    });
-    grid.appendChild(rowDiv);
-    // Insert ad after each chunk
-    const adDiv=document.createElement('div'); adDiv.className='ad-banner'; adDiv.textContent='Advertisement';
-    grid.appendChild(adDiv);
-  }
+  items.forEach((p,i)=>{
+    if(i%2===0){
+      const ad = document.createElement('div');
+      ad.className='ad-block';
+      ad.innerText='Advertisement';
+      grid.appendChild(ad);
+    }
+    const card = document.createElement('div'); card.className='card';
+    card.innerHTML=`<img class="thumb" src="${p.Image}" alt="${p.Name}"/>
+    <div class="info">
+      <div class="name">${p.Name}</div>
+      <div class="sizes">${p.Sizes}</div>
+      <div class="price">${(parseFloat(p.Price)*fxRates[visitorCurrency] || p.Price).toFixed(2)} ${visitorCurrency}</div>
+    </div>`;
+    grid.appendChild(card);
+  });
 }
 
-function selectCategory(cat){
+function renderCategory(cat){
   buildTabs(cat);
-  const items=byCat[cat]||[];
+  const items = allProducts.filter(p=>p.Category?.toUpperCase()===cat);
   statusEl.hidden=true; grid.hidden=false;
-  renderProductsWithAds(items);
+  renderWithAds(items);
 }
 
-async function load(){
+async function loadProducts(){
   try{
-    // fetch rates
-    const fxRes=await fetch(FX_URL); const fxJson=await fxRes.json();
-    if(fxJson&&fxJson.conversion_rates) rates=fxJson.conversion_rates;
-    // fetch sheet
-    const res=await fetch(SHEET_CSV_URL);
-    if(!res.ok) throw new Error('Sheet not reachable');
-    const csv=await res.text();
-    const rows=parseCSV(csv);
-    const headers=rows.shift().map(h=>h.trim());
-    const idx={ Name: headers.indexOf('Name'), Price: headers.indexOf('Price'), Image: headers.indexOf('Image'), Sizes: headers.indexOf('Sizes'), Category: headers.indexOf('Category') };
-    allRows=rows.map(r=>({ Name:r[idx.Name]?.trim()||'', Price:r[idx.Price]?.trim()||'', Image:r[idx.Image]?.trim()||'', Sizes:r[idx.Sizes]?.trim()||'', Category:(r[idx.Category]?.trim()||'').toUpperCase() })).filter(x=>x.Name && x.Image);
-    byCat={}; CATEGORIES.forEach(c=>byCat[c]=[]); allRows.forEach(p=>{ if(byCat[p.Category]) byCat[p.Category].push(p); });
-    const firstWithItems=CATEGORIES.find(c=>(byCat[c]&&byCat[c].length));
-    if(firstWithItems) selectCategory(firstWithItems); else statusEl.textContent='No products yet';
-  }catch(err){ console.error(err); statusEl.className='error'; statusEl.textContent='Error loading data';}
-}
-
-function parseCSV(text){
-  const rows=[]; let cur=[]; let val=''; let inQ=false;
-  for(let i=0;i<text.length;i++){ const c=text[i]; const n=text[i+1];
-    if(c==='"'){ if(inQ && n==='"'){ val+='"'; i++; } else { inQ=!inQ; } }
-    else if(c===',' && !inQ){ cur.push(val); val=''; }
-    else if((c==='\n'||c==='\r')&&!inQ){ if(val!==''||cur.length){ cur.push(val); rows.push(cur); cur=[]; val=''; } }
-    else{ val+=c; }
+    const res = await fetch(SHEET_CSV_URL);
+    const text = await res.text();
+    allProducts = csvToArray(text).filter(x=>x.Name && x.Image);
+    const firstCat = categories.find(c=> allProducts.some(p=>p.Category?.toUpperCase()===c));
+    if(firstCat){ renderCategory(firstCat); }
+    else{ statusEl.textContent='No products yet. Add rows to your Google Sheet.'; }
+  }catch(e){
+    statusEl.className='error';
+    statusEl.textContent='Error loading products';
+    console.error(e);
   }
-  if(val!==''||cur.length){ cur.push(val); rows.push(cur); }
-  return rows;
 }
 
-// --- Search ---
-document.getElementById('searchBtn').addEventListener('click',()=>{
-  const q=document.getElementById('search').value.toLowerCase();
-  const match=allRows.filter(p=>(p.Name||'').toLowerCase().includes(q));
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  const q = document.getElementById('search').value.toLowerCase();
+  const match = allProducts.filter(p=>(p.Name||'').toLowerCase().includes(q));
   statusEl.hidden=true; grid.hidden=false;
   buildTabs('');
-  renderProductsWithAds(match);
+  renderWithAds(match);
 });
 
-// --- Cart ---
-const cartBtn=document.getElementById('cartBtn');
-const cartPanel=document.getElementById('cartPanel');
-const cartItemsDiv=document.getElementById('cartItems');
-
-cartBtn.addEventListener('click',()=>{ cartPanel.style.display=cartPanel.style.display==='block'?'none':'block'; });
-
-function addToCart(product){
-  addDoc(collection(db,'cart'),{name:product.Name,price:product.Price,image:product.Image,timestamp:Date.now()});
-}
-
-onSnapshot(collection(db,'cart'),snapshot=>{
-  if(snapshot.empty){ cartItemsDiv.textContent='No items yet'; return; }
-  cartItemsDiv.innerHTML='';
-  snapshot.forEach(doc=>{
-    const data=doc.data();
-    const div=document.createElement('div'); div.className='cart-item';
-    div.textContent=`${data.name} - ${TARGET_CCY==='ZAR'?data.price:formatMoney(Number(data.price)*rates[TARGET_CCY],TARGET_CCY)}`;
-    cartItemsDiv.appendChild(div);
-  });
-});
-
-load();
+loadProducts();
 </script>
 </body>
-            </html>
+  </html>

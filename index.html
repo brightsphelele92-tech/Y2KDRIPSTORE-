@@ -4,155 +4,29 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Y2KDRIPSTORE</title>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3351085100403648"
+     crossorigin="anonymous"></script>
 <style>
-/* Dark Gradient Background Animation */
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden;
-    background: linear-gradient(45deg, #013220, #4B0000, #CC5500, #2F2F2F, #0B0B0B, #800080, #4B2E2E);
-    background-size: 1400% 1400%;
-    animation: gradientAnimation 28s ease infinite;
-}
-@keyframes gradientAnimation {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-html { scroll-behavior: smooth; }
-
-/* Header */
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap; background: rgba(0,0,0,0.5); border-bottom: 1px solid #444; }
-.logo { font-size: 28px; font-weight: bold; }
-.logo span.red { color: #FF0000; }
-.logo span.green { color: #00FF00; }
-.logo span.white { color: #FFFFFF; }
-nav { display: flex; gap: 10px; flex-wrap: wrap; }
-nav a { color: #006400; text-decoration: none; padding: 6px 10px; border-radius: 5px; font-weight: bold; transition: 0.3s; }
-nav a:hover { background-color: #004d00; color: #fff; }
-.top-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-.top-buttons button { padding: 6px 12px; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
-.login { background-color: #00FF00; color: #000; }
-.signup { background-color: #FF0000; color: #fff; }
-.cart { background-color: #FFD700; color: #000; }
-
-/* Search Bar */
-.search-container { width: 100%; display: flex; justify-content: center; margin: 10px 0; }
-.search-container input { width: 80%; padding: 8px 12px; border-radius: 5px; border: none; font-size: 16px; }
-
-/* Welcome Message */
-.welcome {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30vh;
-    text-align: center;
-    font-size: 36px;
-    color: #FFFFFF;
-    text-shadow: 0 0 10px rgba(255,255,255,0.7);
-    background: rgba(0,0,0,0.5);
-    border-radius: 15px;
-    margin: 10px 20px;
-    animation: fadeScale 6s ease-in-out infinite;
-}
-@keyframes fadeScale { 0%, 100% {opacity: 0; transform: scale(0.9);} 50% {opacity: 1; transform: scale(1);} }
-
-/* Product Row */
-.product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; cursor: grab; }
-.product-row.active { cursor: grabbing; }
-.product { 
-    flex: 0 0 auto; 
-    width: 180px; 
-    background: rgba(0,0,0,0.4); 
-    border-radius: 10px; 
-    text-align: center; 
-    color: white; 
-    padding: 10px; 
-    cursor: pointer; 
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-.product:hover { 
-    transform: translateY(-5px); 
-    box-shadow: 0 0 15px rgba(255,255,255,0.4); 
-}
-.product img { width: 100%; border-radius: 5px; }
-.product-name { font-weight: bold; margin: 8px 0; }
-.product-price { color: #FFD700; }
-
-/* Ad */
-.ad { 
-    flex: 0 0 auto; 
-    height: 100px; 
-    width: 180px; 
-    background: rgba(0,0,0,0.5); 
-    color: white; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    font-weight: bold; 
-    border-radius: 10px; 
-}
-
-/* About Section */
-.about { 
-    background: rgba(0,0,0,0.7); 
-    color: white; 
-    padding: 30px 20px; 
-    margin: 20px; 
-    border-radius: 15px; 
-    line-height: 1.6; 
-    text-shadow: 0 0 5px rgba(0,0,0,0.2);
-}
-.about a { color: #FFD700; text-decoration: underline; }
-
-/* Footer */
-footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
-
-/* Scrollbar Styling */
-::-webkit-scrollbar { height: 8px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
-
-/* Responsive Adjustments */
-@media (max-width: 1024px) { .product { width: 150px; } .ad { width: 150px; height: 80px; font-size: 14px; } }
-@media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 140px; height: 70px; font-size: 12px; } .about { font-size: 14px; padding: 20px 10px; } }
-@media (max-width: 480px) { .product { width: 120px; } .ad { width: 120px; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
-
-/* Modal */
-.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-.modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
-.close { color: #fff; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
-.modal img { width: 100%; border-radius: 8px; }
-.modal .product-name { font-size: 24px; margin: 15px 0 5px; }
-.modal .product-price { font-size: 20px; color: #FFD700; margin-bottom: 10px; }
-.modal .buy-button { background-color: #00FF00; border: none; color: black; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
-.modal .similar-products { margin-top: 15px; }
-.similar-row { display: flex; overflow-x: hidden; position: relative; gap: 10px; }
-.similar-row-inner { display: flex; gap: 10px; animation: scrollLeft 20s linear infinite; }
-@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.similar-product { flex: 0 0 auto; width: 120px; text-align: center; cursor: pointer; }
-.similar-product img { width: 100%; border-radius: 5px; }
-.similar-product .name { font-size: 14px; color: #fff; }
-.similar-product .price { font-size: 14px; color: #FFD700; }
+/* ---- keep all your previous CSS here ---- */
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
-    <nav>
-        <a href="#home">Home</a><a href="#women">Women</a><a href="#men">Men</a>
-        <a href="#girls">Girls</a><a href="#boys">Boys</a><a href="#sneakers">Sneakers</a><a href="#iphones">iPhones</a>
-    </nav>
-    <div class="top-buttons">
-        <button class="login">Login</button>
-        <button class="signup">Sign Up</button>
-        <button class="cart">Cart</button>
-    </div>
+  <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
+  <nav>
+    <a href="#home">Home</a><a href="#women">Women</a><a href="#men">Men</a>
+    <a href="#girls">Girls</a><a href="#boys">Boys</a><a href="#sneakers">Sneakers</a><a href="#iphones">iPhones</a>
+  </nav>
+  <div class="top-buttons">
+    <button class="login">Login</button>
+    <button class="signup">Sign Up</button>
+    <button class="cart">Cart</button>
+  </div>
 </header>
 
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search products...">
+  <input type="text" id="searchInput" placeholder="Search products...">
 </div>
 
 <section class="welcome" id="home">WELCOME TO Y2KDRIPSTORE</section>
@@ -165,8 +39,18 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
         <img id="modalImage" src="" alt="">
         <div class="product-name" id="modalName"></div>
         <div class="product-price" id="modalPrice"></div>
+        
+        <label for="sizeSelect" style="display:block;margin:10px 0;color:#fff;font-weight:bold;">Select Size:</label>
+        <select id="sizeSelect" style="padding:5px 8px;border-radius:5px;font-size:16px;width:100%;margin-bottom:15px;"></select>
+        
         <button class="buy-button">Buy Now</button>
-        <div class="ad" style="margin-bottom:15px;">Ad Space</div>
+        <div class="ad" style="margin-bottom:15px;">
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-3351085100403648"
+               data-ad-slot="YOUR_SLOT_ID"
+               data-ad-format="auto"></ins>
+        </div>
         <div class="similar-products">
             <h3>Similar Products</h3>
             <div class="similar-row" id="similarRow"></div>
@@ -175,21 +59,14 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 </div>
 
 <section class="about">
-    <h2>About Us</h2>
-    <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
-    <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Facebook page</a>.</p>
-    <p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
-    <p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
-    <p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
-    <p>Refund policy: Returns accepted within 30 days.</p>
-    <p>Website built by <strong>brightsphelele92@</strong></p>
+    <!-- keep your about content here -->
 </section>
 
 <footer>©Y2KDRIPSTORE 2025 RESERVED</footer>
 
 <script>
 // ==== Sheet Integration ====
-const sheetAPI = 'YOUR_SHEETDB_API_URL'; // Replace with SheetDB JSON API
+const sheetAPI = 'https://sheetdb.io/api/v1/dmyb12hod7ibm';
 let allProducts = [];
 
 function renderProducts(products) {
@@ -207,17 +84,32 @@ function renderProducts(products) {
                 row.innerHTML = `<div class="product" data-index="${i}" data-category="${category}"><img src="${categoryData[i].ImageURL}" alt="${categoryData[i].ProductName}"><div class="product-name">${categoryData[i].ProductName}</div><div class="product-price">${categoryData[i].Price}</div></div>
                 <div class="product" data-index="${i+1}" data-category="${category}"><img src="${categoryData[i+1]?.ImageURL}" alt="${categoryData[i+1]?.ProductName}"><div class="product-name">${categoryData[i+1]?.ProductName||''}</div><div class="product-price">${categoryData[i+1]?.Price||''}</div></div>`;
                 section.appendChild(row);
-                if(i+2<categoryData.length){ const ad = document.createElement('div'); ad.className='ad'; ad.innerText='Ad Space'; section.appendChild(ad);}
+
+                // Ad section every 2 products
+                if(i+2<categoryData.length){ 
+                    const ad = document.createElement('div'); 
+                    ad.className='ad';
+                    ad.innerHTML=`<ins class="adsbygoogle"
+                        style="display:block"
+                        data-ad-client="ca-pub-3351085100403648"
+                        data-ad-slot="YOUR_SLOT_ID"
+                        data-ad-format="auto"></ins>`;
+                    section.appendChild(ad);
+                    (adsbygoogle = window.adsbygoogle || []).push({});
+                }
             }
             main.appendChild(section);
         }
     });
     setupProductClicks();
-    setupRowDragScroll(); // Enable swipe scroll after render
+    setupRowDragScroll(); 
 }
 
-// Fetch products
-fetch(sheetAPI).then(res=>res.json()).then(data=>{allProducts=data;renderProducts(allProducts);}).catch(err=>console.error(err));
+// Fetch products from SheetDB
+fetch(sheetAPI)
+  .then(res=>res.json())
+  .then(data=>{allProducts=data;renderProducts(allProducts);})
+  .catch(err=>console.error(err));
 
 // ==== Search ====
 document.getElementById('searchInput').addEventListener('input', function(){
@@ -228,27 +120,74 @@ document.getElementById('searchInput').addEventListener('input', function(){
     else{renderProducts(filtered);}
 });
 
-// ==== Modal ====
-const modal=document.getElementById('productModal'); const modalImage=document.getElementById('modalImage'); const modalName=document.getElementById('modalName'); const modalPrice=document.getElementById('modalPrice'); const similarRow=document.getElementById('similarRow'); const closeModal=document.getElementsByClassName('close')[0];
+// ==== Modal & Sizes ====
+const modal=document.getElementById('productModal'); 
+const modalImage=document.getElementById('modalImage'); 
+const modalName=document.getElementById('modalName'); 
+const modalPrice=document.getElementById('modalPrice'); 
+const modalSizes=document.getElementById('sizeSelect'); 
+const similarRow=document.getElementById('similarRow'); 
+const closeModal=document.getElementsByClassName('close')[0];
 
 function setupProductClicks(){
     document.querySelectorAll('.product').forEach(p=>{
         p.addEventListener('click',()=>{
-            const index=parseInt(p.dataset.index); const category=p.dataset.category;
+            const index=parseInt(p.dataset.index); 
+            const category=p.dataset.category;
             const product=allProducts.find(prod=>prod.Category===category && allProducts.indexOf(prod)===index);
             if(!product) return;
-            modalImage.src=product.ImageURL; modalName.innerText=product.ProductName; modalPrice.innerText=product.Price;
+            modalImage.src=product.ImageURL; 
+            modalName.innerText=product.ProductName; 
+            modalPrice.innerText=product.Price;
 
+            // Populate sizes dropdown
+            modalSizes.innerHTML=''; 
+            if(product.Sizes && product.Sizes.trim()!==''){
+                const sizesArr = product.Sizes.split(',').map(s=>s.trim());
+                sizesArr.forEach(size => {
+                    const option = document.createElement('option');
+                    option.value = size;
+                    option.innerText = size;
+                    modalSizes.appendChild(option);
+                });
+            } else {
+                const option = document.createElement('option');
+                option.value = 'One Size';
+                option.innerText = 'One Size';
+                modalSizes.appendChild(option);
+            }
+
+            // Similar products
             const similar=allProducts.filter(pr=>pr.Category===category && pr.ProductName!==product.ProductName).slice(0,6);
-            similarRow.innerHTML=''; const innerDiv=document.createElement('div'); innerDiv.className='similar-row-inner';
-            similar.forEach(s=>{const div=document.createElement('div'); div.className='similar-product'; div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; div.addEventListener('click',()=>{p.click(); modal.scrollTo({top:0,behavior:'smooth'});}); innerDiv.appendChild(div);});
-            similar.forEach(s=>{const div=document.createElement('div'); div.className='similar-product'; div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; innerDiv.appendChild(div);});
+            similarRow.innerHTML=''; 
+            const innerDiv=document.createElement('div'); 
+            innerDiv.className='similar-row-inner';
+            similar.forEach(s=>{
+                const div=document.createElement('div'); 
+                div.className='similar-product'; 
+                div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; 
+                div.addEventListener('click',()=>{p.click(); modal.scrollTo({top:0,behavior:'smooth'});}); 
+                innerDiv.appendChild(div);
+            });
+            similar.forEach(s=>{
+                const div=document.createElement('div'); 
+                div.className='similar-product'; 
+                div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; 
+                innerDiv.appendChild(div);
+            });
             similarRow.appendChild(innerDiv);
 
             modal.style.display='flex';
         });
     });
 }
+
+// Buy button captures selected size
+document.querySelector('.buy-button').onclick = function() {
+    const selectedSize = modalSizes.value;
+    alert(`You chose ${modalName.innerText} - Size: ${selectedSize}`);
+    // You can link this to your payment/cart system
+};
 
 closeModal.onclick=function(){modal.style.display='none';}
 window.onclick=function(e){if(e.target==modal) modal.style.display='none';}
@@ -273,4 +212,4 @@ function setupRowDragScroll(){
 </script>
 
 </body>
-                                                                                              </html>
+    </html>

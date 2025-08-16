@@ -1,216 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Y2K Drip Store</title>
-<style>
-:root{
-  --dark-green:#064420; 
-  --dark-red:#4e0000; 
-  --white:#fff;
-  --accent:#00ff7f;
-}
-html,body{height:100%; margin:0; font-family: Arial, sans-serif; color: var(--white);
-  background: linear-gradient(270deg, var(--dark-green), var(--dark-red), var(--dark-green));
-  background-size: 600% 600%;
-  animation: gradientShift 3s ease infinite;
-  overflow-x:hidden;
-}
-@keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
-.wrap{width:100%; max-width:1200px; margin:0 auto;}
-@media(max-width:480px){.wrap{max-width:420px;}}
-header{background:#000; border-bottom:3px solid #8b0000; padding:12px 16px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;}
-header h1{font-size:24px; color:var(--accent); margin:0;}
-nav ul{list-style:none; margin:0; padding:0; display:flex; gap:10px; flex-wrap:wrap;}
-nav a{color:#fff; text-decoration:none; font-weight:bold; padding:6px 10px; border-radius:6px;}
-nav a:hover{background:var(--accent); color:#000;}
-.search-bar{padding:12px; display:flex; justify-content:center; gap:8px; background: rgba(0,0,0,.55);} 
-.search-bar input{width:60%; max-width:320px; padding:10px; border:0; border-radius:8px;}
-.search-bar button{padding:10px 14px; border:0; border-radius:8px; cursor:pointer;
-  background: linear-gradient(90deg, var(--dark-red), var(--dark-green));
-  background-size:200% 200%; animation: gradientShift 3s ease infinite; color:#fff;}
-.banner{height:260px; display:flex; align-items:center; justify-content:center; text-align:center;
-  padding:16px; font-size:28px; font-weight:800; text-shadow:2px 2px 6px rgba(0,0,0,.5); background: rgba(0,0,0,.15);}
-.tabs{margin:12px auto 0; padding:0 12px;}
-.tab-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center;}
-.tab{background:#000; border:1px solid rgba(255,255,255,.15); padding:8px 12px; border-radius:20px; font-size:13px; cursor:pointer;}
-.tab.active{background: var(--accent); color:#000;}
-.grid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; padding:12px;}
-@media(min-width:700px){.grid{grid-template-columns: repeat(3, minmax(0,1fr));}}
-@media(min-width:1024px){.grid{grid-template-columns: repeat(4, minmax(0,1fr));}}
-.card{background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden;}
-.thumb{width:100%; aspect-ratio:1/1; background:#111; object-fit:cover; display:block;}
-.info{padding:10px;}
-.name{font-weight:700; font-size:14px; margin:0 0 6px;}
-.sizes{font-size:12px; opacity:.85;}
-.price{margin-top:8px; font-weight:800;}
-.ad-block{background:#111; color:#00ff7f; display:flex; align-items:center; justify-content:center; text-align:center; height:10vh; font-size:20px; font-weight:700; border:2px dashed #00ff7f; margin:6px 0;}
-.loading, .error{padding:20px; text-align:center; font-weight:700;}
-footer{background:#000; border-top:3px solid #8b0000; padding:18px; text-align:center; color:#ccc;}
-.about{background: rgba(0,0,0,.55); padding:20px; border-radius:12px; margin:20px 12px; text-align:left;}
-.about h2{color:var(--accent);}
-.about p{line-height:1.6;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Y2K Drip Store</title>
+  <style>
+    :root{
+      --red:#ff0000;
+      --dark-green:#064420;
+      --white:#fff;
+      --accent:#00ff7f;
+    }
+    /* ===== Base & Animated Background (red <-> dark green, 3s) ===== */
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: Arial, sans-serif; color: var(--white);
+      background: linear-gradient(270deg, var(--red), var(--dark-green), var(--red));
+      background-size: 600% 600%;
+      animation: gradientShift 3s ease infinite;
+      overflow-x:hidden;
+    }
+    @keyframes gradientShift{
+      0%{background-position:0% 50%;}
+      50%{background-position:100% 50%;}
+      100%{background-position:0% 50%;}
+    }
+
+    /* ===== Layout ===== */
+    .wrap{width:100%; max-width:1200px; margin:0 auto;}
+    @media (max-width:480px){ .wrap{max-width:420px;} }
+
+    /* ===== Header / Nav ===== */
+    header{
+      background:#000; border-bottom:3px solid #8b0000; padding:12px 16px;
+      display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    header h1{font-size:24px; color:var(--accent); margin:0;}
+    nav ul{list-style:none; margin:0; padding:0; display:flex; gap:10px; flex-wrap:wrap;}
+    nav a{color:#fff; text-decoration:none; font-weight:bold; padding:6px 10px; border-radius:6px;}
+    nav a:hover{background:var(--accent); color:#000;}
+
+    /* ===== Search Bar ===== */
+    .search-bar{padding:12px; display:flex; justify-content:center; gap:8px; background: rgba(0,0,0,.55);} 
+    .search-bar input{width:60%; max-width:320px; padding:10px; border:0; border-radius:8px;}
+    .search-bar button{padding:10px 14px; border:0; border-radius:8px; cursor:pointer;
+      background: linear-gradient(90deg, var(--red), var(--dark-green));
+      background-size:200% 200%; animation: gradientShift 3s ease infinite; color:#fff;
+    }
+
+    /* ===== Banner ===== */
+    .banner{height: 200px; display:flex; align-items:center; justify-content:center; text-align:center;
+      padding: 16px; font-size: 28px; font-weight: 800; text-shadow: 2px 2px 6px rgba(0,0,0,.5);
+      background: rgba(0,0,0,.15);
+    }
+
+    /* ===== About Us ===== */
+    .about{background: rgba(0,0,0,.55); padding:20px; border-radius:12px; margin:20px 12px; text-align:left;}
+    .about h2{color:var(--accent); margin-top:0;}
+    .about p{line-height:1.65; margin:10px 0;}
+    .about a{color:var(--accent); text-decoration:none;}
+    .about a:hover{text-decoration:underline;}
+
+    /* ===== Ads (10% screen height blocks) ===== */
+    .ad-block{
+      background:#111; color:var(--accent);
+      display:flex; align-items:center; justify-content:center; text-align:center;
+      height:10vh; min-height:70px; font-size:18px; font-weight:800;
+      border:2px dashed var(--accent); border-radius:12px;
+      margin:8px 0;
+    }
+
+    /* ===== Tabs ===== */
+    .tabs{margin: 12px auto 0; padding: 0 12px;}
+    .tab-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center;}
+    .tab{background:#000; border:1px solid rgba(255,255,255,.15); padding:8px 12px; border-radius:20px; font-size:13px; cursor:pointer;}
+    .tab.active{background: var(--accent); color:#000;}
+
+    /* ===== Grids ===== */
+    .grid{display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:10px; padding: 12px;}
+    @media (min-width: 700px){.grid{grid-template-columns: repeat(3, minmax(0,1fr));}}
+    @media (min-width: 1024px){.grid{grid-template-columns: repeat(4, minmax(0,1fr));}}
+
+    .card{background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden;}
+    .thumb{width:100%; aspect-ratio: 1/1; background:#111; object-fit: cover; display:block;}
+    .info{padding:10px;}
+    .name{font-weight:700; font-size:14px; margin:0 0 6px;}
+    .sizes{font-size:12px; opacity:.85;}
+    .price{margin-top:8px; font-weight:800;}
+
+    /* ===== FB Feed styles ===== */
+    .feed{padding: 12px;}
+    .post{background: rgba(0,0,0,.55); border:1px solid rgba(255,255,255,.12); border-radius:12px; overflow:hidden; margin:6px 0;}
+    .post img{width:100%; display:block; max-height:520px; object-fit:cover;}
+    .post .body{padding:12px; font-size:14px; line-height:1.5;}
+    .post a{color:var(--accent); text-decoration:none;}
+    .post a:hover{text-decoration:underline;}
+    .feed .section-title{font-weight:800; font-size:20px; margin:6px 0 10px 6px;}
+
+    /* ===== Status ===== */
+    .loading, .error{padding: 20px; text-align:center; font-weight:700;}
+
+    footer{background:#000; border-top:3px solid #8b0000; padding:18px; text-align:center; color:#ccc;}
+  </style>
 </head>
 <body>
+  <header class="wrap">
+    <h1>Y2K Drip Store</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Men's Clothing</a></li>
+        <li><a href="#">Women's Clothing</a></li>
+        <li><a href="#">Kids Clothing</a></li>
+        <li><a href="#">Boys Clothing</a></li>
+        <li><a href="#">Girls Clothing</a></li>
+        <li><a href="#">Sneakers</a></li>
+        <li><a href="#">iPhones</a></li>
+        <li><a href="#">Laptops</a></li>
+        <li><a href="#">Jewelry</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header class="wrap">
-  <h1>Y2K Drip Store</h1>
-  <nav>
-    <ul>
-      <li><a href="#">Men's Clothing</a></li>
-      <li><a href="#">Women's Clothing</a></li>
-      <li><a href="#">Kids Clothing</a></li>
-      <li><a href="#">Boys Clothing</a></li>
-      <li><a href="#">Girls Clothing</a></li>
-      <li><a href="#">Sneakers</a></li>
-      <li><a href="#">iPhones</a></li>
-      <li><a href="#">Laptops</a></li>
-      <li><a href="#">Jewelry</a></li>
-    </ul>
-  </nav>
-</header>
+  <div class="search-bar wrap">
+    <input id="search" type="text" placeholder="Search for products..."/>
+    <button id="searchBtn">Search</button>
+  </div>
 
-<div class="search-bar wrap">
-  <input id="search" type="text" placeholder="Search for products..."/>
-  <button id="searchBtn">Search</button>
-</div>
+  <div class="banner wrap">Welcome to Y2KDRIPSTORE</div>
 
-<div class="banner wrap">Welcome to Y2KDRIPSTORE</div>
+  <!-- ===== About Us (Top-tier) ===== -->
+  <section class="about wrap" id="about">
+    <h2>About Us</h2>
+    <p><strong>Y2K Drip Store</strong> brings you premium <em>streetwear, sneakers, jewelry, and the hottest tech</em> at prices you’ll love. We’re Joburg-born and built for the grind — curated drops, verified quality, and a smooth shopping experience from checkout to doorstep.</p>
+    <p><strong>Delivery:</strong> 2–7 days nationwide. <strong>Lay-buy iPhones:</strong> Only <strong>R600/month</strong> — start using your device while you pay.</p>
+    <p><strong>Location:</strong> GAUTENG • JOHANNESBURG • ANDERSON STREET 001</p>
+    <p><strong>Contact:</strong>
+      WhatsApp: <a href="https://wa.me/27685270789" target="_blank">068 527 0789</a> • 
+      Group: <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">Join our WhatsApp Group</a> •
+      Facebook: <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Our Facebook Page</a>
+    </p>
+  </section>
 
-<!-- About Us Section -->
-<section class="about wrap">
-  <h2>About Us</h2>
-  <p>Welcome to <strong>Y2K Drip Store</strong>, your ultimate destination for the freshest fashion, sneakers, and top-tier gadgets. We bring style and technology together for a seamless shopping experience. Shop our exclusive collection and stay ahead of the trends!</p>
-  <p><strong>Contact us:</strong> WhatsApp: <a href="https://wa.me/0685270789" target="_blank">0685270789</a> | <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">Join our WhatsApp group</a> | <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Facebook Page</a></p>
-  <p><strong>Delivery:</strong> 2 to 7 days nationwide. <strong>Lay-buy:</strong> Get iPhones now for R600 per month while using the device.</p>
-  <p><strong>Location:</strong> GAUTENG, JOHANNESBURG, ANDERSON STREET 001.</p>
-</section>
+  <!-- ===== HOMEPAGE: Facebook Page Posts (with ads every 2 posts) ===== -->
+  <section class="wrap feed" id="homeFeed">
+    <div class="section-title">Latest from Facebook</div>
 
-<!-- Category Tabs -->
-<section class="tabs wrap">
-  <div class="tab-row" id="tabRow"></div>
-</section>
+    <!-- Ad first (10% height), then posts will render below and interleave ads every 2 -->
+    <div class="ad-block">Ad Space (Homepage)</div>
 
-<!-- Products & Ads Grid -->
-<main class="wrap" id="content">
-  <div id="status" class="loading">Loading products…</div>
-  <div id="grid" class="grid" hidden></div>
-</main>
+    <!-- Custom feed container (uses Graph API if token is set) -->
+    <div id="fbPosts"></div>
 
-<footer>
-  &copy; Y2KDRIPSTORE 2025 @ Reserved
-</footer>
+    <!-- Fallback official Page Plugin (shows page posts only) -->
+    <div id="fbFallback" style="margin-top:12px;">
+      <div id="fb-root"></div>
+      <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v19.0"></script>
+      <div class="fb-page"
+        data-href="https://www.facebook.com/profile.php?id=61559868803161"
+        data-tabs="timeline"
+        data-width="1000"
+        data-height=""
+        data-small-header="false"
+        data-adapt-container-width="true"
+        data-hide-cover="true"
+        data-show-facepile="false">
+      </div>
+      <!-- Note: Ads cannot be inserted inside the Page Plugin iframe. The custom feed above handles interleaving ads when an access token is provided. -->
+    </div>
+  </section>
 
-<!-- Firebase Analytics -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
+  <!-- ===== Category Tabs ===== -->
+  <section class="tabs wrap">
+    <div class="tab-row" id="tabRow"></div>
+  </section>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCCf-NoeTqAd2ZMUxH118WTVkHfWtwybno",
-  authDomain: "y2kdripstore-cf955.firebaseapp.com",
-  projectId: "y2kdripstore-cf955",
-  storageBucket: "y2kdripstore-cf955.appspot.com",
-  messagingSenderId: "463524157257",
-  appId: "1:463524157257:web:d385bf676cbbb77f042c98",
-  measurementId: "G-DYK3Y1Z492"
-};
-const app = initializeApp(firebaseConfig);
-getAnalytics(app);
-</script>
+  <!-- ===== Products Grid (with ads every 2 items) ===== -->
+  <main class="wrap" id="content">
+    <div id="status" class="loading">Loading products…</div>
+    <div id="grid" class="grid" hidden></div>
+  </main>
 
-<!-- Google Sheet Products + Currency Conversion -->
-<script>
-const SHEET_ID = '1K3RwSQVH2x60mFaNo5DCFY8jtncU2CaVOjovTtuB4dU';
-const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-const FX_KEY = '88d799cb628598ac17f47565';
-const FX_URL = `https://v6.exchangerate-api.com/v6/${FX_KEY}/latest/ZAR`;
+  <footer>
+    &copy; Y2KDRIPSTORE 2025 @ Reserved
+  </footer>
 
-let fxRates = { ZAR:1 };
-fetch(FX_URL).then(r=>r.json()).then(d=>{ fxRates = d.conversion_rates; });
+  <!-- ===== Firebase (your exact config) ===== -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
 
-const visitorCurrency = (navigator.languages && navigator.languages[0])?.split('-')[1] || 'ZAR';
+    const firebaseConfig = {
+      apiKey: "AIzaSyCCf-NoeTqAd2ZMUxH118WTVkHfWtwybno",
+      authDomain: "y2kdripstore-cf955.firebaseapp.com",
+      projectId: "y2kdripstore-cf955",
+      storageBucket: "y2kdripstore-cf955.firebasestorage.app",
+      messagingSenderId: "463524157257",
+      appId: "1:463524157257:web:d385bf676cbbb77f042c98",
+      measurementId: "G-DYK3Y1Z492"
+    };
+    const app = initializeApp(firebaseConfig);
+    getAnalytics(app);
+  </script>
 
-function csvToArray(str, delimiter=','){
-  const lines = str.split('\n');
-  const headers = lines.shift().split(delimiter);
-  return lines.map(l=>{
-    const obj = {};
-    l.split(delimiter).forEach((v,i)=>obj[headers[i]]=v);
-    return obj;
-  });
-}
+  <!-- ===== Live Sheet + Currency Conversion + FB Feed ===== -->
+  <script>
+    // ---- SETTINGS ----
+    const SHEET_ID = '1K3RwSQVH2x60mFaNo5DCFY8jtncU2CaVOjovTtuB4dU';
+    const SHEET_CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
+    // ExchangeRate-API (base ZAR)
+    const FX_KEY = '88d799cb628598ac17f47565';
+    const FX_URL = `https://v6.exchangerate-api.com/v6/${FX_KEY}/latest/ZAR`;
 
-let allProducts = [];
-const categories = ['MENS CLOTHING','WOMEN CLOTHING','KIDS CLOTHING','BOYS CLOTHING','GIRLS CLOTHING','SNEAKERS','IPHONES','LAPTOPS','JEWELRY'];
-const tabRow = document.getElementById('tabRow');
-const grid = document.getElementById('grid');
-const statusEl = document.getElementById('status');
+    // Facebook Page posts (optional Graph API for interleaving ads)
+    const FB_PAGE_ID = '61559868803161';
+    // If you want interleaved ads between posts, paste a Page Access Token below:
+    const FB_ACCESS_TOKEN = ''; // <-- PASTE YOUR FACEBOOK PAGE ACCESS TOKEN (leave blank to use fallback plugin)
 
-function buildTabs(activeCat){
-  tabRow.innerHTML='';
-  categories.forEach(cat=>{
-    const btn = document.createElement('button');
-    btn.className='tab'+(cat===activeCat?' active':'');
-    btn.textContent=cat;
-    btn.addEventListener('click',()=>{ renderCategory(cat); });
-    tabRow.appendChild(btn);
-  });
-}
+    // Expected Sheet columns: Name | Price | Image | Sizes | Category
 
-function renderWithAds(items){
-  grid.innerHTML='';
-  items.forEach((p,i)=>{
-    if(i%2===0){
-      const ad = document.createElement('div');
-      ad.className='ad-block';
-      ad.innerText='Advertisement';
-      grid.appendChild(ad);
+    // ---- Currency Detection ----
+    function guessCurrency(){
+      const locale = (navigator.languages && navigator.languages[0]) || navigator.language || 'en-ZA';
+      const region = (locale.split('-')[1] || 'ZA').toUpperCase();
+      const map = {
+        ZA:'ZAR', US:'USD', GB:'GBP', EU:'EUR', DE:'EUR', FR:'EUR', IT:'EUR', ES:'EUR', PT:'EUR', IE:'EUR', NL:'EUR', BE:'EUR', AT:'EUR', FI:'EUR', GR:'EUR', SK:'EUR', SI:'EUR', EE:'EUR', LV:'EUR', LT:'EUR', CY:'EUR', LU:'EUR', MT:'EUR',
+        CA:'CAD', AU:'AUD', NZ:'NZD', JP:'JPY', CN:'CNY', HK:'HKD', SG:'SGD', IN:'INR', NG:'NGN', KE:'KES', TZ:'TZS', MZ:'MZN', BW:'BWP', NA:'NAD', ZM:'ZMW', ZW:'ZWL',
+        AE:'AED', SA:'SAR', QA:'QAR', KW:'KWD', BH:'BHD'
+      };
+      return map[region] || 'ZAR';
     }
-    const card = document.createElement('div'); card.className='card';
-    card.innerHTML=`<img class="thumb" src="${p.Image}" alt="${p.Name}"/>
-    <div class="info">
-      <div class="name">${p.Name}</div>
-      <div class="sizes">${p.Sizes}</div>
-      <div class="price">${(parseFloat(p.Price)*fxRates[visitorCurrency] || p.Price).toFixed(2)} ${visitorCurrency}</div>
-    </div>`;
-    grid.appendChild(card);
-  });
-}
+    let TARGET_CCY = guessCurrency();
+    let rates = { ZAR: 1 };
 
-function renderCategory(cat){
-  buildTabs(cat);
-  const items = allProducts.filter(p=>p.Category?.toUpperCase()===cat);
-  statusEl.hidden=true; grid.hidden=false;
-  renderWithAds(items);
-}
+    function formatMoney(amount, ccy){
+      const n = Number(amount||0);
+      try{ return new Intl.NumberFormat(undefined, {style:'currency', currency: ccy}).format(n); }
+      catch(e){ return n.toFixed(2) + ' ' + ccy; }
+    }
 
-async function loadProducts(){
-  try{
-    const res = await fetch(SHEET_CSV_URL);
-    const text = await res.text();
-    allProducts = csvToArray(text).filter(x=>x.Name && x.Image);
-    const firstCat = categories.find(c=> allProducts.some(p=>p.Category?.toUpperCase()===c));
-    if(firstCat){ renderCategory(firstCat); }
-    else{ statusEl.textContent='No products yet. Add rows to your Google Sheet.'; }
-  }catch(e){
-    statusEl.className='error';
-    statusEl.textContent='Error loading products';
-    console.error(e);
-  }
-}
+    // ---- CSV Parse (handles quotes) ----
+    function parseCSV(text){
+      const rows = []; let cur = []; let val = ''; let inQ = false;
+      for(let i=0;i<text.length;i++){
+        const c = text[i]; const n = text[i+1];
+        if(c==='"'){
+          if(inQ && n==='"'){ val+='"'; i++; }
+          else { inQ = !inQ; }
+        } else if(c===',' && !inQ){ cur.push(val); val=''; }
+        else if((c==='\n' || c==='\r') && !inQ){ if(val!==''||cur.length){ cur.push(val); rows.push(cur); cur=[]; val=''; } }
+        else { val+=c; }
+      }
+      if(val!==''||cur.length){ cur.push(val); rows.push(cur); }
+      return rows;
+    }
 
-document.getElementById('searchBtn').addEventListener('click', ()=>{
-  const q = document.getElementById('search').value.toLowerCase();
-  const match = allProducts.filter(p=>(p.Name||'').toLowerCase().includes(q));
-  statusEl.hidden=true; grid.hidden=false;
-  buildTabs('');
-  renderWithAds(match);
-});
+    // ---- Elements ----
+    const tabRow = document.getElementById('tabRow');
+    const grid   = document.getElementById('grid');
+    const statusEl = document.getElementById('status');
 
-loadProducts();
-</script>
+    const CATEGORIES = [
+      'MENS CLOTHING','WOMEN CLOTHING','KIDS CLOTHING','BOYS CLOTHING','GIRLS CLOTHING','SNEAKERS','IPHONES','LAPTOPS','JEWELRY'
+    ];
+
+    // ---- Build Tabs ----
+    function buildTabs(active){
+      tabRow.innerHTML = '';
+      CATEGORIES.forEach(cat => {
+        const b = document.createElement('button');
+        b.className = 'tab' + (cat===active?' active':'');
+        b.textContent = cat;
+        b.addEventListener('click', ()=> selectCategory(cat));
+        tabRow.appendChild(b);
+      });
+    }
+
+    // ---- Render Helpers ----
+    function renderProductsWithAds(items){
+      grid.innerHTML = '';
+      // Start with an ad to match your requested flow: Ad -> 2 products -> Ad -> 2 products...
+      if(items.length){ grid.appendChild(makeAd('Ad Space (Category)')); }
+
+      items.forEach((p, i) => {
+        // Product card
+        grid.appendChild(makeCard(p));
+
+        // After every 2 products, drop an ad block
+        const isEndOfPair = ((i+1) % 2 === 0);
+        if(isEndOfPair && i < items.length - 1){
+          grid.appendChild(makeAd('Ad Space (Category)'));
+        }
+      });
+    }
+
+    function makeCard(p){
+      const card = document.createElement('div'); card.className='card';
+      const img = document.createElement('img'); img.className='thumb'; img.loading='lazy'; img.alt=p.Name; img.src = p.Image;
+      const info = document.createElement('div'); info.className='info';
+      const name = document.createElement('p'); name.className='name'; name.textContent = p.Name;
+      const sizes = document.createElement('p'); sizes.className='sizes'; sizes.textContent = p.Sizes ? `Sizes: ${p.Sizes}` : '';
+      const price = document.createElement('div'); price.className='price';
+      const zar = Number(p.Price || 0);
+      const fx = rates[TARGET_CCY] || 1; // rate is how many TARGET per 1 ZAR
+      price.textContent = formatMoney(zar * fx, TARGET_CCY);
+
+      info.appendChild(name); info.appendChild(sizes); info.appendChild(price);
+      card.appendChild(img); card.appendChild(info);
+      return card;
+    }
+
+    function makeAd(label='Advertisement'){
+      const ad = document.createElement('div');
+      ad.className = 'ad-block';
+      ad.textContent = label;
+      return ad;
+    }
+
+    // ---- State ----
+    let allRows = [];
+    let byCat = {};
+
+    function selectCategory(cat){
+      buildTabs(cat);
+      const items = (byCat[cat]||[]);
+      statusEl.hidden = true; grid.hidden = false;
+      renderProductsWithAds(items);
+    }
+
+    // ---- Facebook Feed (custom, for interleaved ads) ----
+    async function loadFacebookPosts(){
+      const container = document.getElementById('fbPosts');
+      // If no token, skip custom rendering; fallback plugin below remains visible
+      if(!FB_ACCESS_TOKEN){ return; }
+
+      try{
+        // Hide fallback plugin if we can load custom feed
+        const fbFallback = document.getElementById('fbFallback');
+        if(fbFallback) fbFallback.style.display = 'none';
+
+        const url = `https://graph.facebook.com/${FB_PAGE_ID}/posts?fields=message,full_picture,permalink_url,created_time&access_token=${encodeURIComponent(FB_ACCESS_TOKEN)}`;
+        const res = await fetch(url);
+        if(!res.ok){ throw new Error('Facebook API error'); }
+        const json = await res.json();
+        const posts = Array.isArray(json.data) ? json.data : [];
+
+        // Start with an ad (you asked to start with 10% ad first)
+        // (We already placed a static ad above this container, so we start listing posts here.)
+        let count = 0;
+        posts.forEach((post, idx) => {
+          // Render only page posts with content
+          if(!post.message && !post.full_picture) return;
+
+          const el = document.createElement('div');
+          el.className = 'post';
+          el.innerHTML = `
+            ${post.full_picture ? `<img src="${post.full_picture}" alt="Post image"/>` : ``}
+            <div class="body">
+              ${post.message ? `<div>${escapeHTML(post.message)}</div>` : ``}
+              <div style="margin-top:8px;">
+                <a href="${post.permalink_url}" target="_blank">View on Facebook</a>
+              </div>
+            </div>
+          `;
+          container.appendChild(el);
+
+          count++;
+          if(count % 2 === 0){
+            container.appendChild(makeAd('Ad Space (Homepage)'));
+          }
+        });
+      }catch(err){
+        // If custom feed fails, leave the fallback plugin visible
+        console.warn('FB custom feed failed, showing fallback plugin:', err);
+      }
+    }
+
+    function escapeHTML(s){
+      return String(s).replace(/[&<>\"']/g, m => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+      }[m]));
+    }
+
+    // ---- Load all data ----
+    async function load(){
+      try{
+        // 1) Rates (ZAR base)
+        const fxRes = await fetch(FX_URL);
+        const fxJson = await fxRes.json();
+        if(fxJson && fxJson.conversion_rates){ rates = fxJson.conversion_rates; }
+
+        // 2) Facebook custom feed (optional, for interleaved ads)
+        loadFacebookPosts();
+
+        // 3) Sheet CSV
+        const res = await fetch(SHEET_CSV_URL);
+        if(!res.ok) throw new Error('Sheet not reachable – make sure sharing is set to "Anyone with the link"');
+        const csv = await res.text();
+        const rows = parseCSV(csv);
+        const headers = rows.shift().map(h=>h.trim());
+        const idx = {
+          Name: headers.indexOf('Name'),
+          Price: headers.indexOf('Price'),
+          Image: headers.indexOf('Image'),
+          Sizes: headers.indexOf('Sizes'),
+          Category: headers.indexOf('Category')
+        };
+        allRows = rows.map(r=>({
+          Name: r[idx.Name]?.trim()||'',
+          Price: r[idx.Price]?.trim()||'',
+          Image: r[idx.Image]?.trim()||'',
+          Sizes: r[idx.Sizes]?.trim()||'',
+          Category: (r[idx.Category]?.trim()||'').toUpperCase()
+        })).filter(x=>x.Name && x.Image);
+
+        // Group by category
+        byCat = {}; CATEGORIES.forEach(c=>byCat[c]=[]);
+        allRows.forEach(p=>{ if(byCat[p.Category]) byCat[p.Category].push(p); });
+
+        // Default view: first tab with any items
+        const firstWithItems = CATEGORIES.find(c=> (byCat[c]&&byCat[c].length));
+        if(firstWithItems){ selectCategory(firstWithItems); }
+        else { statusEl.textContent = 'No products yet — add rows to your Google Sheet to see them here.'; }
+      }catch(err){
+        console.error(err);
+        statusEl.className = 'error';
+        statusEl.textContent = 'Error loading data. Check Sheet sharing and API key.';
+      }
+    }
+
+    // Search (client-side)
+    document.getElementById('searchBtn').addEventListener('click', ()=>{
+      const q = document.getElementById('search').value.toLowerCase();
+      const match = allRows.filter(p=> (p.Name||'').toLowerCase().includes(q));
+      statusEl.hidden = true; grid.hidden=false;
+      buildTabs('');
+      renderProductsWithAds(match);
+    });
+
+    // Build tabs immediately (no selection yet)
+    buildTabs('');
+
+    // Kick off loading
+    load();
+  </script>
 </body>
   </html>

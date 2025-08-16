@@ -1,7 +1,8 @@
-<!DOCTYPE html><html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Y2KDRIPSTORE</title>
 <style>
 /* Dark Gradient Background Animation */
@@ -40,11 +41,12 @@ nav a:hover { background-color: #004d00; color: #fff; }
 .welcome { display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center; font-size: 36px; color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.7); background: rgba(0,0,0,0.5); border-radius: 15px; margin: 10px 20px; animation: fadeScale 6s ease-in-out infinite; }
 @keyframes fadeScale { 0%, 100% {opacity: 0; transform: scale(0.9);} 50% {opacity: 1; transform: scale(1);} }
 /* Product Row */
+.section-title { color: #fff; margin: 10px 20px; font-size: 20px; font-weight: bold; }
 .product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; cursor: grab; }
 .product-row.active { cursor: grabbing; }
 .product { flex: 0 0 auto; width: 180px; background: rgba(0,0,0,0.4); border-radius: 10px; text-align: center; color: white; padding: 10px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
 .product:hover { transform: translateY(-5px); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
-.product img { width: 100%; border-radius: 5px; }
+.product img { width: 100%; border-radius: 5px; object-fit: cover; height: 160px; }
 .product-name { font-weight: bold; margin: 8px 0; }
 .product-price { color: #FFD700; }
 /* Ad */
@@ -66,7 +68,7 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
 .modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
 .close { color: #fff; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
-.modal img { width: 100%; border-radius: 8px; }
+.modal img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 360px; }
 .modal .product-name { font-size: 24px; margin: 15px 0 5px; }
 .modal .product-price { font-size: 20px; color: #FFD700; margin-bottom: 10px; }
 .modal .buy-button { background-color: #00FF00; border: none; color: black; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
@@ -83,9 +85,8 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 <body>
 <header>
     <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
-    <nav>
-        <a href="#home">Home</a><a href="#women">Women</a><a href="#men">Men</a>
-        <a href="#girls">Girls</a><a href="#boys">Boys</a><a href="#sneakers">Sneakers</a><a href="#iphones">iPhones</a>
+    <nav id="site-nav">
+        <!-- links will be filled dynamically -->
     </nav>
     <div class="top-buttons">
         <button class="login">Login</button>
@@ -93,91 +94,301 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
         <button class="cart">Cart</button>
     </div>
 </header>
+
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search products...">
 </div>
+
 <section class="welcome" id="home">WELCOME TO Y2KDRIPSTORE</section>
-<div id="main-content"></div><!-- Modal --><div id="productModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
+
+<div id="main-content"></div>
+
+<!-- Modal -->
+<div id="productModal" class="modal" aria-hidden="true">
+    <div class="modal-content" role="dialog" aria-modal="true">
+        <span class="close" id="modalClose">&times;</span>
         <img id="modalImage" src="" alt="">
         <div class="product-name" id="modalName"></div>
         <div class="product-price" id="modalPrice"></div>
-        <button class="buy-button">Buy Now</button>
+        <button class="buy-button" id="buyButton">Buy Now</button>
+
         <div class="ad" style="margin-bottom:15px;">
-            <!-- Google AdSense Code -->
+            <!-- Google AdSense Code placeholder -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
                  data-ad-slot="YYYYYYYYYY"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <!-- (adsbygoogle script loaded at bottom if needed) -->
         </div>
+
         <div class="similar-products">
             <h3>Similar Products</h3>
             <div class="similar-row" id="similarRow"></div>
         </div>
     </div>
-</div><section class="about">
+</div>
+
+<section class="about">
     <h2>About Us</h2>
-    <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
-    <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Facebook page</a>.</p>
+    <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank" rel="noopener">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
+    <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">Facebook page</a>.</p>
     <p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
     <p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
     <p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
     <p>Refund policy: Returns accepted within 30 days.</p>
     <p>Website built by <strong>brightsphelele92@</strong></p>
 </section>
-<footer>©Y2KDRIPSTORE 2025 RESERVED</footer><script>
+
+<footer>©Y2KDRIPSTORE 2025 RESERVED</footer>
+
+<script>
+/* ====== Data ====== */
 const allProducts = [
   {ProductName:'Y2k Ripped Jean', Category:'Men', ImageURL:'https://i.supaimg.com/0c728538-ad10-4424-9b19-4cd9e478ba8c.jpg', Price:'R400'},
   {ProductName:'Y2k Blue jean', Category:'Men', ImageURL:'https://i.supaimg.com/4b2984bb-3be0-4873-8548-8bb5392884c5.jpg', Price:'R320'},
   {ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
   {ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
-  {ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'}
-  //... Add all the rest of your products here in the same format
+  {ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'},
+  // Example additional categories and products:
+  {ProductName:'Y2k Mini Dress', Category:'Women', ImageURL:'https://via.placeholder.com/400x400?text=Y2k+Mini+Dress', Price:'R450'},
+  {ProductName:'Y2k Platform Sneakers', Category:'Sneakers', ImageURL:'https://via.placeholder.com/400x400?text=Platform+Sneakers', Price:'R650'},
+  {ProductName:'Y2k Phone Case', Category:'iPhones', ImageURL:'https://via.placeholder.com/400x400?text=Phone+Case', Price:'R80'},
+  {ProductName:'Y2k Kids Tee', Category:'Girls', ImageURL:'https://via.placeholder.com/400x400?text=Kids+Tee', Price:'R120'}
 ];
 
-function renderProducts(products){
-  const main=document.getElementById('main-content');
-  main.innerHTML='';
-  const categories=['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
-  categories.forEach(cat=>{
-    const catData=products.filter(p=>p.Category===cat);
-    if(catData.length>0){
-      const sec=document.createElement('div');
-      sec.id=cat.toLowerCase();
-      const title=document.createElement('div');
-      title.className='section-title';
-      title.innerText=cat.toUpperCase();
-      sec.appendChild(title);
-      for(let i=0;i<catData.length;i+=2){
-        const row=document.createElement('div');
-        row.className='product-row';
-        row.innerHTML=`<div class='product' data-index='${i}' data-category='${cat}'><img src='${catData[i].ImageURL}'><div class='product-name'>${catData[i].ProductName}</div><div class='product-price'>${catData[i].Price}</div></div>`;
-        if(catData[i+1]){
-          row.innerHTML+=`<div class='product' data-index='${i+1}' data-category='${cat}'><img src='${catData[i+1].ImageURL}'><div class='product-name'>${catData[i+1].ProductName}</div><div class='product-price'>${catData[i+1].Price}</div></div>`;
-        }
-        sec.appendChild(row);
-        if(i+2<catData.length){
-          const ad=document.createElement('div');
-          ad.className='ad';
-          ad.innerHTML=`<!-- Google AdSense Code -->
-            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="YYYYYYYYYY" data-ad-format="auto" data-full-width-responsive="true"></ins>
-            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>`;sec.appendChild(ad);
-    }
-  }
-  main.appendChild(sec);
+/* Preferred category order for nav display (add categories here if you want them always present) */
+const preferredOrder = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
+
+/* ====== Helpers ====== */
+function normalizeId(s){ return s.toLowerCase().replace(/\s+/g,'-'); }
+
+/* ====== Render ====== */
+function renderNav(categories){
+  const nav = document.getElementById('site-nav');
+  nav.innerHTML = '';
+  const ordered = [];
+  preferredOrder.forEach(p=>{
+    if(categories.includes(p)) ordered.push(p);
+  });
+  // add any other categories not in preferredOrder
+  categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
+
+  ordered.forEach(cat=>{
+    const a = document.createElement('a');
+    a.href = `#${normalizeId(cat)}`;
+    a.innerText = cat;
+    nav.appendChild(a);
+  });
 }
 
-}); setupProductClicks(); setupRowDragScroll(); }
+function renderProducts(products){
+  const main = document.getElementById('main-content');
+  main.innerHTML = '';
 
+  // determine categories present
+  const categoriesSet = new Set(products.map(p=>p.Category));
+  const categories = Array.from(categoriesSet);
+
+  renderNav(categories);
+
+  // ensure preferredOrder items show even if empty? we only show categories that have products
+  const ordered = [];
+  preferredOrder.forEach(p => { if(categories.includes(p)) ordered.push(p); });
+  categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
+
+  ordered.forEach(cat=>{
+    const catData = products.filter(p=>p.Category === cat);
+    if(catData.length === 0) return;
+
+    const sec = document.createElement('section');
+    sec.id = normalizeId(cat);
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.innerText = cat.toUpperCase();
+    sec.appendChild(title);
+
+    // Create rows of products (simple horizontal scroller; all products in one row)
+    const row = document.createElement('div');
+    row.className = 'product-row';
+    catData.forEach((prod, idx)=>{
+      const div = document.createElement('div');
+      div.className = 'product';
+      div.tabIndex = 0;
+      div.setAttribute('data-index', idx);
+      div.setAttribute('data-category', cat);
+      div.innerHTML = `
+        <img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}">
+        <div class="product-name">${escapeHtml(prod.ProductName)}</div>
+        <div class="product-price">${escapeHtml(prod.Price)}</div>
+      `;
+      // attach full product object via dataset for easy retrieval
+      div.__product = prod;
+      row.appendChild(div);
+    });
+    sec.appendChild(row);
+
+    // Optionally add an ad after the row
+    const ad = document.createElement('div');
+    ad.className = 'ad';
+    ad.innerHTML = 'Advertisement';
+    sec.appendChild(ad);
+
+    main.appendChild(sec);
+  });
+
+  setupProductClicks();
+  setupRowDragScroll();
+}
+
+/* Simple HTML escape */
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
+}
+
+/* ====== Clicks & Modal ====== */
+const modal = document.getElementById('productModal');
+const modalImage = document.getElementById('modalImage');
+const modalName = document.getElementById('modalName');
+const modalPrice = document.getElementById('modalPrice');
+const modalClose = document.getElementById('modalClose');
+const similarRow = document.getElementById('similarRow');
+
+function setupProductClicks(){
+  document.querySelectorAll('.product').forEach(el=>{
+    el.removeEventListener('click', productClickHandler);
+    el.addEventListener('click', productClickHandler);
+    el.addEventListener('keypress', (e)=>{ if(e.key === 'Enter') productClickHandler.call(el,e); });
+  });
+}
+
+function productClickHandler(e){
+  const prod = this.__product;
+  if(!prod) return;
+  openModalWithProduct(prod);
+}
+
+function openModalWithProduct(prod){
+  modalImage.src = prod.ImageURL || '';
+  modalImage.alt = prod.ProductName || '';
+  modalName.innerText = prod.ProductName || '';
+  modalPrice.innerText = prod.Price || '';
+  modal.style.display = 'flex';
+  modal.setAttribute('aria-hidden','false');
+  populateSimilar(prod);
+}
+
+modalClose.addEventListener('click', closeModal);
+modal.addEventListener('click', function(e){
+  if(e.target === modal) closeModal();
+});
+function closeModal(){
+  modal.style.display = 'none';
+  modal.setAttribute('aria-hidden','true');
+  similarRow.innerHTML = '';
+}
+
+/* Buy button placeholder */
+document.getElementById('buyButton').addEventListener('click', function(){
+  alert('Buy flow not implemented in this demo. Contact seller or integrate payment gateway.');
+});
+
+/* Similar products (same category, excluding the product itself) */
+function populateSimilar(prod){
+  similarRow.innerHTML = '';
+  const same = allProducts.filter(p => p.Category === prod.Category && p.ProductName !== prod.ProductName);
+  if(same.length === 0){
+    similarRow.innerHTML = '<div style="color:#fff;">No similar products</div>';
+    return;
+  }
+  const inner = document.createElement('div');
+  inner.className = 'similar-row-inner';
+  // duplicate list to create a continuous scrolling effect if desired
+  const items = same.concat(same);
+  items.forEach(s=>{
+    const d = document.createElement('div');
+    d.className = 'similar-product';
+    d.innerHTML = `
+      <img src="${s.ImageURL}" alt="${escapeHtml(s.ProductName)}">
+      <div class="name">${escapeHtml(s.ProductName)}</div>
+      <div class="price">${escapeHtml(s.Price)}</div>
+    `;
+    d.__product = s;
+    d.addEventListener('click', ()=> openModalWithProduct(s));
+    inner.appendChild(d);
+  });
+  similarRow.appendChild(inner);
+}
+
+/* ====== Drag-to-scroll for product rows (mouse + touch) ====== */
+function setupRowDragScroll(){
+  const rows = document.querySelectorAll('.product-row');
+  rows.forEach(row=>{
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    // Mouse
+    row.addEventListener('mousedown', (e)=>{
+      isDown = true;
+      row.classList.add('active');
+      startX = e.pageX - row.offsetLeft;
+      scrollLeft = row.scrollLeft;
+    });
+    window.addEventListener('mouseup', ()=>{
+      if(isDown){ isDown = false; row.classList.remove('active'); }
+    });
+    row.addEventListener('mouseleave', ()=>{
+      if(isDown){ isDown = false; row.classList.remove('active'); }
+    });
+    row.addEventListener('mousemove', (e)=>{
+      if(!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - row.offsetLeft;
+      const walk = (x - startX) * 1; //scroll-fast
+      row.scrollLeft = scrollLeft - walk;
+    });
+
+    // Touch
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+    row.addEventListener('touchstart', (e)=>{
+      touchStartX = e.touches[0].pageX - row.offsetLeft;
+      touchScrollLeft = row.scrollLeft;
+    }, {passive: true});
+    row.addEventListener('touchmove', (e)=>{
+      const x = e.touches[0].pageX - row.offsetLeft;
+      const walk = (x - touchStartX) * 1;
+      row.scrollLeft = touchScrollLeft - walk;
+    }, {passive: true});
+  });
+}
+
+/* ====== Search ====== */
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', (e)=>{
+  const q = e.target.value.trim().toLowerCase();
+  const filtered = allProducts.filter(p => p.ProductName.toLowerCase().includes(q) || p.Category.toLowerCase().includes(q));
+  if(q === '') {
+    renderProducts(allProducts);
+  } else {
+    renderProducts(filtered);
+    // scroll to top so users see results
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+});
+
+/* ====== Initialize ====== */
 renderProducts(allProducts);
 
-// Modal and swipe scroll functions remain same as your previous code </script>
+/* Optionally load AdSense script (uncomment when ready and replace publisher info) */
+// const adsScript = document.createElement('script');
+// adsScript.async = true;
+// adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+// document.body.appendChild(adsScript);
+</script>
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script></body>
-    </html>
+</body>
+            </html>

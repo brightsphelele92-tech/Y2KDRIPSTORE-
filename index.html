@@ -5,175 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Y2KDRIPSTORE</title>
 <style>
-    /* Background animation */
-    body {
-        margin: 0;
-        font-family: 'Arial', sans-serif;
-        overflow-x: hidden;
-        animation: bgAnimation 28s infinite;
-    }
-    @keyframes bgAnimation {
-        0% {background-color: #013220;}   /* dark green */
-        14% {background-color: #8B0000;}  /* dark red */
-        28% {background-color: #FF8C00;}  /* dark orange */
-        42% {background-color: #A9A9A9;}  /* dark white (grayish) */
-        57% {background-color: #0B0B0B;}  /* dark black */
-        71% {background-color: #8B008B;}  /* dark pink (purple) */
-        85% {background-color: #654321;}  /* dark brown */
-        100% {background-color: #013220;} /* back to dark green */
-    }
+/* Smooth Gradient Background Animation */
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    overflow-x: hidden;
+    background: linear-gradient(45deg, #013220, #8B0000, #FF8C00, #A9A9A9, #0B0B0B, #8B008B, #654321);
+    background-size: 1400% 1400%;
+    animation: gradientAnimation 28s ease infinite;
+}
+@keyframes gradientAnimation {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+html { scroll-behavior: smooth; }
 
-    /* Header */
-    header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 30px;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: rgba(0,0,0,0.5);
-    }
-    .logo {
-        font-size: 28px;
-        font-weight: bold;
-    }
-    .logo span.red { color: #FF0000; }
-    .logo span.green { color: #00FF00; }
-    .logo span.white { color: #FFFFFF; }
-    nav {
-        display: flex;
-        gap: 15px;
-    }
-    nav a {
-        text-decoration: none;
-        color: #006400;
-        padding: 8px 12px;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-    nav a:hover {
-        background-color: #004d00;
-        color: #fff;
-    }
-    .top-buttons {
-        display: flex;
-        gap: 10px;
-    }
-    .top-buttons button {
-        padding: 8px 15px;
-        border: none;
-        border-radius: 5px;
-        font-weight: bold;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    .login { background-color: #00FF00; color: #000; }
-    .signup { background-color: #FF0000; color: #fff; }
-    .cart { background-color: #FFD700; color: #000; }
+/* Header */
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap; background: rgba(0,0,0,0.5); }
+.logo { font-size: 28px; font-weight: bold; }
+.logo span.red { color: #FF0000; }
+.logo span.green { color: #00FF00; }
+.logo span.white { color: #FFFFFF; }
+nav { display: flex; gap: 10px; flex-wrap: wrap; }
+nav a { color: #006400; text-decoration: none; padding: 6px 10px; border-radius: 5px; font-weight: bold; transition: 0.3s; }
+nav a:hover { background-color: #004d00; color: #fff; }
+.top-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+.top-buttons button { padding: 6px 12px; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
+.login { background-color: #00FF00; color: #000; }
+.signup { background-color: #FF0000; color: #fff; }
+.cart { background-color: #FFD700; color: #000; }
 
-    /* Welcome Section */
-    .welcome {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 30vh;
-        color: white;
-        font-size: 36px;
-        font-weight: bold;
-        text-align: center;
-        animation: fadeInOut 6s infinite;
-    }
-    @keyframes fadeInOut {
-        0%,100% {opacity:0;}
-        50% {opacity:1;}
-    }
+/* Search Bar */
+.search-container { width: 100%; display: flex; justify-content: center; margin: 10px 0; }
+.search-container input { width: 80%; padding: 8px 12px; border-radius: 5px; border: none; font-size: 16px; }
 
-    /* Products & Ads */
-    .section-title {
-        text-align: center;
-        color: white;
-        font-size: 28px;
-        margin: 25px 0 10px 0;
-        font-weight: bold;
-    }
-    .product-row {
-        display: flex;
-        overflow-x: auto;
-        gap: 15px;
-        padding: 10px 20px;
-        scroll-behavior: smooth;
-    }
-    .product {
-        flex: 0 0 auto;
-        background: rgba(255,255,255,0.1);
-        border-radius: 8px;
-        padding: 10px;
-        width: 180px;
-        text-align: center;
-        color: white;
-    }
-    .product img {
-        width: 100%;
-        border-radius: 5px;
-    }
-    .product-name { font-weight: bold; margin: 8px 0; }
-    .product-price { color: #FFD700; }
+/* Welcome Message */
+.welcome { display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center; font-size: 36px; color: white; animation: fadeScale 6s ease-in-out infinite; padding: 0 10px; }
+@keyframes fadeScale { 0%, 100% {opacity: 0; transform: scale(0.9);} 50% {opacity: 1; transform: scale(1);} }
 
-    .ad {
-        height: 100px;
-        background: rgba(255,255,255,0.2);
-        color: white;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-        margin: 15px 20px;
-        border-radius: 8px;
-        flex-shrink: 0;
-    }
+/* Product Row */
+.product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; }
+.product { flex: 0 0 auto; width: 180px; background: rgba(255,255,255,0.1); border-radius: 8px; text-align: center; color: white; padding: 10px; cursor: pointer; }
+.product img { width: 100%; border-radius: 5px; }
+.product-name { font-weight: bold; margin: 8px 0; }
+.product-price { color: #FFD700; }
 
-    /* About Us */
-    .about {
-        background: rgba(0,0,0,0.6);
-        color: white;
-        padding: 30px 20px;
-        line-height: 1.6;
-        border-radius: 10px;
-        margin: 20px;
-    }
-    .about a { color: #FFD700; text-decoration: none; }
+/* Ad */
+.ad { flex: 0 0 auto; height: 100px; width: 180px; background: rgba(255,255,255,0.2); color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; border-radius: 8px; }
 
-    /* Footer */
-    footer {
-        text-align: center;
-        color: white;
-        padding: 20px 0;
-        margin-top: 20px;
-        font-size: 14px;
-    }
+/* About Section */
+.about { background: rgba(0,0,0,0.6); color: white; padding: 30px 20px; margin: 20px; border-radius: 10px; line-height: 1.6; }
+.about a { color: #FFD700; }
 
-    /* Scrollbar Styling */
-    ::-webkit-scrollbar { height: 8px; }
-    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
-    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+/* Footer */
+footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
+
+/* Scrollbar Styling */
+::-webkit-scrollbar { height: 8px; }
+::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+/* Responsive Adjustments */
+@media (max-width: 1024px) { .product { width: 150px; } .ad { width: 150px; height: 80px; font-size: 14px; } }
+@media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 140px; height: 70px; font-size: 12px; } .about { font-size: 14px; padding: 20px 10px; } }
+@media (max-width: 480px) { .product { width: 120px; } .ad { width: 120px; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
+
+/* Popup Modal */
+.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+.modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
+.close { color: #fff; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
+.modal img { width: 100%; border-radius: 8px; }
+.modal .product-name { font-size: 24px; margin: 15px 0 5px; }
+.modal .product-price { font-size: 20px; color: #FFD700; margin-bottom: 10px; }
+.modal .buy-button { background-color: #00FF00; border: none; color: black; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
+.modal .similar-products { margin-top: 15px; }
+.similar-row { display: flex; overflow-x: hidden; position: relative; gap: 10px; }
+.similar-row-inner { display: flex; gap: 10px; animation: scrollLeft 20s linear infinite; }
+@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.similar-product { flex: 0 0 auto; width: 120px; text-align: center; cursor: pointer; }
+.similar-product img { width: 100%; border-radius: 5px; }
+.similar-product .name { font-size: 14px; color: #fff; }
+.similar-product .price { font-size: 14px; color: #FFD700; }
 </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <span class="red">Y2K</span><span class="white">DRIPSTORE</span>
-    </div>
+    <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
     <nav>
-        <a href="#home">Home</a>
-        <a href="#women">Women</a>
-        <a href="#men">Men</a>
-        <a href="#girls">Girls</a>
-        <a href="#boys">Boys</a>
-        <a href="#sneakers">Sneakers</a>
-        <a href="#iphones">iPhones</a>
+        <a href="#home">Home</a><a href="#women">Women</a><a href="#men">Men</a>
+        <a href="#girls">Girls</a><a href="#boys">Boys</a><a href="#sneakers">Sneakers</a><a href="#iphones">iPhones</a>
     </nav>
     <div class="top-buttons">
         <button class="login">Login</button>
@@ -182,56 +104,29 @@
     </div>
 </header>
 
-<section class="welcome" id="home">
-    WELCOME TO Y2KDRIPSTORE
-</section>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search products...">
+</div>
 
-<!-- Repeating Products + Ads 10 times -->
-<script>
-    const body = document.body;
-    const colors = ['#013220','#8B0000','#FF8C00','#A9A9A9','#0B0B0B','#8B008B','#654321'];
-</script>
+<section class="welcome" id="home">WELCOME TO Y2KDRIPSTORE</section>
+<div id="main-content"></div>
 
-<div id="main-content">
+<!-- Modal -->
+<div id="productModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <img id="modalImage" src="" alt="">
+        <div class="product-name" id="modalName"></div>
+        <div class="product-price" id="modalPrice"></div>
+        <button class="buy-button">Buy Now</button>
+        <div class="ad" style="margin-bottom:15px;">Ad Space</div>
+        <div class="similar-products">
+            <h3>Similar Products</h3>
+            <div class="similar-row" id="similarRow"></div>
+        </div>
+    </div>
+</div>
 
-<script>
-function createProductRow(sectionId, rowNum) {
-    const container = document.createElement('div');
-    container.className = 'product-row';
-    container.id = `${sectionId}-row-${rowNum}`;
-    for(let i=1;i<=2;i++){
-        const product = document.createElement('div');
-        product.className = 'product';
-        product.innerHTML = `
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <div class="product-name">Product Name</div>
-            <div class="product-price">$00.00</div>
-        `;
-        container.appendChild(product);
-    }
-    // Add ad placeholder
-    const ad = document.createElement('div');
-    ad.className = 'ad';
-    ad.innerText = 'Ad Space';
-    container.appendChild(ad);
-
-    return container;
-}
-
-const sections = ['home','women','men','girls','boys','sneakers','iphones'];
-sections.forEach(sec => {
-    for(let r=1;r<=10;r++){
-        const row = createProductRow(sec,r);
-        const title = document.createElement('div');
-        title.className='section-title';
-        title.innerText = sec.toUpperCase();
-        document.getElementById('main-content').appendChild(title);
-        document.getElementById('main-content').appendChild(row);
-    }
-});
-</script>
-
-<!-- About Us Section -->
 <section class="about">
     <h2>About Us</h2>
     <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
@@ -243,9 +138,73 @@ sections.forEach(sec => {
     <p>Website built by <strong>brightsphelele92@</strong></p>
 </section>
 
-<footer>
-    ©Y2KDRIPSTORE 2025 RESERVED
-</footer>
+<footer>©Y2KDRIPSTORE 2025 RESERVED</footer>
+
+<script>
+// ==== Sheet Integration ====
+const sheetAPI = 'YOUR_SHEETDB_API_URL'; // Replace with SheetDB JSON API
+let allProducts = [];
+
+function renderProducts(products) {
+    const main = document.getElementById('main-content');
+    main.innerHTML = '';
+    const categories = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
+    categories.forEach(category => {
+        const categoryData = products.filter(item => item.Category === category);
+        if(categoryData.length>0){
+            const section = document.createElement('div'); section.id=category.toLowerCase();
+            const title = document.createElement('div'); title.className='section-title'; title.innerText=category.toUpperCase(); section.appendChild(title);
+
+            for(let i=0;i<categoryData.length;i+=2){
+                const row = document.createElement('div'); row.className='product-row';
+                row.innerHTML = `<div class="product" data-index="${i}" data-category="${category}"><img src="${categoryData[i].ImageURL}" alt="${categoryData[i].ProductName}"><div class="product-name">${categoryData[i].ProductName}</div><div class="product-price">${categoryData[i].Price}</div></div>
+                <div class="product" data-index="${i+1}" data-category="${category}"><img src="${categoryData[i+1]?.ImageURL}" alt="${categoryData[i+1]?.ProductName}"><div class="product-name">${categoryData[i+1]?.ProductName||''}</div><div class="product-price">${categoryData[i+1]?.Price||''}</div></div>`;
+                section.appendChild(row);
+                if(i+2<categoryData.length){ const ad = document.createElement('div'); ad.className='ad'; ad.innerText='Ad Space'; section.appendChild(ad);}
+            }
+            main.appendChild(section);
+        }
+    });
+    setupProductClicks();
+}
+
+// Fetch products
+fetch(sheetAPI).then(res=>res.json()).then(data=>{allProducts=data;renderProducts(allProducts);}).catch(err=>console.error(err));
+
+// ==== Search ====
+document.getElementById('searchInput').addEventListener('input', function(){
+    const query=this.value.toLowerCase();
+    if(query===''){renderProducts(allProducts);return;}
+    const filtered=allProducts.filter(p=>p.ProductName.toLowerCase().includes(query));
+    if(filtered.length===0){document.getElementById('main-content').innerHTML='<div style="color:white;text-align:center;font-size:24px;margin:20px;">No products found</div>';}
+    else{renderProducts(filtered);}
+});
+
+// ==== Modal ====
+const modal=document.getElementById('productModal'); const modalImage=document.getElementById('modalImage'); const modalName=document.getElementById('modalName'); const modalPrice=document.getElementById('modalPrice'); const similarRow=document.getElementById('similarRow'); const closeModal=document.getElementsByClassName('close')[0];
+
+function setupProductClicks(){
+    document.querySelectorAll('.product').forEach(p=>{
+        p.addEventListener('click',()=>{
+            const index=parseInt(p.dataset.index); const category=p.dataset.category;
+            const product=allProducts.find(prod=>prod.Category===category && allProducts.indexOf(prod)===index);
+            if(!product) return;
+            modalImage.src=product.ImageURL; modalName.innerText=product.ProductName; modalPrice.innerText=product.Price;
+
+            const similar=allProducts.filter(pr=>pr.Category===category && pr.ProductName!==product.ProductName).slice(0,6);
+            similarRow.innerHTML=''; const innerDiv=document.createElement('div'); innerDiv.className='similar-row-inner';
+            similar.forEach(s=>{const div=document.createElement('div'); div.className='similar-product'; div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; div.addEventListener('click',()=>{p.click(); modal.scrollTo({top:0,behavior:'smooth'});}); innerDiv.appendChild(div);});
+            similar.forEach(s=>{const div=document.createElement('div'); div.className='similar-product'; div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; innerDiv.appendChild(div);});
+            similarRow.appendChild(innerDiv);
+
+            modal.style.display='flex';
+        });
+    });
+}
+
+closeModal.onclick=function(){modal.style.display='none';}
+window.onclick=function(e){if(e.target==modal) modal.style.display='none';}
+</script>
 
 </body>
-                                </html>
+    </html>

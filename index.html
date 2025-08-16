@@ -1,177 +1,251 @@
-      <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Y2K Dripstore</title>
+<title>Y2KDRIPSTORE</title>
 <style>
-:root {
-  --red:#8B0000;
-  --dark-green:#064420;
-  --white:#fff;
-  --pink:#FF69B4;
-  --purple:#800080;
-  --blue:#1E90FF;
-  --silver:#C0C0C0;
-  --brown:#8B4513;
-}
-html,body{margin:0;padding:0;height:100%;font-family:Arial,sans-serif;overflow-x:hidden;}
-body{background:linear-gradient(270deg,var(--red),var(--dark-green));background-size:600% 600%;animation:gradientShift 3s ease infinite;color:var(--white);}
-@keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+    /* Background animation */
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        overflow-x: hidden;
+        animation: bgAnimation 28s infinite;
+    }
+    @keyframes bgAnimation {
+        0% {background-color: #013220;}   /* dark green */
+        14% {background-color: #8B0000;}  /* dark red */
+        28% {background-color: #FF8C00;}  /* dark orange */
+        42% {background-color: #A9A9A9;}  /* dark white (grayish) */
+        57% {background-color: #0B0B0B;}  /* dark black */
+        71% {background-color: #8B008B;}  /* dark pink (purple) */
+        85% {background-color: #654321;}  /* dark brown */
+        100% {background-color: #013220;} /* back to dark green */
+    }
 
-.wrap{width:100%;max-width:1200px;margin:0 auto;}
-@media(max-width:480px){.wrap{max-width:420px;}}
+    /* Header */
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 30px;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: rgba(0,0,0,0.5);
+    }
+    .logo {
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .logo span.red { color: #FF0000; }
+    .logo span.green { color: #00FF00; }
+    .logo span.white { color: #FFFFFF; }
+    nav {
+        display: flex;
+        gap: 15px;
+    }
+    nav a {
+        text-decoration: none;
+        color: #006400;
+        padding: 8px 12px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+    nav a:hover {
+        background-color: #004d00;
+        color: #fff;
+    }
+    .top-buttons {
+        display: flex;
+        gap: 10px;
+    }
+    .top-buttons button {
+        padding: 8px 15px;
+        border: none;
+        border-radius: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    .login { background-color: #00FF00; color: #000; }
+    .signup { background-color: #FF0000; color: #fff; }
+    .cart { background-color: #FFD700; color: #000; }
 
-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;padding:12px 0;}
-.tab-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
-.tab{padding:10px 16px;border-radius:20px;font-weight:bold;color:#fff;cursor:pointer;transition:transform .2s;}
-.tab:hover{transform:scale(1.05);}
-.tab.mens{background:var(--red);}
-.tab.women{background:var(--pink);}
-.tab.girls{background:var(--purple);}
-.tab.boys{background:var(--blue);}
-.tab.iphones{background:var(--silver);color:#000;}
-.tab.sneakers{background:var(--brown);}
+    /* Welcome Section */
+    .welcome {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 30vh;
+        color: white;
+        font-size: 36px;
+        font-weight: bold;
+        text-align: center;
+        animation: fadeInOut 6s infinite;
+    }
+    @keyframes fadeInOut {
+        0%,100% {opacity:0;}
+        50% {opacity:1;}
+    }
 
-.welcome{height:50vh;display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:bold;text-align:center;animation:fadeInOut 7s infinite;}
-@keyframes fadeInOut{0%,28%{opacity:0;}30%,100%{opacity:1;}}
-.multicolor span{animation:colorCycle 6s infinite;}
-@keyframes colorCycle{0%{color:red;}33%{color:green;}66%{color:blue;}100%{color:red;}}
+    /* Products & Ads */
+    .section-title {
+        text-align: center;
+        color: white;
+        font-size: 28px;
+        margin: 25px 0 10px 0;
+        font-weight: bold;
+    }
+    .product-row {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 10px 20px;
+        scroll-behavior: smooth;
+    }
+    .product {
+        flex: 0 0 auto;
+        background: rgba(255,255,255,0.1);
+        border-radius: 8px;
+        padding: 10px;
+        width: 180px;
+        text-align: center;
+        color: white;
+    }
+    .product img {
+        width: 100%;
+        border-radius: 5px;
+    }
+    .product-name { font-weight: bold; margin: 8px 0; }
+    .product-price { color: #FFD700; }
 
-.catalog{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:12px;}
-@media(min-width:700px){.catalog{grid-template-columns:repeat(3,1fr);}}
-@media(min-width:1024px){.catalog{grid-template-columns:repeat(4,1fr);}}
+    .ad {
+        height: 100px;
+        background: rgba(255,255,255,0.2);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        margin: 15px 20px;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
 
-.card{background:rgba(0,0,0,.55);border-radius:12px;overflow:hidden;}
-.thumb{width:100%;aspect-ratio:1/1;object-fit:cover;}
-.info{padding:10px;}
-.name{font-weight:700;margin:0 0 6px;}
-.price{font-weight:800;}
-.ads{height:10vh;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:10px 0;font-weight:bold;border-radius:12px;}
-footer{background:#000;color:#ccc;padding:20px;text-align:center;}
+    /* About Us */
+    .about {
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 30px 20px;
+        line-height: 1.6;
+        border-radius: 10px;
+        margin: 20px;
+    }
+    .about a { color: #FFD700; text-decoration: none; }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        color: white;
+        padding: 20px 0;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    /* Scrollbar Styling */
+    ::-webkit-scrollbar { height: 8px; }
+    ::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
 </style>
 </head>
 <body>
 
-<header class="wrap">
-<div class="tab-row">
-<div class="tab mens">Mens Clothing</div>
-<div class="tab women">Women's Clothing</div>
-<div class="tab girls">Girls Clothing</div>
-<div class="tab boys">Boys Clothing</div>
-<div class="tab iphones">iPhones</div>
-<div class="tab sneakers">Sneakers</div>
-</div>
+<header>
+    <div class="logo">
+        <span class="red">Y2K</span><span class="white">DRIPSTORE</span>
+    </div>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#women">Women</a>
+        <a href="#men">Men</a>
+        <a href="#girls">Girls</a>
+        <a href="#boys">Boys</a>
+        <a href="#sneakers">Sneakers</a>
+        <a href="#iphones">iPhones</a>
+    </nav>
+    <div class="top-buttons">
+        <button class="login">Login</button>
+        <button class="signup">Sign Up</button>
+        <button class="cart">Cart</button>
+    </div>
 </header>
 
-<div class="welcome wrap multicolor"><span>WELCOME TO Y2KDRIPSTORE</span></div>
+<section class="welcome" id="home">
+    WELCOME TO Y2KDRIPSTORE
+</section>
 
-<div id="homepageContent" class="wrap">
-<div id="status" class="loading">Loading products…</div>
-</div>
+<!-- Repeating Products + Ads 10 times -->
+<script>
+    const body = document.body;
+    const colors = ['#013220','#8B0000','#FF8C00','#A9A9A9','#0B0B0B','#8B008B','#654321'];
+</script>
 
-<footer class="wrap">
-<h2>About Us</h2>
-<p>
-Welcome to <b>Y2K Dripstore</b><br>
-We sell sneakers, clothes, iPhones & laptops worldwide<br>
-Delivery: 2-7 days<br>
-Lay-buys on iPhones: R600/month while using<br>
-Contact WhatsApp: <b>0685270789</b> | 
-<a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" style="color:#0f0;">Join WhatsApp Group</a><br>
-Facebook: <a href="https://www.facebook.com/profile.php?id=61559868803161" style="color:#0f0;">Y2K Drip N Couple Drip</a>
-</p>
+<div id="main-content">
+
+<script>
+function createProductRow(sectionId, rowNum) {
+    const container = document.createElement('div');
+    container.className = 'product-row';
+    container.id = `${sectionId}-row-${rowNum}`;
+    for(let i=1;i<=2;i++){
+        const product = document.createElement('div');
+        product.className = 'product';
+        product.innerHTML = `
+            <img src="https://via.placeholder.com/150" alt="Product">
+            <div class="product-name">Product Name</div>
+            <div class="product-price">$00.00</div>
+        `;
+        container.appendChild(product);
+    }
+    // Add ad placeholder
+    const ad = document.createElement('div');
+    ad.className = 'ad';
+    ad.innerText = 'Ad Space';
+    container.appendChild(ad);
+
+    return container;
+}
+
+const sections = ['home','women','men','girls','boys','sneakers','iphones'];
+sections.forEach(sec => {
+    for(let r=1;r<=10;r++){
+        const row = createProductRow(sec,r);
+        const title = document.createElement('div');
+        title.className='section-title';
+        title.innerText = sec.toUpperCase();
+        document.getElementById('main-content').appendChild(title);
+        document.getElementById('main-content').appendChild(row);
+    }
+});
+</script>
+
+<!-- About Us Section -->
+<section class="about">
+    <h2>About Us</h2>
+    <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
+    <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank">Facebook page</a>.</p>
+    <p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
+    <p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
+    <p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
+    <p>Refund policy: Returns accepted within 30 days.</p>
+    <p>Website built by <strong>brightsphelele92@</strong></p>
+</section>
+
+<footer>
+    ©Y2KDRIPSTORE 2025 RESERVED
 </footer>
 
-<!-- Firebase -->
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCCf-NoeTqAd2ZMUxH118WTVkHfWtwybno",
-  authDomain: "y2kdripstore-cf955.firebaseapp.com",
-  projectId: "y2kdripstore-cf955",
-  storageBucket: "y2kdripstore-cf955.firebasestorage.app",
-  messagingSenderId: "463524157257",
-  appId: "1:463524157257:web:d385bf676cbbb77f042c98",
-  measurementId: "G-DYK3Y1Z492"
-};
-const app = initializeApp(firebaseConfig);
-getAnalytics(app);
-</script>
-
-<!-- Google Sheet + Currency Conversion -->
-<script>
-const SHEET_ID='1K3RwSQVH2x60mFaNo5DCFY8jtncU2CaVOjovTtuB4dU';
-const SHEET_CSV_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv`;
-const FX_KEY='88d799cb628598ac17f47565';
-const FX_URL=`https://v6.exchangerate-api.com/v6/${FX_KEY}/latest/ZAR`;
-
-function guessCurrency(){
-  const locale=(navigator.languages && navigator.languages[0])||navigator.language||'en-ZA';
-  const region=(locale.split('-')[1]||'ZA').toUpperCase();
-  const map={ZA:'ZAR',US:'USD',GB:'GBP',EU:'EUR',DE:'EUR',FR:'EUR',IT:'EUR',ES:'EUR',PT:'EUR',IE:'EUR',NL:'EUR',BE:'EUR',AT:'EUR',FI:'EUR',GR:'EUR',SK:'EUR',SI:'EUR',EE:'EUR',LV:'EUR',LT:'EUR',CY:'EUR',LU:'EUR',MT:'EUR',
-  CA:'CAD',AU:'AUD',NZ:'NZD',JP:'JPY',CN:'CNY',HK:'HKD',SG:'SGD',IN:'INR',NG:'NGN',KE:'KES',TZ:'TZS',MZ:'MZN',BW:'BWP',NA:'NAD',ZM:'ZMW',ZW:'ZWL',
-  AE:'AED',SA:'SAR',QA:'QAR',KW:'KWD',BH:'BHD'};
-  return map[region]||'ZAR';
-}
-
-let TARGET_CCY=guessCurrency();
-let rates={ZAR:1};
-
-function parseCSV(text){
-  const rows=[];let cur=[];let val='';let inQ=false;
-  for(let i=0;i<text.length;i++){
-    const c=text[i];const n=text[i+1];
-    if(c==='"'){if(inQ && n==='"'){ val+='"'; i++; } else { inQ=!inQ; } }
-    else if(c===',' && !inQ){ cur.push(val); val=''; }
-    else if((c==='\n'||c==='\r') && !inQ){ if(val!==''||cur.length){ cur.push(val); rows.push(cur); cur=[]; val='';} }
-    else { val+=c; }
-  }
-  if(val!==''||cur.length){ cur.push(val); rows.push(cur); }
-  return rows;
-}
-
-function formatMoney(amount,ccy){try{return new Intl.NumberFormat(undefined,{style:'currency',currency:ccy}).format(amount);}catch(e){return amount.toFixed(2)+' '+ccy;}}
-
-async function loadProducts(){
-  try{
-    const fxRes=await fetch(FX_URL);const fxJson=await fxRes.json();
-    if(fxJson && fxJson.conversion_rates){ rates=fxJson.conversion_rates; }
-
-    const res=await fetch(SHEET_CSV_URL);
-    if(!res.ok) throw new Error('Sheet not reachable');
-    const csv=await res.text();
-    const rows=parseCSV(csv);
-    const headers=rows.shift().map(h=>h.trim());
-    const idx={Name:headers.indexOf('Name'),Price:headers.indexOf('Price'),Image:headers.indexOf('Image'),Sizes:headers.indexOf('Sizes'),Category:headers.indexOf('Category')};
-    const allRows=rows.map(r=>({Name:r[idx.Name]?.trim()||'',Price:r[idx.Price]?.trim()||'',Image:r[idx.Image]?.trim()||'',Sizes:r[idx.Sizes]?.trim()||'',Category:(r[idx.Category]?.trim()||'').toUpperCase()})).filter(x=>x.Name && x.Image);
-
-    const homepageContent=document.getElementById('homepageContent');
-    homepageContent.innerHTML='';
-    for(let i=0;i<50;i++){
-      // 2 products
-      let productGrid=document.createElement('div'); productGrid.className='catalog';
-      for(let j=0;j<2;j++){
-        let p=allRows[Math.floor(Math.random()*allRows.length)];
-        let card=document.createElement('div'); card.className='card';
-        let img=document.createElement('img'); img.className='thumb'; img.src=p.Image;
-        let info=document.createElement('div'); info.className='info';
-        let name=document.createElement('p'); name.className='name'; name.textContent=p.Name;
-        let price=document.createElement('p'); price.className='price';
-        let fx=rates[TARGET_CCY]||1; price.textContent=formatMoney(Number(p.Price||0)*fx,TARGET_CCY);
-        info.appendChild(name); info.appendChild(price); card.appendChild(img); card.appendChild(info); productGrid.appendChild(card);
-      }
-      homepageContent.appendChild(productGrid);
-      // ad section 10%
-      let adDiv=document.createElement('div'); adDiv.className='ads'; adDiv.textContent='ADVERTISEMENT PLACEHOLDER';
-      homepageContent.appendChild(adDiv);
-    }
-  }catch(e){console.error(e);document.getElementById('homepageContent').textContent='Error loading products';}
-}
-
-loadProducts();
-</script>
 </body>
-  </html>
+                                </html>

@@ -5,326 +5,312 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Y2KDRIPSTORE</title>
 <style>
-/* Dark Gradient Background Animation */
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    overflow-x: hidden;
-    background: linear-gradient(45deg, #013220, #4B0000, #CC5500, #2F2F2F, #0B0B0B, #800080, #4B2E2E);
-    background-size: 1400% 1400%;
-    animation: gradientAnimation 28s ease infinite;
-}
-@keyframes gradientAnimation {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-}
-html { scroll-behavior: smooth; }
-/* Header */
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap; background: rgba(0,0,0,0.5); border-bottom: 1px solid #444; }
-.logo { font-size: 28px; font-weight: bold; }
-.logo span.red { color: #FF0000; }
-.logo span.green { color: #00FF00; }
-.logo span.white { color: #FFFFFF; }
-nav { display: flex; gap: 10px; flex-wrap: wrap; }
-nav a { color: #006400; text-decoration: none; padding: 6px 10px; border-radius: 5px; font-weight: bold; transition: 0.3s; }
-nav a:hover { background-color: #004d00; color: #fff; }
-.top-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-.top-buttons button { padding: 6px 12px; border-radius: 5px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
-.login { background-color: #00FF00; color: #000; }
-.signup { background-color: #FF0000; color: #fff; }
-.cart { background-color: #FFD700; color: #000; }
-/* Search Bar */
-.search-container { width: 100%; display: flex; justify-content: center; margin: 10px 0; }
-.search-container input { width: 80%; padding: 8px 12px; border-radius: 5px; border: none; font-size: 16px; }
-/* Welcome Message */
-.welcome { display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center; font-size: 36px; color: #FFFFFF; text-shadow: 0 0 10px rgba(255,255,255,0.7); background: rgba(0,0,0,0.5); border-radius: 15px; margin: 10px 20px; animation: fadeScale 6s ease-in-out infinite; }
-@keyframes fadeScale { 0%, 100% {opacity: 0; transform: scale(0.9);} 50% {opacity: 1; transform: scale(1);} }
-/* Product Row */
-.section-title { color: #fff; margin: 10px 20px; font-size: 20px; font-weight: bold; }
-.product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; cursor: grab; }
-.product-row.active { cursor: grabbing; }
-.product { flex: 0 0 auto; width: 180px; background: rgba(0,0,0,0.4); border-radius: 10px; text-align: center; color: white; padding: 10px; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
-.product:hover { transform: translateY(-5px); box-shadow: 0 0 15px rgba(255,255,255,0.4); }
-.product img { width: 100%; border-radius: 5px; object-fit: cover; height: 160px; }
-.product-name { font-weight: bold; margin: 8px 0; }
-.product-price { color: #FFD700; }
-/* Ad */
-.ad { flex: 0 0 auto; height: 100px; width: 180px; background: rgba(0,0,0,0.5); color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; border-radius: 10px; }
-/* About Section */
-.about { background: rgba(0,0,0,0.7); color: white; padding: 30px 20px; margin: 20px; border-radius: 15px; line-height: 1.6; text-shadow: 0 0 5px rgba(0,0,0,0.2); }
-.about a { color: #FFD700; text-decoration: underline; }
-/* Footer */
-footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
-/* Scrollbar Styling */
-::-webkit-scrollbar { height: 8px; }
-::-webkit-scrollbar-track { background: rgba(255,255,255,0.1); }
-::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
-/* Responsive Adjustments */
-@media (max-width: 1024px) { .product { width: 150px; } .ad { width: 150px; height: 80px; font-size: 14px; } }
-@media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 100%; height: 70px; font-size: 14px; } .about { font-size: 14px; padding: 20px 10px; } }
-@media (max-width: 480px) { .product { width: 120px; } .ad { width: 100%; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
-/* Modal */
-.modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
-.modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
-.close { color: #fff; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
-.modal img { width: 100%; border-radius: 8px; object-fit: cover; max-height: 360px; }
-.modal .product-name { font-size: 24px; margin: 15px 0 5px; }
-.modal .product-price { font-size: 20px; color: #FFD700; margin-bottom: 10px; }
-.modal .buy-button { background-color: #00FF00; border: none; color: black; padding: 10px 20px; font-weight: bold; border-radius: 5px; cursor: pointer; margin-bottom: 15px; }
-.modal .similar-products { margin-top: 15px; }
-.similar-row { display: flex; overflow-x: hidden; position: relative; gap: 10px; }
-.similar-row-inner { display: flex; gap: 10px; animation: scrollLeft 20s linear infinite; }
-@keyframes scrollLeft { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-.similar-product { flex: 0 0 auto; width: 120px; text-align: center; cursor: pointer; }
-.similar-product img { width: 100%; border-radius: 5px; }
-.similar-product .name { font-size: 14px; color: #fff; }
-.similar-product .price { font-size: 14px; color: #FFD700; }
+/* DARK GRADIENT BACKGROUND ANIMATION */
+body { margin:0; font-family:'Arial', sans-serif; overflow-x:hidden; background:linear-gradient(45deg,#013220,#4B0000,#CC5500,#2F2F2F,#0B0B0B,#800080,#4B2E2E); background-size:1400% 1400%; animation:gradientAnimation 28s ease infinite;}
+@keyframes gradientAnimation {0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+html {scroll-behavior:smooth;}
+/* HEADER */
+header {display:flex; justify-content:space-between; align-items:center; padding:15px 20px; flex-wrap:wrap; background:rgba(0,0,0,0.5); border-bottom:1px solid #444;}
+.logo {font-size:28px; font-weight:bold;}
+.logo span.red {color:#FF0000;}
+.logo span.green {color:#00FF00;}
+.logo span.white {color:#FFFFFF;}
+nav {display:flex; gap:10px; flex-wrap:wrap;}
+nav a {color:#006400; text-decoration:none; padding:6px 10px; border-radius:5px; font-weight:bold; transition:0.3s;}
+nav a:hover {background-color:#004d00; color:#fff;}
+.top-buttons {display:flex; gap:8px; flex-wrap:wrap;}
+.top-buttons button {padding:6px 12px; border-radius:5px; font-weight:bold; border:none; cursor:pointer; transition:0.3s;}
+.login {background-color:#00FF00; color:#000;}
+.signup {background-color:#FF0000; color:#fff;}
+.cart {background-color:#FFD700; color:#000;}
+/* SEARCH BAR */
+.search-container {width:100%; display:flex; justify-content:center; margin:10px 0;}
+.search-container input {width:80%; padding:8px 12px; border-radius:5px; border:none; font-size:16px;}
+/* WELCOME */
+.welcome {display:flex; justify-content:center; align-items:center; height:30vh; text-align:center; font-size:36px; color:#FFFFFF; text-shadow:0 0 10px rgba(255,255,255,0.7); background:rgba(0,0,0,0.5); border-radius:15px; margin:10px 20px; animation:fadeScale 6s ease-in-out infinite;}
+@keyframes fadeScale {0%,100%{opacity:0; transform:scale(0.9);}50%{opacity:1; transform:scale(1);}}
+
+/* PRODUCT ROW */
+.section-title {color:#fff; margin:10px 20px; font-size:20px; font-weight:bold;}
+.product-row {display:flex; flex-wrap:wrap; justify-content:center; gap:15px; padding:10px 20px; scroll-behavior:smooth; cursor:grab;}
+.product-row.active {cursor:grabbing;}
+.product {width:180px; background:rgba(0,0,0,0.4); border-radius:10px; text-align:center; color:white; padding:10px; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s;}
+.product:hover {transform:translateY(-5px); box-shadow:0 0 15px rgba(255,255,255,0.4);}
+.product img {width:100%; border-radius:5px; object-fit:cover; height:160px;}
+.product-name {font-weight:bold; margin:8px 0;}
+.product-price {color:#FFD700;}
+.ad {flex:0 0 auto; height:80px; width:100%; background:rgba(0,0,0,0.5); color:white; display:flex; justify-content:center; align-items:center; font-weight:bold; border-radius:10px; margin:10px 0;}
+
+/* ABOUT */
+.about {background:rgba(0,0,0,0.7); color:white; padding:30px 20px; margin:20px; border-radius:15px; line-height:1.6; text-shadow:0 0 5px rgba(0,0,0,0.2);}
+.about a {color:#FFD700; text-decoration:underline;}
+
+/* FOOTER */
+footer {text-align:center; color:white; padding:20px 0; font-size:14px;}
+
+/* SCROLLBAR */
+::-webkit-scrollbar {height:8px;}
+::-webkit-scrollbar-track {background:rgba(255,255,255,0.1);}
+::-webkit-scrollbar-thumb {background:rgba(255,255,255,0.3); border-radius:4px;}
+
+/* RESPONSIVE */
+@media(max-width:1024px){.product{width:150px;}.ad{height:70px;}}
+@media(max-width:768px){header{flex-direction:column; align-items:flex-start; gap:10px;} .top-buttons{justify-content:flex-start; width:100%;} .top-buttons button{flex:1; width:auto; font-size:14px; padding:5px 10px;} .welcome{font-size:24px; height:25vh;} nav a{padding:5px 8px; font-size:14px;} .section-title{font-size:22px;} .product{width:140px; padding:8px;} .ad{height:60px; font-size:12px;} .about{font-size:14px; padding:20px 10px;}}
+@media(max-width:480px){.product{width:120px;} .ad{height:50px; font-size:12px;} .welcome{font-size:20px; height:20vh;} .search-container input{width:90%; font-size:14px;}}
+
+/* MODAL */
+.modal {display:none; position:fixed; z-index:1000; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,0,0.9); justify-content:center; align-items:center;}
+.modal-content {background-color:#1a1a1a; margin:auto; padding:20px; border-radius:10px; width:90%; max-width:600px; color:white; position:relative;}
+.close {color:#fff; position:absolute; top:10px; right:20px; font-size:28px; font-weight:bold; cursor:pointer;}
+.modal img {width:100%; border-radius:8px; object-fit:cover; max-height:360px;}
+.modal .product-name {font-size:24px; margin:15px 0 5px;}
+.modal .product-price {font-size:20px; color:#FFD700; margin-bottom:10px;}
+.modal .buy-button {background-color:#00FF00; border:none; color:black; padding:10px 20px; font-weight:bold; border-radius:5px; cursor:pointer; margin-bottom:15px;}
+.similar-products {margin-top:15px;}
+.similar-row {display:flex; overflow-x:hidden; position:relative; gap:10px;}
+.similar-row-inner {display:flex; gap:10px; animation:scrollLeft 20s linear infinite;}
+@keyframes scrollLeft {0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.similar-product {flex:0 0 auto; width:120px; text-align:center; cursor:pointer;}
+.similar-product img {width:100%; border-radius:5px;}
+.similar-product .name {font-size:14px; color:#fff;}
+.similar-product .price {font-size:14px; color:#FFD700;}
 </style>
 </head>
 <body>
+
 <header>
-    <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
-    <nav id="site-nav"></nav>
-    <div class="top-buttons">
-        <button class="login">Login</button>
-        <button class="signup">Sign Up</button>
-        <button class="cart">Cart</button>
-    </div>
+<div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
+<nav id="site-nav"></nav>
+<div class="top-buttons">
+<button class="login">Login</button>
+<button class="signup">Sign Up</button>
+<button class="cart">Cart</button>
+</div>
 </header>
 
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="Search products...">
+<input type="text" id="searchInput" placeholder="Search products...">
 </div>
 
 <section class="welcome" id="home">WELCOME TO Y2KDRIPSTORE</section>
 
 <div id="main-content"></div>
 
-<!-- Modal -->
+<!-- MODAL -->
 <div id="productModal" class="modal" aria-hidden="true">
-    <div class="modal-content" role="dialog" aria-modal="true">
-        <span class="close" id="modalClose">&times;</span>
-        <img id="modalImage" src="" alt="">
-        <div class="product-name" id="modalName"></div>
-        <div class="product-price" id="modalPrice"></div>
-        <button class="buy-button" id="buyButton">Buy Now</button>
-
-        <div class="ad" style="margin-bottom:15px;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                 data-ad-slot="YYYYYYYYYY"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-        </div>
-
-        <div class="similar-products">
-            <h3>Similar Products</h3>
-            <div class="similar-row" id="similarRow"></div>
-        </div>
-    </div>
+<div class="modal-content" role="dialog" aria-modal="true">
+<span class="close" id="modalClose">&times;</span>
+<img id="modalImage" src="" alt="">
+<div class="product-name" id="modalName"></div>
+<div class="product-price" id="modalPrice"></div>
+<button class="buy-button" id="buyButton">Buy Now</button>
+<div class="similar-products">
+<h3>Similar Products</h3>
+<div class="similar-row" id="similarRow"></div>
+</div>
+</div>
 </div>
 
 <section class="about">
-    <h2>About Us</h2>
-    <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank" rel="noopener">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
-    <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">Facebook page</a>.</p>
-    <p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
-    <p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
-    <p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
-    <p>Refund policy: Returns accepted within 30 days.</p>
-    <p>Website built by <strong>brightsphelele92@</strong></p>
+<h2>About Us</h2>
+<p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank" rel="noopener">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
+<p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">Facebook page</a>.</p>
+<p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
+<p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
+<p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
+<p>Refund policy: Returns accepted within 30 days.</p>
+<p>Website built by <strong>brightsphelele92@</strong></p>
 </section>
 
 <footer>©Y2KDRIPSTORE 2025 RESERVED</footer>
 
+<!-- ADMIN PANEL -->
+<div id="adminPanel" style="display:none; position:fixed; z-index:2000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); color:#fff; overflow:auto;">
+<div style="max-width:500px; margin:50px auto; background:#111; padding:20px; border-radius:10px; position:relative;">
+<span id="adminClose" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">&times;</span>
+
+<!-- LOGIN FORM -->
+<div id="loginForm">
+<h2>Admin Login</h2>
+<input type="text" id="adminUser" placeholder="Username" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+<input type="password" id="adminPass" placeholder="Password" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+<button id="loginBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Login</button>
+</div>
+
+<!-- PRODUCT FORM -->
+<div id="productForm" style="display:none;">
+<h2>Add Product</h2>
+<input type="text" id="prodName" placeholder="Product Name" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+<input type="text" id="prodCategory" placeholder="Category" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+<input type="file" id="prodImageFile" accept="image/*" style="width:100%; margin:5px 0;"><br>
+<input type="text" id="prodPrice" placeholder="Price (R...)" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+<button id="addProductBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Add Product</button>
+</div>
+</div>
+</div>
+
+<!-- ADMIN OPEN BUTTON -->
+<button id="adminOpen" style="position:fixed; bottom:20px; right:20px; padding:12px 18px; background:#FFD700; color:#000; border:none; border-radius:10px; z-index:1000; cursor:pointer;">Admin</button>
+
 <script>
-/* ====== Data ====== */
-const allProducts = [
-  {ProductName:'Y2k Ripped Jean', Category:'Men', ImageURL:'https://i.supaimg.com/0c728538-ad10-4424-9b19-4cd9e478ba8c.jpg', Price:'R400'},
-  {ProductName:'Y2k Blue jean', Category:'Men', ImageURL:'https://i.supaimg.com/4b2984bb-3be0-4873-8548-8bb5392884c5.jpg', Price:'R320'},
-  {ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
-  {ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
-  {ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'},
-  {ProductName:'Y2k Mini Dress', Category:'Women', ImageURL:'https://via.placeholder.com/400x400?text=Y2k+Mini+Dress', Price:'R450'},
-  {ProductName:'Y2k Platform Sneakers', Category:'Sneakers', ImageURL:'https://via.placeholder.com/400x400?text=Platform+Sneakers', Price:'R650'},
-  {ProductName:'Y2k Phone Case', Category:'iPhones', ImageURL:'https://via.placeholder.com/400x400?text=Phone+Case', Price:'R80'},
-  {ProductName:'Y2k Kids Tee', Category:'Girls', ImageURL:'https://via.placeholder.com/400x400?text=Kids+Tee', Price:'R120'}
+/* ====== DATA ====== */
+let allProducts = [
+{ProductName:'Y2k Ripped Jean', Category:'Men', ImageURL:'https://i.supaimg.com/0c728538-ad10-4424-9b19-4cd9e478ba8c.jpg', Price:'R400'},
+{ProductName:'Y2k Blue jean', Category:'Men', ImageURL:'https://i.supaimg.com/4b2984bb-3be0-4873-8548-8bb5392884c5.jpg', Price:'R320'},
+{ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
+{ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
+{ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'}
 ];
 
-/* Preferred category order */
-const preferredOrder = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
-
-/* Helpers */
+/* ====== HELPERS ====== */
 function normalizeId(s){ return s.toLowerCase().replace(/\s+/g,'-'); }
+function escapeHtml(str){ return str? String(str).replace(/[&<>"']/g,function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }):''; }
 
-/* Render Navigation */
+/* ====== NAV & PRODUCTS ====== */
 function renderNav(categories){
-  const nav = document.getElementById('site-nav');
-  nav.innerHTML = '';
-  const ordered = [];
-  preferredOrder.forEach(p=>{
-    if(categories.includes(p)) ordered.push(p);
-  });
-  categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
-  ordered.forEach(cat=>{
-    const a = document.createElement('a');
-    a.href = `#${normalizeId(cat)}`;
-    a.innerText = cat;
-    nav.appendChild(a);
+  const nav=document.getElementById('site-nav'); nav.innerHTML='';
+  categories.forEach(cat=>{
+    const a=document.createElement('a');
+    a.href=`#${normalizeId(cat)}`; a.innerText=cat; nav.appendChild(a);
   });
 }
 
-/* HTML escape */
-function escapeHtml(str){
-  if(!str) return '';
-  return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
-}
-
-/* ====== Render Products with Shein-style scrolling & ads ====== */
 function renderProducts(products){
-  const main = document.getElementById('main-content');
-  main.innerHTML = '';
-
-  const categoriesSet = new Set(products.map(p=>p.Category));
-  const categories = Array.from(categoriesSet);
+  const main=document.getElementById('main-content'); main.innerHTML='';
+  const categories=[...new Set(products.map(p=>p.Category))];
   renderNav(categories);
 
-  const ordered = [];
-  preferredOrder.forEach(p => { if(categories.includes(p)) ordered.push(p); });
-  categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
+  categories.forEach(cat=>{
+    const catData=products.filter(p=>p.Category===cat);
+    if(catData.length===0) return;
 
-  ordered.forEach(cat=>{
-    const catData = products.filter(p=>p.Category === cat);
-    if(catData.length === 0) return;
+    const sec=document.createElement('section'); sec.id=normalizeId(cat);
+    const title=document.createElement('div'); title.className='section-title'; title.innerText=cat.toUpperCase(); sec.appendChild(title);
 
-    const sec = document.createElement('section');
-    sec.id = normalizeId(cat);
-
-    const title = document.createElement('div');
-    title.className = 'section-title';
-    title.innerText = cat.toUpperCase();
-    sec.appendChild(title);
-
-    let row = document.createElement('div');
-    row.className = 'product-row';
-
-    catData.forEach((prod, idx)=>{
-      const div = document.createElement('div');
-      div.className = 'product';
-      div.tabIndex = 0;
-      div.__product = prod;
-      div.innerHTML = `
-        <img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}">
-        <div class="product-name">${escapeHtml(prod.ProductName)}</div>
-        <div class="product-price">${escapeHtml(prod.Price)}</div>
-      `;
+    const row=document.createElement('div'); row.className='product-row';
+    catData.forEach((prod,idx)=>{
+      const div=document.createElement('div'); div.className='product'; div.tabIndex=0; div.__product=prod;
+      div.innerHTML=`<img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}"><div class="product-name">${escapeHtml(prod.ProductName)}</div><div class="product-price">${escapeHtml(prod.Price)}</div>`;
       row.appendChild(div);
 
-      // After every 2 products, insert full-width ad and new row
-      if ((idx + 1) % 2 === 0 && idx !== catData.length - 1) {
-        sec.appendChild(row);
-        const adRow = document.createElement('div');
-        adRow.className = 'ad';
-        adRow.style.width = '100%';
-        adRow.style.margin = '10px 0';
-        adRow.innerText = 'Advertisement';
-        sec.appendChild(adRow);
-        row = document.createElement('div');
-        row.className = 'product-row';
+      // insert ad after every 2 products
+      if((idx+1)%2===0){
+        const ad=document.createElement('div'); ad.className='ad'; ad.innerText='Advertisement';
+        sec.appendChild(row); sec.appendChild(ad);
+        row=document.createElement('div'); row.className='product-row';
       }
     });
-    if (row.children.length > 0) sec.appendChild(row);
-
-    main.appendChild(sec);
+    sec.appendChild(row); main.appendChild(sec);
   });
-
   setupProductClicks();
-  setupRowDragScroll();
 }
 
-/* ====== Clicks & Modal ====== */
-const modal = document.getElementById('productModal');
-const modalImage = document.getElementById('modalImage');
-const modalName = document.getElementById('modalName');
-const modalPrice = document.getElementById('modalPrice');
-const modalClose = document.getElementById('modalClose');
-const similarRow = document.getElementById('similarRow');
+/* ====== MODAL ====== */
+const modal=document.getElementById('productModal');
+const modalImage=document.getElementById('modalImage');
+const modalName=document.getElementById('modalName');
+const modalPrice=document.getElementById('modalPrice');
+const modalClose=document.getElementById('modalClose');
+const similarRow=document.getElementById('similarRow');
 
 function setupProductClicks(){
   document.querySelectorAll('.product').forEach(el=>{
     el.removeEventListener('click', productClickHandler);
     el.addEventListener('click', productClickHandler);
-    el.addEventListener('keypress', (e)=>{ if(e.key === 'Enter') productClickHandler.call(el,e); });
   });
 }
-
 function productClickHandler(e){
-  const prod = this.__product;
-  if(!prod) return;
-  openModalWithProduct(prod);
+  const prod=this.__product; if(!prod) return; openModalWithProduct(prod);
+}
+function openModalWithProduct(prod){
+  modalImage.src=prod.ImageURL; modalImage.alt=prod.ProductName;
+  modalName.innerText=prod.ProductName; modalPrice.innerText=prod.Price;
+  modal.style.display='flex'; modal.setAttribute('aria-hidden','false');
+  populateSimilar(prod);
+}
+modalClose.addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); similarRow.innerHTML=''; });
+modal.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none'; similarRow.innerHTML=''; });
+
+document.getElementById('buyButton').addEventListener('click', ()=>{ alert('Buy flow not implemented.'); });
+
+function populateSimilar(prod){
+  similarRow.innerHTML=''; const same=allProducts.filter(p=>p.Category===prod.Category && p.ProductName!==prod.ProductName);
+  if(same.length===0){ similarRow.innerHTML='<div style="color:#fff;">No similar products</div>'; return;}
+  const inner=document.createElement('div'); inner.className='similar-row-inner';
+  same.concat(same).forEach(s=>{
+    const d=document.createElement('div'); d.className='similar-product'; d.__product=s;
+    d.innerHTML=`<img src="${s.ImageURL}" alt="${escapeHtml(s.ProductName)}"><div class="name">${escapeHtml(s.ProductName)}</div><div class="price">${escapeHtml(s.Price)}</div>`;
+    d.addEventListener('click', ()=>openModalWithProduct(s));
+    inner.appendChild(d);
+  });
+  similarRow.appendChild(inner);
 }
 
-function openModalWithProductfunction openModalWithProduct(prod){
-    modal.style.display = 'flex';
-    modal.setAttribute('aria-hidden','false');
-    modalImage.src = prod.ImageURL;
-    modalImage.alt = prod.ProductName;
-    modalName.innerText = prod.ProductName;
-    modalPrice.innerText = prod.Price;
-
-    // Similar products (same category, excluding itself)
-    similarRow.innerHTML = '';
-    const similar = allProducts.filter(p=>p.Category === prod.Category && p.ProductName !== prod.ProductName);
-    similar.forEach(sp=>{
-        const div = document.createElement('div');
-        div.className = 'similar-product';
-        div.innerHTML = `<img src="${sp.ImageURL}" alt="${escapeHtml(sp.ProductName)}">
-                         <div class="name">${escapeHtml(sp.ProductName)}</div>
-                         <div class="price">${escapeHtml(sp.Price)}</div>`;
-        similarRow.appendChild(div);
-    });
-}
-
-// Close modal
-modalClose.onclick = ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); };
-window.onclick = e=>{ if(e.target === modal){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); } };
-
-// ===== Drag Scroll for Shein-style rows =====
-function setupRowDragScroll(){
-    document.querySelectorAll('.product-row').forEach(row=>{
-        let isDown = false, startX, scrollLeft;
-        row.addEventListener('mousedown', e=>{
-            isDown = true;
-            row.classList.add('active');
-            startX = e.pageX - row.offsetLeft;
-            scrollLeft = row.scrollLeft;
-        });
-        row.addEventListener('mouseleave', ()=>{ isDown = false; row.classList.remove('active'); });
-        row.addEventListener('mouseup', ()=>{ isDown = false; row.classList.remove('active'); });
-        row.addEventListener('mousemove', e=>{
-            if(!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - row.offsetLeft;
-            const walk = (x - startX) * 2;
-            row.scrollLeft = scrollLeft - walk;
-        });
-        row.addEventListener('touchstart', e=>{ startX = e.touches[0].pageX - row.offsetLeft; scrollLeft = row.scrollLeft; });
-        row.addEventListener('touchmove', e=>{ const x = e.touches[0].pageX - row.offsetLeft; row.scrollLeft = scrollLeft - (x - startX) * 2; });
-    });
-}
-
-// ===== Search Functionality =====
-document.getElementById('searchInput').addEventListener('input', e=>{
-    const term = e.target.value.toLowerCase();
-    const filtered = allProducts.filter(p=>p.ProductName.toLowerCase().includes(term) || p.Category.toLowerCase().includes(term));
-    renderProducts(filtered.length ? filtered : allProducts);
+/* ====== SEARCH ====== */
+document.getElementById('searchInput').addEventListener('input', function(){
+  const term=this.value.toLowerCase();
+  const filtered=allProducts.filter(p=>p.ProductName.toLowerCase().includes(term) || p.Category.toLowerCase().includes(term));
+  renderProducts(filtered);
 });
 
-// ===== Initialize =====
+/* ====== SCROLLING PRODUCT ROW DRAG ====== */
+let isDown=false, startX, scrollLeft;
+document.querySelectorAll('.product-row').forEach(row=>{
+  row.addEventListener('mousedown', e=>{
+    isDown=true; row.classList.add('active');
+    startX=e.pageX-row.offsetLeft; scrollLeft=row.scrollLeft;
+  });
+  row.addEventListener('mouseleave', ()=>{ isDown=false; row.classList.remove('active'); });
+  row.addEventListener('mouseup', ()=>{ isDown=false; row.classList.remove('active'); });
+  row.addEventListener('mousemove', e=>{
+    if(!isDown) return;
+    e.preventDefault();
+    const x=e.pageX-row.offsetLeft; const walk=(x-startX)*2;
+    row.scrollLeft=scrollLeft-walk;
+  });
+});
+
+/* ====== ADMIN PANEL ====== */
+const adminOpen=document.getElementById('adminOpen');
+const adminPanel=document.getElementById('adminPanel');
+const adminClose=document.getElementById('adminClose');
+const loginForm=document.getElementById('loginForm');
+const productForm=document.getElementById('productForm');
+
+adminOpen.addEventListener('click', ()=>{ adminPanel.style.display='block'; });
+adminClose.addEventListener('click', ()=>{ adminPanel.style.display='none'; });
+
+document.getElementById('loginBtn').addEventListener('click', ()=>{
+  const user=document.getElementById('adminUser').value;
+  const pass=document.getElementById('adminPass').value;
+  // simple demo credentials
+  if(user==='admin' && pass==='1234'){ loginForm.style.display='none'; productForm.style.display='block'; }
+  else{ alert('Wrong credentials'); }
+});
+
+document.getElementById('addProductBtn').addEventListener('click', ()=>{
+  const name=document.getElementById('prodName').value;
+  const category=document.getElementById('prodCategory').value;
+  const price=document.getElementById('prodPrice').value;
+  const file=document.getElementById('prodImageFile').files[0];
+
+  if(!name || !category || !price || !file){ alert('Please fill all fields and select an image'); return; }
+
+  const reader=new FileReader();
+  reader.onload=function(e){
+    const imgData=e.target.result;
+    allProducts.push({ProductName:name, Category:category, ImageURL:imgData, Price:price});
+    renderProducts(allProducts);
+    alert('Product added!');
+    // clear fields
+    document.getElementById('prodName').value='';
+    document.getElementById('prodCategory').value='';
+    document.getElementById('prodPrice').value='';
+    document.getElementById('prodImageFile').value='';
+  };
+  reader.readAsDataURL(file);
+});
+
+/* ====== INITIAL RENDER ====== */
 renderProducts(allProducts);
 </script>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-</body>
-</html>

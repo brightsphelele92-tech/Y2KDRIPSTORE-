@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Y2KDRIPSTORE</title>
 <style>
-/* Smooth Gradient Background Animation */
+/* Dark Gradient Background Animation */
 body {
     margin: 0;
     font-family: 'Arial', sans-serif;
     overflow-x: hidden;
-    background: linear-gradient(45deg, #013220, #8B0000, #FF8C00, #A9A9A9, #0B0B0B, #8B008B, #654321);
+    background: linear-gradient(45deg, #013220, #4B0000, #CC5500, #2F2F2F, #0B0B0B, #800080, #4B2E2E);
     background-size: 1400% 1400%;
     animation: gradientAnimation 28s ease infinite;
 }
@@ -22,7 +22,7 @@ body {
 html { scroll-behavior: smooth; }
 
 /* Header */
-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap; background: rgba(0,0,0,0.5); }
+header { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; flex-wrap: wrap; background: rgba(0,0,0,0.5); border-bottom: 1px solid #444; }
 .logo { font-size: 28px; font-weight: bold; }
 .logo span.red { color: #FF0000; }
 .logo span.green { color: #00FF00; }
@@ -41,22 +41,69 @@ nav a:hover { background-color: #004d00; color: #fff; }
 .search-container input { width: 80%; padding: 8px 12px; border-radius: 5px; border: none; font-size: 16px; }
 
 /* Welcome Message */
-.welcome { display: flex; justify-content: center; align-items: center; height: 30vh; text-align: center; font-size: 36px; color: white; animation: fadeScale 6s ease-in-out infinite; padding: 0 10px; }
+.welcome {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30vh;
+    text-align: center;
+    font-size: 36px;
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(255,255,255,0.7);
+    background: rgba(0,0,0,0.5);
+    border-radius: 15px;
+    margin: 10px 20px;
+    animation: fadeScale 6s ease-in-out infinite;
+}
 @keyframes fadeScale { 0%, 100% {opacity: 0; transform: scale(0.9);} 50% {opacity: 1; transform: scale(1);} }
 
 /* Product Row */
-.product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; }
-.product { flex: 0 0 auto; width: 180px; background: rgba(255,255,255,0.1); border-radius: 8px; text-align: center; color: white; padding: 10px; cursor: pointer; }
+.product-row { display: flex; overflow-x: auto; gap: 15px; padding: 10px 20px; scroll-behavior: smooth; cursor: grab; }
+.product-row.active { cursor: grabbing; }
+.product { 
+    flex: 0 0 auto; 
+    width: 180px; 
+    background: rgba(0,0,0,0.4); 
+    border-radius: 10px; 
+    text-align: center; 
+    color: white; 
+    padding: 10px; 
+    cursor: pointer; 
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.product:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 0 15px rgba(255,255,255,0.4); 
+}
 .product img { width: 100%; border-radius: 5px; }
 .product-name { font-weight: bold; margin: 8px 0; }
 .product-price { color: #FFD700; }
 
 /* Ad */
-.ad { flex: 0 0 auto; height: 100px; width: 180px; background: rgba(255,255,255,0.2); color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; border-radius: 8px; }
+.ad { 
+    flex: 0 0 auto; 
+    height: 100px; 
+    width: 180px; 
+    background: rgba(0,0,0,0.5); 
+    color: white; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: bold; 
+    border-radius: 10px; 
+}
 
 /* About Section */
-.about { background: rgba(0,0,0,0.6); color: white; padding: 30px 20px; margin: 20px; border-radius: 10px; line-height: 1.6; }
-.about a { color: #FFD700; }
+.about { 
+    background: rgba(0,0,0,0.7); 
+    color: white; 
+    padding: 30px 20px; 
+    margin: 20px; 
+    border-radius: 15px; 
+    line-height: 1.6; 
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+.about a { color: #FFD700; text-decoration: underline; }
 
 /* Footer */
 footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
@@ -71,7 +118,7 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 @media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 140px; height: 70px; font-size: 12px; } .about { font-size: 14px; padding: 20px 10px; } }
 @media (max-width: 480px) { .product { width: 120px; } .ad { width: 120px; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
 
-/* Popup Modal */
+/* Modal */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
 .modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
 .close { color: #fff; position: absolute; top: 10px; right: 20px; font-size: 28px; font-weight: bold; cursor: pointer; }
@@ -166,6 +213,7 @@ function renderProducts(products) {
         }
     });
     setupProductClicks();
+    setupRowDragScroll(); // Enable swipe scroll after render
 }
 
 // Fetch products
@@ -204,7 +252,25 @@ function setupProductClicks(){
 
 closeModal.onclick=function(){modal.style.display='none';}
 window.onclick=function(e){if(e.target==modal) modal.style.display='none';}
+
+// ==== Touch/Swipe Horizontal Scroll ====
+function setupRowDragScroll(){
+    document.querySelectorAll('.product-row').forEach(row => {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        row.addEventListener('mousedown', (e) => { isDown = true; row.classList.add('active'); startX = e.pageX - row.offsetLeft; scrollLeft = row.scrollLeft; });
+        row.addEventListener('mouseleave', () => { isDown = false; row.classList.remove('active'); });
+        row.addEventListener('mouseup', () => { isDown = false; row.classList.remove('active'); });
+        row.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - row.offsetLeft; const walk = (x - startX) * 2; row.scrollLeft = scrollLeft - walk; });
+
+        let touchStartX = 0;
+        let touchScrollLeft = 0;
+        row.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].pageX; touchScrollLeft = row.scrollLeft; });
+        row.addEventListener('touchmove', (e) => { const x = e.touches[0].pageX; const walk = (touchStartX - x) * 2; row.scrollLeft = touchScrollLeft + walk; });
+    });
+}
 </script>
 
 </body>
-    </html>
+                                                                                              </html>

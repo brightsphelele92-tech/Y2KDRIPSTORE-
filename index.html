@@ -62,8 +62,8 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
 /* Responsive Adjustments */
 @media (max-width: 1024px) { .product { width: 150px; } .ad { width: 150px; height: 80px; font-size: 14px; } }
-@media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 140px; height: 70px; font-size: 12px; } .about { font-size: 14px; padding: 20px 10px; } }
-@media (max-width: 480px) { .product { width: 120px; } .ad { width: 120px; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
+@media (max-width: 768px) { header { flex-direction: column; align-items: flex-start; gap: 10px; } .top-buttons { justify-content: flex-start; width: 100%; } .top-buttons button { flex: 1; width: auto; font-size: 14px; padding: 5px 10px; } .welcome { font-size: 24px; height: 25vh; } nav a { padding: 5px 8px; font-size: 14px; } .section-title { font-size: 22px; } .product { width: 140px; padding: 8px; } .ad { width: 100%; height: 70px; font-size: 14px; } .about { font-size: 14px; padding: 20px 10px; } }
+@media (max-width: 480px) { .product { width: 120px; } .ad { width: 100%; height: 60px; font-size: 12px; } .welcome { font-size: 20px; height: 20vh; } .search-container input { width: 90%; font-size: 14px; } }
 /* Modal */
 .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
 .modal-content { background-color: #1a1a1a; margin: auto; padding: 20px; border-radius: 10px; width: 90%; max-width: 600px; color: white; position: relative; }
@@ -85,9 +85,7 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 <body>
 <header>
     <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
-    <nav id="site-nav">
-        <!-- links will be filled dynamically -->
-    </nav>
+    <nav id="site-nav"></nav>
     <div class="top-buttons">
         <button class="login">Login</button>
         <button class="signup">Sign Up</button>
@@ -113,14 +111,12 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
         <button class="buy-button" id="buyButton">Buy Now</button>
 
         <div class="ad" style="margin-bottom:15px;">
-            <!-- Google AdSense Code placeholder -->
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
                  data-ad-slot="YYYYYYYYYY"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <!-- (adsbygoogle script loaded at bottom if needed) -->
         </div>
 
         <div class="similar-products">
@@ -151,20 +147,19 @@ const allProducts = [
   {ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
   {ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
   {ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'},
-  // Example additional categories and products:
   {ProductName:'Y2k Mini Dress', Category:'Women', ImageURL:'https://via.placeholder.com/400x400?text=Y2k+Mini+Dress', Price:'R450'},
   {ProductName:'Y2k Platform Sneakers', Category:'Sneakers', ImageURL:'https://via.placeholder.com/400x400?text=Platform+Sneakers', Price:'R650'},
   {ProductName:'Y2k Phone Case', Category:'iPhones', ImageURL:'https://via.placeholder.com/400x400?text=Phone+Case', Price:'R80'},
   {ProductName:'Y2k Kids Tee', Category:'Girls', ImageURL:'https://via.placeholder.com/400x400?text=Kids+Tee', Price:'R120'}
 ];
 
-/* Preferred category order for nav display (add categories here if you want them always present) */
+/* Preferred category order */
 const preferredOrder = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
 
-/* ====== Helpers ====== */
+/* Helpers */
 function normalizeId(s){ return s.toLowerCase().replace(/\s+/g,'-'); }
 
-/* ====== Render ====== */
+/* Render Navigation */
 function renderNav(categories){
   const nav = document.getElementById('site-nav');
   nav.innerHTML = '';
@@ -172,9 +167,7 @@ function renderNav(categories){
   preferredOrder.forEach(p=>{
     if(categories.includes(p)) ordered.push(p);
   });
-  // add any other categories not in preferredOrder
   categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
-
   ordered.forEach(cat=>{
     const a = document.createElement('a');
     a.href = `#${normalizeId(cat)}`;
@@ -183,17 +176,21 @@ function renderNav(categories){
   });
 }
 
+/* HTML escape */
+function escapeHtml(str){
+  if(!str) return '';
+  return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
+}
+
+/* ====== Render Products with Shein-style scrolling & ads ====== */
 function renderProducts(products){
   const main = document.getElementById('main-content');
   main.innerHTML = '';
 
-  // determine categories present
   const categoriesSet = new Set(products.map(p=>p.Category));
   const categories = Array.from(categoriesSet);
-
   renderNav(categories);
 
-  // ensure preferredOrder items show even if empty? we only show categories that have products
   const ordered = [];
   preferredOrder.forEach(p => { if(categories.includes(p)) ordered.push(p); });
   categories.forEach(c => { if(!ordered.includes(c)) ordered.push(c); });
@@ -204,48 +201,47 @@ function renderProducts(products){
 
     const sec = document.createElement('section');
     sec.id = normalizeId(cat);
+
     const title = document.createElement('div');
     title.className = 'section-title';
     title.innerText = cat.toUpperCase();
     sec.appendChild(title);
 
-    // Create rows of products (simple horizontal scroller; all products in one row)
-    const row = document.createElement('div');
+    let row = document.createElement('div');
     row.className = 'product-row';
+
     catData.forEach((prod, idx)=>{
       const div = document.createElement('div');
       div.className = 'product';
       div.tabIndex = 0;
-      div.setAttribute('data-index', idx);
-      div.setAttribute('data-category', cat);
+      div.__product = prod;
       div.innerHTML = `
         <img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}">
         <div class="product-name">${escapeHtml(prod.ProductName)}</div>
         <div class="product-price">${escapeHtml(prod.Price)}</div>
       `;
-      // attach full product object via dataset for easy retrieval
-      div.__product = prod;
       row.appendChild(div);
-    });
-    sec.appendChild(row);
 
-    // Optionally add an ad after the row
-    const ad = document.createElement('div');
-    ad.className = 'ad';
-    ad.innerHTML = 'Advertisement';
-    sec.appendChild(ad);
+      // After every 2 products, insert full-width ad and new row
+      if ((idx + 1) % 2 === 0 && idx !== catData.length - 1) {
+        sec.appendChild(row);
+        const adRow = document.createElement('div');
+        adRow.className = 'ad';
+        adRow.style.width = '100%';
+        adRow.style.margin = '10px 0';
+        adRow.innerText = 'Advertisement';
+        sec.appendChild(adRow);
+        row = document.createElement('div');
+        row.className = 'product-row';
+      }
+    });
+    if (row.children.length > 0) sec.appendChild(row);
 
     main.appendChild(sec);
   });
 
   setupProductClicks();
   setupRowDragScroll();
-}
-
-/* Simple HTML escape */
-function escapeHtml(str){
-  if(!str) return '';
-  return String(str).replace(/[&<>"']/g, function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; });
 }
 
 /* ====== Clicks & Modal ====== */
@@ -270,125 +266,65 @@ function productClickHandler(e){
   openModalWithProduct(prod);
 }
 
-function openModalWithProduct(prod){
-  modalImage.src = prod.ImageURL || '';
-  modalImage.alt = prod.ProductName || '';
-  modalName.innerText = prod.ProductName || '';
-  modalPrice.innerText = prod.Price || '';
-  modal.style.display = 'flex';
-  modal.setAttribute('aria-hidden','false');
-  populateSimilar(prod);
+function openModalWithProductfunction openModalWithProduct(prod){
+    modal.style.display = 'flex';
+    modal.setAttribute('aria-hidden','false');
+    modalImage.src = prod.ImageURL;
+    modalImage.alt = prod.ProductName;
+    modalName.innerText = prod.ProductName;
+    modalPrice.innerText = prod.Price;
+
+    // Similar products (same category, excluding itself)
+    similarRow.innerHTML = '';
+    const similar = allProducts.filter(p=>p.Category === prod.Category && p.ProductName !== prod.ProductName);
+    similar.forEach(sp=>{
+        const div = document.createElement('div');
+        div.className = 'similar-product';
+        div.innerHTML = `<img src="${sp.ImageURL}" alt="${escapeHtml(sp.ProductName)}">
+                         <div class="name">${escapeHtml(sp.ProductName)}</div>
+                         <div class="price">${escapeHtml(sp.Price)}</div>`;
+        similarRow.appendChild(div);
+    });
 }
 
-modalClose.addEventListener('click', closeModal);
-modal.addEventListener('click', function(e){
-  if(e.target === modal) closeModal();
-});
-function closeModal(){
-  modal.style.display = 'none';
-  modal.setAttribute('aria-hidden','true');
-  similarRow.innerHTML = '';
-}
+// Close modal
+modalClose.onclick = ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); };
+window.onclick = e=>{ if(e.target === modal){ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); } };
 
-/* Buy button placeholder */
-document.getElementById('buyButton').addEventListener('click', function(){
-  alert('Buy flow not implemented in this demo. Contact seller or integrate payment gateway.');
-});
-
-/* Similar products (same category, excluding the product itself) */
-function populateSimilar(prod){
-  similarRow.innerHTML = '';
-  const same = allProducts.filter(p => p.Category === prod.Category && p.ProductName !== prod.ProductName);
-  if(same.length === 0){
-    similarRow.innerHTML = '<div style="color:#fff;">No similar products</div>';
-    return;
-  }
-  const inner = document.createElement('div');
-  inner.className = 'similar-row-inner';
-  // duplicate list to create a continuous scrolling effect if desired
-  const items = same.concat(same);
-  items.forEach(s=>{
-    const d = document.createElement('div');
-    d.className = 'similar-product';
-    d.innerHTML = `
-      <img src="${s.ImageURL}" alt="${escapeHtml(s.ProductName)}">
-      <div class="name">${escapeHtml(s.ProductName)}</div>
-      <div class="price">${escapeHtml(s.Price)}</div>
-    `;
-    d.__product = s;
-    d.addEventListener('click', ()=> openModalWithProduct(s));
-    inner.appendChild(d);
-  });
-  similarRow.appendChild(inner);
-}
-
-/* ====== Drag-to-scroll for product rows (mouse + touch) ====== */
+// ===== Drag Scroll for Shein-style rows =====
 function setupRowDragScroll(){
-  const rows = document.querySelectorAll('.product-row');
-  rows.forEach(row=>{
-    let isDown = false;
-    let startX;
-    let scrollLeft;
-
-    // Mouse
-    row.addEventListener('mousedown', (e)=>{
-      isDown = true;
-      row.classList.add('active');
-      startX = e.pageX - row.offsetLeft;
-      scrollLeft = row.scrollLeft;
+    document.querySelectorAll('.product-row').forEach(row=>{
+        let isDown = false, startX, scrollLeft;
+        row.addEventListener('mousedown', e=>{
+            isDown = true;
+            row.classList.add('active');
+            startX = e.pageX - row.offsetLeft;
+            scrollLeft = row.scrollLeft;
+        });
+        row.addEventListener('mouseleave', ()=>{ isDown = false; row.classList.remove('active'); });
+        row.addEventListener('mouseup', ()=>{ isDown = false; row.classList.remove('active'); });
+        row.addEventListener('mousemove', e=>{
+            if(!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - row.offsetLeft;
+            const walk = (x - startX) * 2;
+            row.scrollLeft = scrollLeft - walk;
+        });
+        row.addEventListener('touchstart', e=>{ startX = e.touches[0].pageX - row.offsetLeft; scrollLeft = row.scrollLeft; });
+        row.addEventListener('touchmove', e=>{ const x = e.touches[0].pageX - row.offsetLeft; row.scrollLeft = scrollLeft - (x - startX) * 2; });
     });
-    window.addEventListener('mouseup', ()=>{
-      if(isDown){ isDown = false; row.classList.remove('active'); }
-    });
-    row.addEventListener('mouseleave', ()=>{
-      if(isDown){ isDown = false; row.classList.remove('active'); }
-    });
-    row.addEventListener('mousemove', (e)=>{
-      if(!isDown) return;
-      e.preventDefault();
-      const x = e.pageX - row.offsetLeft;
-      const walk = (x - startX) * 1; //scroll-fast
-      row.scrollLeft = scrollLeft - walk;
-    });
-
-    // Touch
-    let touchStartX = 0;
-    let touchScrollLeft = 0;
-    row.addEventListener('touchstart', (e)=>{
-      touchStartX = e.touches[0].pageX - row.offsetLeft;
-      touchScrollLeft = row.scrollLeft;
-    }, {passive: true});
-    row.addEventListener('touchmove', (e)=>{
-      const x = e.touches[0].pageX - row.offsetLeft;
-      const walk = (x - touchStartX) * 1;
-      row.scrollLeft = touchScrollLeft - walk;
-    }, {passive: true});
-  });
 }
 
-/* ====== Search ====== */
-const searchInput = document.getElementById('searchInput');
-searchInput.addEventListener('input', (e)=>{
-  const q = e.target.value.trim().toLowerCase();
-  const filtered = allProducts.filter(p => p.ProductName.toLowerCase().includes(q) || p.Category.toLowerCase().includes(q));
-  if(q === '') {
-    renderProducts(allProducts);
-  } else {
-    renderProducts(filtered);
-    // scroll to top so users see results
-    window.scrollTo({top:0,behavior:'smooth'});
-  }
+// ===== Search Functionality =====
+document.getElementById('searchInput').addEventListener('input', e=>{
+    const term = e.target.value.toLowerCase();
+    const filtered = allProducts.filter(p=>p.ProductName.toLowerCase().includes(term) || p.Category.toLowerCase().includes(term));
+    renderProducts(filtered.length ? filtered : allProducts);
 });
 
-/* ====== Initialize ====== */
+// ===== Initialize =====
 renderProducts(allProducts);
-
-/* Optionally load AdSense script (uncomment when ready and replace publisher info) */
-// const adsScript = document.createElement('script');
-// adsScript.async = true;
-// adsScript.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-// document.body.appendChild(adsScript);
 </script>
-
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 </body>
-            </html>
+</html>

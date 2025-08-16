@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Y2KDRIPSTORE</title>
 <style>
 /* Dark Gradient Background Animation */
@@ -125,6 +125,8 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 .similar-product .name { font-size: 14px; color: #fff; }
 .similar-product .price { font-size: 14px; color: #FFD700; }
 </style>
+
+<!-- AdSense script (your client id already present) -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3351085100403648"
      crossorigin="anonymous"></script>
 </head>
@@ -157,15 +159,25 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
         <img id="modalImage" src="" alt="">
         <div class="product-name" id="modalName"></div>
         <div class="product-price" id="modalPrice"></div>
+
+        <!-- Sizes dropdown (populated from sheet sizes column) -->
+        <div id="sizeWrapper" style="margin:10px 0;color:white;">
+            <label for="sizeSelect" style="font-weight:bold;">Size:</label>
+            <select id="sizeSelect" style="margin-left:8px;padding:6px;border-radius:4px;"></select>
+        </div>
+
         <button class="buy-button">Buy Now</button>
+
+        <!-- Modal Ad (replace REPLACE_WITH_SLOT with your ad slot id) -->
         <div class="ad" style="margin-bottom:15px;">
             <ins class="adsbygoogle"
                  style="display:block"
                  data-ad-client="ca-pub-3351085100403648"
-                 data-ad-slot="1234567890"
+                 data-ad-slot="REPLACE_WITH_SLOT"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
         </div>
+
         <div class="similar-products">
             <h3>Similar Products</h3>
             <div class="similar-row" id="similarRow"></div>
@@ -188,76 +200,107 @@ footer { text-align: center; color: white; padding: 20px 0; font-size: 14px; }
 
 <script>
 // ==== Sheet Integration ====
+// Your SheetDB API (you provided this earlier)
 const sheetAPI = 'https://sheetdb.io/api/v1/dmyb12hod7ibm';
 let allProducts = [];
+
+// categories order you want on the page
+const CATEGORIES_ORDER = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
 
 function renderProducts(products) {
     const main = document.getElementById('main-content');
     main.innerHTML = '';
-    const categories = ['Home','Women','Men','Girls','Boys','Sneakers','iPhones'];
-    categories.forEach(category => {
-        const categoryData = products.filter(item => item.Category === category);
-        if(categoryData.length>0){
-            const section = document.createElement('div'); 
-            section.id = category.toLowerCase();
-            const title = document.createElement('div'); 
-            title.className='section-title'; 
-            title.innerText=category.toUpperCase(); 
+
+    CATEGORIES_ORDER.forEach(category => {
+        // match sheet 'categories' column case-insensitive
+        const categoryData = products.filter(item => (item.categories || '').toString().trim().toLowerCase() === category.toLowerCase());
+        if (categoryData.length > 0) {
+            const section = document.createElement('div');
+            section.id = 'cat-' + category.toLowerCase();
+            const title = document.createElement('div');
+            title.className = 'section-title';
+            title.style.color = '#fff';
+            title.style.fontSize = '18px';
+            title.style.fontWeight = '700';
+            title.style.margin = '12px 20px';
+            title.innerText = category.toUpperCase();
             section.appendChild(title);
 
-            for(let i=0;i<categoryData.length;i+=2){
-                const row = document.createElement('div'); 
-                row.className='product-row';
+            for (let i = 0; i < categoryData.length; i += 2) {
+                const row = document.createElement('div');
+                row.className = 'product-row';
 
-                row.innerHTML = `
-                <div class="product" data-index="${i}" data-category="${category}">
-                    <img src="${categoryData[i].ImageURL}" alt="${categoryData[i].ProductName}">
-                    <div class="product-name">${categoryData[i].ProductName}</div>
-                    <div class="product-price">${categoryData[i].Price}</div>
-                </div>
-                <div class="product" data-index="${i+1}" data-category="${category}">
-                    <img src="${categoryData[i+1]?.ImageURL}" alt="${categoryData[i+1]?.ProductName}">
-                    <div class="product-name">${categoryData[i+1]?.ProductName||''}</div>
-                    <div class="product-price">${categoryData[i+1]?.Price||''}</div>
+                const prodA = categoryData[i];
+                const prodB = categoryData[i+1];
+
+                const idxA = products.indexOf(prodA);
+                const idxB = prodB ? products.indexOf(prodB) : -1;
+
+                const partA = `
+                <div class="product" data-idx="${idxA}" data-category="${category}">
+                    <img src="${prodA.imageURL || ''}" alt="${(prodA.productname || '')}" loading="lazy">
+                    <div class="product-name">${prodA.productname || ''}</div>
+                    <div class="product-price">R${prodA.price || ''}</div>
                 </div>`;
 
+                const partB = prodB ? `
+                <div class="product" data-idx="${idxB}" data-category="${category}">
+                    <img src="${prodB.imageURL || ''}" alt="${(prodB.productname || '')}" loading="lazy">
+                    <div class="product-name">${prodB.productname || ''}</div>
+                    <div class="product-price">R${prodB.price || ''}</div>
+                </div>` : `<div class="product" style="visibility:hidden;"></div>`;
+
+                row.innerHTML = partA + partB;
                 section.appendChild(row);
 
-                if(i+2<categoryData.length){ 
-                    const ad = document.createElement('div'); 
-                    ad.className='ad'; 
+                // Insert AdSense ad after every two products (replace REPLACE_WITH_SLOT)
+                if (i + 2 < categoryData.length) {
+                    const ad = document.createElement('div');
+                    ad.className = 'ad';
                     ad.innerHTML = `
                         <ins class="adsbygoogle"
                              style="display:block"
                              data-ad-client="ca-pub-3351085100403648"
-                             data-ad-slot="1234567890"
+                             data-ad-slot="REPLACE_WITH_SLOT"
                              data-ad-format="auto"
                              data-full-width-responsive="true"></ins>`;
                     section.appendChild(ad);
                     (adsbygoogle = window.adsbygoogle || []).push({});
                 }
             }
+
             main.appendChild(section);
         }
     });
+
     setupProductClicks();
-    setupRowDragScroll(); 
+    setupRowDragScroll();
 }
 
-// Fetch products
+// Fetch products from SheetDB
 fetch(sheetAPI)
     .then(res => res.json())
-    .then(data => { allProducts = data; renderProducts(allProducts); })
-    .catch(err => console.error(err));
+    .then(data => {
+        allProducts = data;
+        renderProducts(allProducts);
+        // initialize any static AdSense blocks (modal ad etc.)
+        try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e) {}
+    })
+    .catch(err => {
+        console.error('Failed to fetch sheet data:', err);
+        document.getElementById('main-content').innerHTML = '<div style="color:white;text-align:center;font-size:18px;margin:20px;">Failed to load products. Check SheetDB URL and sheet headers.</div>';
+    });
 
 // ==== Search ====
 document.getElementById('searchInput').addEventListener('input', function(){
     const query = this.value.toLowerCase();
-    if(query===''){ renderProducts(allProducts); return; }
-    const filtered = allProducts.filter(p => p.ProductName.toLowerCase().includes(query));
-    if(filtered.length===0){
-        document.getElementById('main-content').innerHTML='<div style="color:white;text-align:center;font-size:24px;margin:20px;">No products found</div>';
-    } else { renderProducts(filtered); }
+    if (query === '') { renderProducts(allProducts); return; }
+    const filtered = allProducts.filter(p => (p.productname || '').toString().toLowerCase().includes(query));
+    if (filtered.length === 0) {
+        document.getElementById('main-content').innerHTML = '<div style="color:white;text-align:center;font-size:24px;margin:20px;">No products found</div>';
+    } else {
+        renderProducts(filtered);
+    }
 });
 
 // ==== Modal ====
@@ -265,46 +308,87 @@ const modal = document.getElementById('productModal');
 const modalImage = document.getElementById('modalImage');
 const modalName = document.getElementById('modalName');
 const modalPrice = document.getElementById('modalPrice');
+const modalSizeSelect = document.getElementById('sizeSelect');
 const similarRow = document.getElementById('similarRow');
 const closeModal = document.getElementsByClassName('close')[0];
 
 function setupProductClicks(){
-    document.querySelectorAll('.product').forEach(p=>{
-        p.addEventListener('click',()=>{
-            const index = parseInt(p.dataset.index); 
-            const category = p.dataset.category;
-            const product = allProducts.find(prod => prod.Category===category && allProducts.indexOf(prod)===index);
-            if(!product) return;
-            modalImage.src = product.ImageURL; 
-            modalName.innerText = product.ProductName; 
-            modalPrice.innerText = product.Price;
+    document.querySelectorAll('.product').forEach(p => {
+        const idx = parseInt(p.dataset.idx);
+        if (isNaN(idx) || idx < 0) return; // skip empty placeholders
+        p.addEventListener('click', () => {
+            const product = allProducts[idx];
+            if (!product) return;
 
-            const similar = allProducts.filter(pr=>pr.Category===category && pr.ProductName!==product.ProductName).slice(0,6);
-            similarRow.innerHTML = ''; 
-            const innerDiv = document.createElement('div'); 
+            modalImage.src = product.imageURL || '';
+            modalName.innerText = product.productname || '';
+            modalPrice.innerText = product.price ? ('R' + product.price) : '';
+
+            // Populate sizes dropdown
+            modalSizeSelect.innerHTML = '';
+            if (product.sizes && product.sizes.toString().trim() !== '') {
+                product.sizes.toString().split(',').map(s => s.trim()).forEach(sz => {
+                    const opt = document.createElement('option');
+                    opt.value = sz;
+                    opt.innerText = sz;
+                    modalSizeSelect.appendChild(opt);
+                });
+            } else {
+                const opt = document.createElement('option');
+                opt.value = 'One Size';
+                opt.innerText = 'One Size';
+                modalSizeSelect.appendChild(opt);
+            }
+
+            // Similar products (same category)
+            const cat = (product.categories || '').toString().trim().toLowerCase();
+            const similar = allProducts.filter(pr => (pr.categories || '').toString().trim().toLowerCase() === cat && pr.productname !== product.productname).slice(0,6);
+            similarRow.innerHTML = '';
+            const innerDiv = document.createElement('div');
             innerDiv.className = 'similar-row-inner';
-            similar.forEach(s=>{
-                const div = document.createElement('div'); 
-                div.className='similar-product'; 
-                div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; 
-                div.addEventListener('click',()=>{ p.click(); modal.scrollTo({top:0,behavior:'smooth'}); }); 
+            similar.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'similar-product';
+                div.innerHTML = `<img src="${s.imageURL || ''}" alt="${s.productname || ''}"><div class="name">${s.productname||''}</div><div class="price">R${s.price||''}</div>`;
+                div.addEventListener('click', () => {
+                    // open that product in modal
+                    modalImage.src = s.imageURL || '';
+                    modalName.innerText = s.productname || '';
+                    modalPrice.innerText = s.price ? ('R' + s.price) : '';
+                    modalSizeSelect.innerHTML = '';
+                    if (s.sizes && s.sizes.toString().trim() !== '') {
+                        s.sizes.toString().split(',').map(x=>x.trim()).forEach(sz => {
+                            const o = document.createElement('option'); o.value = sz; o.innerText = sz; modalSizeSelect.appendChild(o);
+                        });
+                    } else {
+                        const o = document.createElement('option'); o.value = 'One Size'; o.innerText = 'One Size'; modalSizeSelect.appendChild(o);
+                    }
+                });
                 innerDiv.appendChild(div);
             });
-            similar.forEach(s=>{
-                const div = document.createElement('div'); 
-                div.className='similar-product'; 
-                div.innerHTML=`<img src="${s.ImageURL}" alt="${s.ProductName}"><div class="name">${s.ProductName}</div><div class="price">${s.Price}</div>`; 
+            // duplicate items for continuous scroll effect
+            similar.forEach(s => {
+                const div = document.createElement('div');
+                div.className = 'similar-product';
+                div.innerHTML = `<img src="${s.imageURL || ''}" alt="${s.productname || ''}"><div class="name">${s.productname||''}</div><div class="price">R${s.price||''}</div>`;
                 innerDiv.appendChild(div);
             });
             similarRow.appendChild(innerDiv);
 
-            modal.style.display='flex';  
+            modal.style.display = 'flex';
         });
     });
 }
 
-closeModal.onclick = function(){ modal.style.display='none'; }
-window.onclick = function(e){ if(e.target==modal) modal.style.display='none'; }
+closeModal.onclick = function(){ modal.style.display = 'none'; }
+window.onclick = function(e){ if (e.target == modal) modal.style.display = 'none'; }
+
+// Buy button (example - currently shows an alert with selected size; connect to your cart/payment)
+document.querySelector('.buy-button').addEventListener('click', function(){
+    const name = modalName.innerText || 'Product';
+    const size = modalSizeSelect.value || 'One Size';
+    alert(`Selected: ${name} — Size: ${size}\n(Integrate this with your cart/payment or WhatsApp link.)`);
+});
 
 // ==== Touch/Swipe Horizontal Scroll ====
 function setupRowDragScroll(){
@@ -315,21 +399,14 @@ function setupRowDragScroll(){
         row.addEventListener('mousedown', (e) => { isDown = true; row.classList.add('active'); startX = e.pageX - row.offsetLeft; scrollLeft = row.scrollLeft; });
         row.addEventListener('mouseleave', () => { isDown = false; row.classList.remove('active'); });
         row.addEventListener('mouseup', () => { isDown = false; row.classList.remove('active'); });
-        row.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault();const x = e.pageX - row.offsetLeft; 
-        const walk = (x - startX) * 2; 
-        row.scrollLeft = scrollLeft - walk; 
-        });
+        row.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - row.offsetLeft; const walk = (x - startX) * 2; row.scrollLeft = scrollLeft - walk; });
 
-        let touchStartX = 0;  
-        let touchScrollLeft = 0;  
-        row.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].pageX; touchScrollLeft = row.scrollLeft; });  
-        row.addEventListener('touchmove', (e) => {  
-            const x = e.touches[0].pageX;  
-            const walk = (touchStartX - x) * 2;  
-            row.scrollLeft = touchScrollLeft + walk;  
-        });  
-    });  
+        let touchStartX = 0;
+        let touchScrollLeft = 0;
+        row.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].pageX; touchScrollLeft = row.scrollLeft; });
+        row.addEventListener('touchmove', (e) => { const x = e.touches[0].pageX; const walk = (touchStartX - x) * 2; row.scrollLeft = touchScrollLeft + walk; });
+    });
 }
 </script>
 </body>
-</html>
+    </html>

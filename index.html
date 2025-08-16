@@ -24,8 +24,9 @@ nav a:hover {background-color:#004d00; color:#fff;}
 .signup {background-color:#FF0000; color:#fff;}
 .cart {background-color:#FFD700; color:#000;}
 /* SEARCH BAR */
-.search-container {width:100%; display:flex; justify-content:center; margin:10px 0;}
-.search-container input {width:80%; padding:8px 12px; border-radius:5px; border:none; font-size:16px;}
+.search-container {width:100%; display:flex; justify-content:center; align-items:center; gap:8px; margin:10px 0;}
+.search-container input {flex:1; max-width:800px; padding:8px 12px; border-radius:5px; border:none; font-size:16px;}
+.search-container select {padding:8px 12px; border-radius:5px; border:none;}
 /* WELCOME */
 .welcome {display:flex; justify-content:center; align-items:center; height:30vh; text-align:center; font-size:36px; color:#FFFFFF; text-shadow:0 0 10px rgba(255,255,255,0.7); background:rgba(0,0,0,0.5); border-radius:15px; margin:10px 20px; animation:fadeScale 6s ease-in-out infinite;}
 @keyframes fadeScale {0%,100%{opacity:0; transform:scale(0.9);}50%{opacity:1; transform:scale(1);}}
@@ -79,238 +80,290 @@ footer {text-align:center; color:white; padding:20px 0; font-size:14px;}
 <body>
 
 <header>
-<div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
-<nav id="site-nav"></nav>
-<div class="top-buttons">
-<button class="login">Login</button>
-<button class="signup">Sign Up</button>
-<button class="cart">Cart</button>
-</div>
+  <div class="logo"><span class="red">Y2K</span><span class="white">DRIPSTORE</span></div>
+  <nav id="site-nav"></nav>
+  <div class="top-buttons">
+    <button class="login">Login</button>
+    <button class="signup">Sign Up</button>
+    <button class="cart">Cart</button>
+  </div>
 </header>
 
 <div class="search-container">
-<input type="text" id="searchInput" placeholder="Search products...">
+  <input type="text" id="searchInput" placeholder="Search products...">
+  <!-- Optional currency override for users -->
+  <select id="currencySelect" title="Currency">
+    <option value="auto" selected>Auto Currency</option>
+    <option value="ZAR">ZAR</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+    <option value="GBP">GBP</option>
+    <option value="NGN">NGN</option>
+    <option value="INR">INR</option>
+    <option value="JPY">JPY</option>
+    <option value="CNY">CNY</option>
+  </select>
 </div>
 
 <section class="welcome" id="home">WELCOME TO Y2KDRIPSTORE</section>
 
 <div id="main-content"></div>
 
-<!-- MODAL -->
+<!-- PRODUCT MODAL -->
 <div id="productModal" class="modal" aria-hidden="true">
-<div class="modal-content" role="dialog" aria-modal="true">
-<span class="close" id="modalClose">&times;</span>
-<img id="modalImage" src="" alt="">
-<div class="product-name" id="modalName"></div>
-<div class="product-price" id="modalPrice"></div>
-<button class="buy-button" id="buyButton">Buy Now</button>
-<div class="similar-products">
-<h3>Similar Products</h3>
-<div class="similar-row" id="similarRow"></div>
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <span class="close" id="modalClose">&times;</span>
+    <img id="modalImage" src="" alt="">
+    <div class="product-name" id="modalName"></div>
+    <div class="product-price" id="modalPrice"></div>
+    <button class="buy-button" id="buyButton">Buy Now</button>
+    <div class="similar-products">
+      <h3>Similar Products</h3>
+      <div class="similar-row" id="similarRow"></div>
+    </div>
+  </div>
 </div>
-</div>
+
+<!-- CHECKOUT MODAL -->
+<div id="checkoutModal" class="modal" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-modal="true">
+    <span class="close" id="checkoutClose">&times;</span>
+    <h2 style="margin-top:0">Choose Payment Option</h2>
+
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin:10px 0;">
+      <button id="paypalBtn" class="buy-button" style="background:#FFD700; color:#000;">Pay with PayPal</button>
+      <button id="cashSendBtn" class="buy-button">Cash Send</button>
+      <button id="moneyInstantBtn" class="buy-button">Money Instant</button>
+      <button id="ewalletBtn" class="buy-button">eWallet</button>
+    </div>
+
+    <div style="background:#111; padding:10px; border-radius:8px; margin-bottom:10px;">
+      <p style="margin:0">Banks are unavailable for now. You can do <b>Cash Send</b>, <b>Money Instant</b> and <b>eWallet</b>.</p>
+    </div>
+
+    <div id="bankForm" style="display:none;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <input type="text" id="cellNumber" placeholder="Your Cell Number" style="flex:1; padding:8px; border-radius:6px; border:none;">
+        <input type="text" id="pinNumber" placeholder="PIN Number" style="flex:1; padding:8px; border-radius:6px; border:none;">
+      </div>
+      <p style="color:#ff5555; margin:8px 0 10px;">⚠️ If you send wrong information we will ban your account.</p>
+      <label style="display:block; margin-bottom:6px;">Upload Screenshot / Proof</label>
+      <input type="file" id="paymentScreenshot" accept="image/*" capture="environment" style="width:100%; margin-bottom:10px;">
+      <button id="sendPaymentBtn" class="buy-button">Send</button>
+    </div>
+  </div>
 </div>
 
 <section class="about">
-<h2>About Us</h2>
-<p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank" rel="noopener">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
-<p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">Facebook page</a>.</p>
-<p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
-<p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
-<p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
-<p>Refund policy: Returns accepted within 30 days.</p>
-<p>Website built by <strong>brightsphelele92@</strong></p>
+  <h2>About Us</h2>
+  <p>Join our <a href="https://chat.whatsapp.com/HOCcS6OCWWAFfGpJr4nBQs?mode=ac_t" target="_blank" rel="noopener">WhatsApp group</a> or contact us at <a href="tel:0685270789">0685270789</a>.</p>
+  <p>Follow our <a href="https://www.facebook.com/profile.php?id=61559868803161" target="_blank" rel="noopener">Facebook page</a>.</p>
+  <p>Delivery takes 2 to 7 days. We deliver nationwide and worldwide.</p>
+  <p>Business Location: Gauteng, Johannesburg, Anderson Street 001.</p>
+  <p>Partnered with: THE BOSS TECH, IMILE, IPHONE STORE, HOODLAND, BUFFALO, and many more.</p>
+  <p>Refund policy: Returns accepted within 30 days.</p>
+  <p>Website built by <strong>brightsphelele92@</strong></p>
 </section>
 
 <footer>©Y2KDRIPSTORE 2025 RESERVED</footer>
 
 <!-- ADMIN PANEL -->
 <div id="adminPanel" style="display:none; position:fixed; z-index:2000; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); color:#fff; overflow:auto;">
-<div style="max-width:500px; margin:50px auto; background:#111; padding:20px; border-radius:10px; position:relative;">
-<span id="adminClose" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">&times;</span>
+  <div style="max-width:700px; margin:50px auto; background:#111; padding:20px; border-radius:10px; position:relative;">
+    <span id="adminClose" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer;">&times;</span>
 
-<!-- LOGIN FORM -->
-<div id="loginForm">
-<h2>Admin Login</h2>
-<input type="text" id="adminUser" placeholder="Username" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
-<input type="password" id="adminPass" placeholder="Password" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
-<button id="loginBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Login</button>
-</div>
+    <!-- LOGIN FORM -->
+    <div id="loginForm">
+      <h2>Admin Login</h2>
+      <input type="text" id="adminUser" placeholder="Username" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+      <input type="password" id="adminPass" placeholder="Password" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+      <button id="loginBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Login</button>
+    </div>
 
-<!-- PRODUCT FORM -->
-<div id="productForm" style="display:none;">
-<h2>Add Product</h2>
-<input type="text" id="prodName" placeholder="Product Name" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
-<input type="text" id="prodCategory" placeholder="Category" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
-<input type="file" id="prodImageFile" accept="image/*" style="width:100%; margin:5px 0;"><br>
-<input type="text" id="prodPrice" placeholder="Price (R...)" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
-<button id="addProductBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Add Product</button>
-</div>
-</div>
+    <!-- DASHBOARD -->
+    <div id="dashboard" style="display:none;">
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+        <button id="tabProducts" class="buy-button" style="background:#444;">Products</button>
+        <button id="tabPayments" class="buy-button" style="background:#444;">Payments</button>
+      </div>
+
+      <!-- PRODUCT FORM -->
+      <div id="productForm" style="display:block;">
+        <h2>Add Product</h2>
+        <input type="text" id="prodName" placeholder="Product Name" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+        <input type="text" id="prodCategory" placeholder="Category" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+        <input type="file" id="prodImageFile" accept="image/*" style="width:100%; margin:5px 0;"><br>
+        <input type="text" id="prodPrice" placeholder="Price (R...)" style="width:100%; margin:5px 0; padding:8px; border-radius:5px; border:none;"><br>
+        <button id="addProductBtn" style="padding:8px 12px; margin-top:5px; background:#00FF00; border:none; cursor:pointer;">Add Product</button>
+      </div>
+
+      <!-- PAYMENTS ADMIN -->
+      <div id="paymentsAdmin" style="display:none;">
+        <h2>Payments</h2>
+        <div id="paymentsList" style="display:grid; gap:12px;"></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- ADMIN OPEN BUTTON -->
 <button id="adminOpen" style="position:fixed; bottom:20px; right:20px; padding:12px 18px; background:#FFD700; color:#000; border:none; border-radius:10px; z-index:1000; cursor:pointer;">Admin</button>
 
-<script>
-/* ====== DATA ====== */
-let allProducts = [
-{ProductName:'Y2k Ripped Jean', Category:'Men', ImageURL:'https://i.supaimg.com/0c728538-ad10-4424-9b19-4cd9e478ba8c.jpg', Price:'R400'},
-{ProductName:'Y2k Blue jean', Category:'Men', ImageURL:'https://i.supaimg.com/4b2984bb-3be0-4873-8548-8bb5392884c5.jpg', Price:'R320'},
-{ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
-{ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
-{ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'}
-];
+<!-- FIREBASE + EXCHANGE + LOGIC -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, query, orderBy, updateDoc, doc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+  import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
 
-/* ====== HELPERS ====== */
-function normalizeId(s){ return s.toLowerCase().replace(/\s+/g,'-'); }
-function escapeHtml(str){ return str? String(str).replace(/[&<>"']/g,function(m){ return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }):''; }
-
-/* ====== NAV & PRODUCTS ====== */
-function renderNav(categories){
-  const nav=document.getElementById('site-nav'); nav.innerHTML='';
-  categories.forEach(cat=>{
-    const a=document.createElement('a');
-    a.href=`#${normalizeId(cat)}`; a.innerText=cat; nav.appendChild(a);
-  });
-}
-
-function renderProducts(products){
-  const main=document.getElementById('main-content'); main.innerHTML='';
-  const categories=[...new Set(products.map(p=>p.Category))];
-  renderNav(categories);
-
-  categories.forEach(cat=>{
-    const catData=products.filter(p=>p.Category===cat);
-    if(catData.length===0) return;
-
-    const sec=document.createElement('section'); sec.id=normalizeId(cat);
-    const title=document.createElement('div'); title.className='section-title'; title.innerText=cat.toUpperCase(); sec.appendChild(title);
-
-    const row=document.createElement('div'); row.className='product-row';
-    catData.forEach((prod,idx)=>{
-      const div=document.createElement('div'); div.className='product'; div.tabIndex=0; div.__product=prod;
-      div.innerHTML=`<img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}"><div class="product-name">${escapeHtml(prod.ProductName)}</div><div class="product-price">${escapeHtml(prod.Price)}</div>`;
-      row.appendChild(div);
-
-      // insert ad after every 2 products
-      if((idx+1)%2===0){
-        const ad=document.createElement('div'); ad.className='ad'; ad.innerText='Advertisement';
-        sec.appendChild(row); sec.appendChild(ad);
-        row=document.createElement('div'); row.className='product-row';
-      }
-    });
-    sec.appendChild(row); main.appendChild(sec);
-  });
-  setupProductClicks();
-}
-
-/* ====== MODAL ====== */
-const modal=document.getElementById('productModal');
-const modalImage=document.getElementById('modalImage');
-const modalName=document.getElementById('modalName');
-const modalPrice=document.getElementById('modalPrice');
-const modalClose=document.getElementById('modalClose');
-const similarRow=document.getElementById('similarRow');
-
-function setupProductClicks(){
-  document.querySelectorAll('.product').forEach(el=>{
-    el.removeEventListener('click', productClickHandler);
-    el.addEventListener('click', productClickHandler);
-  });
-}
-function productClickHandler(e){
-  const prod=this.__product; if(!prod) return; openModalWithProduct(prod);
-}
-function openModalWithProduct(prod){
-  modalImage.src=prod.ImageURL; modalImage.alt=prod.ProductName;
-  modalName.innerText=prod.ProductName; modalPrice.innerText=prod.Price;
-  modal.style.display='flex'; modal.setAttribute('aria-hidden','false');
-  populateSimilar(prod);
-}
-modalClose.addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); similarRow.innerHTML=''; });
-modal.addEventListener('click', e=>{ if(e.target===modal) modal.style.display='none'; similarRow.innerHTML=''; });
-
-document.getElementById('buyButton').addEventListener('click', ()=>{ alert('Buy flow not implemented.'); });
-
-function populateSimilar(prod){
-  similarRow.innerHTML=''; const same=allProducts.filter(p=>p.Category===prod.Category && p.ProductName!==prod.ProductName);
-  if(same.length===0){ similarRow.innerHTML='<div style="color:#fff;">No similar products</div>'; return;}
-  const inner=document.createElement('div'); inner.className='similar-row-inner';
-  same.concat(same).forEach(s=>{
-    const d=document.createElement('div'); d.className='similar-product'; d.__product=s;
-    d.innerHTML=`<img src="${s.ImageURL}" alt="${escapeHtml(s.ProductName)}"><div class="name">${escapeHtml(s.ProductName)}</div><div class="price">${escapeHtml(s.Price)}</div>`;
-    d.addEventListener('click', ()=>openModalWithProduct(s));
-    inner.appendChild(d);
-  });
-  similarRow.appendChild(inner);
-}
-
-/* ====== SEARCH ====== */
-document.getElementById('searchInput').addEventListener('input', function(){
-  const term=this.value.toLowerCase();
-  const filtered=allProducts.filter(p=>p.ProductName.toLowerCase().includes(term) || p.Category.toLowerCase().includes(term));
-  renderProducts(filtered);
-});
-
-/* ====== SCROLLING PRODUCT ROW DRAG ====== */
-let isDown=false, startX, scrollLeft;
-document.querySelectorAll('.product-row').forEach(row=>{
-  row.addEventListener('mousedown', e=>{
-    isDown=true; row.classList.add('active');
-    startX=e.pageX-row.offsetLeft; scrollLeft=row.scrollLeft;
-  });
-  row.addEventListener('mouseleave', ()=>{ isDown=false; row.classList.remove('active'); });
-  row.addEventListener('mouseup', ()=>{ isDown=false; row.classList.remove('active'); });
-  row.addEventListener('mousemove', e=>{
-    if(!isDown) return;
-    e.preventDefault();
-    const x=e.pageX-row.offsetLeft; const walk=(x-startX)*2;
-    row.scrollLeft=scrollLeft-walk;
-  });
-});
-
-/* ====== ADMIN PANEL ====== */
-const adminOpen=document.getElementById('adminOpen');
-const adminPanel=document.getElementById('adminPanel');
-const adminClose=document.getElementById('adminClose');
-const loginForm=document.getElementById('loginForm');
-const productForm=document.getElementById('productForm');
-
-adminOpen.addEventListener('click', ()=>{ adminPanel.style.display='block'; });
-adminClose.addEventListener('click', ()=>{ adminPanel.style.display='none'; });
-
-document.getElementById('loginBtn').addEventListener('click', ()=>{
-  const user=document.getElementById('adminUser').value;
-  const pass=document.getElementById('adminPass').value;
-  // simple demo credentials
-  if(user==='admin' && pass==='1234'){ loginForm.style.display='none'; productForm.style.display='block'; }
-  else{ alert('Wrong credentials'); }
-});
-
-document.getElementById('addProductBtn').addEventListener('click', ()=>{
-  const name=document.getElementById('prodName').value;
-  const category=document.getElementById('prodCategory').value;
-  const price=document.getElementById('prodPrice').value;
-  const file=document.getElementById('prodImageFile').files[0];
-
-  if(!name || !category || !price || !file){ alert('Please fill all fields and select an image'); return; }
-
-  const reader=new FileReader();
-  reader.onload=function(e){
-    const imgData=e.target.result;
-    allProducts.push({ProductName:name, Category:category, ImageURL:imgData, Price:price});
-    renderProducts(allProducts);
-    alert('Product added!');
-    // clear fields
-    document.getElementById('prodName').value='';
-    document.getElementById('prodCategory').value='';
-    document.getElementById('prodPrice').value='';
-    document.getElementById('prodImageFile').value='';
+  /* ====== FIREBASE CONFIG (REPLACE WITH YOURS) ====== */
+  const firebaseConfig = {
+    apiKey: "YOUR_FIREBASE_KEY",
+    authDomain: "YOUR_FIREBASE_APP.firebaseapp.com",
+    projectId: "YOUR_FIREBASE_PROJECT_ID",
+    storageBucket: "YOUR_FIREBASE_BUCKET.appspot.com",
+    messagingSenderId: "SENDER_ID",
+    appId: "APP_ID"
   };
-  reader.readAsDataURL(file);
-});
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-/* ====== INITIAL RENDER ====== */
-renderProducts(allProducts);
-</script>
+  /* ====== GLOBAL ====== */
+  let allProducts = [
+    {ProductName:'Y2k Ripped Jean', Category:'Men', ImageURL:'https://i.supaimg.com/0c728538-ad10-4424-9b19-4cd9e478ba8c.jpg', Price:'R400'},
+    {ProductName:'Y2k Blue jean', Category:'Men', ImageURL:'https://i.supaimg.com/4b2984bb-3be0-4873-8548-8bb5392884c5.jpg', Price:'R320'},
+    {ProductName:'Y2k Golden Bb Chain', Category:'Men', ImageURL:'https://i.supaimg.com/bccb199c-1af3-44e5-b889-1eaa19374516.jpg', Price:'R210'},
+    {ProductName:'Y2k Printed Spider Jean Light blue', Category:'Men', ImageURL:'https://i.supaimg.com/993a8c4e-3d7c-4a51-a921-a9812de5cba8.jpg', Price:'R300'},
+    {ProductName:'Y2k Sweaters Skull Printed', Category:'Men', ImageURL:'https://i.supaimg.com/520bb9b0-c5a3-4928-aa3b-5cd49780685a.jpg', Price:'R320'}
+  ];
+  let currencySymbol = "R"; // default
+  let exchangeRate = 1;      // ZAR -> chosen currency
+  let userCurrency = "ZAR";
+  let currentProduct = null; // for checkout
+
+  /* ====== HELPERS ====== */
+  function normalizeId(s){ return s.toLowerCase().replace(/\s+/g,'-'); }
+  function escapeHtml(str){ return str? String(str).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m])):''; }
+  function parseZAR(price){ return parseFloat(String(price).replace(/[^\d.]/g,'')) || 0; }
+
+  /* ====== CURRENCY DETECTION + RATES ====== */
+  const localeCurrencyMap = {
+    'en-US':'USD','es-MX':'MXN','pt-BR':'BRL','en-GB':'GBP','fr-FR':'EUR','de-DE':'EUR','es-ES':'EUR','it-IT':'EUR','nl-NL':'EUR','pl-PL':'PLN','ru-RU':'RUB','ja-JP':'JPY','zh-CN':'CNY','hi-IN':'INR','en-NG':'NGN','en-ZA':'ZAR'
+  };
+
+  async function setCurrency(targetCurrency){
+    try {
+      const res = await fetch('https://open.er-api.com/v6/latest/ZAR');
+      const data = await res.json();
+      if(data && data.result === 'success'){
+        const desired = targetCurrency === 'auto' ? detectCurrency() : targetCurrency;
+        userCurrency = data.rates[desired] ? desired : 'ZAR';
+        exchangeRate = data.rates[userCurrency] || 1;
+        currencySymbol = symbolFor(userCurrency);
+        renderProducts(allProducts);
+      }
+    } catch(err){ console.warn('Exchange fetch failed', err); }
+  }
+
+  function detectCurrency(){
+    const loc = navigator.language || (navigator.languages && navigator.languages[0]) || 'en-ZA';
+    return localeCurrencyMap[loc] || (loc.endsWith('-ZA') ? 'ZAR' : 'ZAR');
+  }
+
+  function symbolFor(code){
+    const symbols = {ZAR:'R', USD:'$', EUR:'€', GBP:'£', NGN:'₦', INR:'₹', JPY:'¥', CNY:'¥', BRL:'R$', MXN:'$'};
+    return symbols[code] || code + ' ';
+  }
+
+  /* ====== NAV & PRODUCTS ====== */
+  function renderNav(categories){
+    const nav=document.getElementById('site-nav'); nav.innerHTML='';
+    categories.forEach(cat=>{
+      const a=document.createElement('a');
+      a.href=`#${normalizeId(cat)}`; a.innerText=cat; nav.appendChild(a);
+    });
+  }
+
+  function renderProducts(products){
+    const main=document.getElementById('main-content'); main.innerHTML='';
+    const categories=[...new Set(products.map(p=>p.Category))];
+    renderNav(categories);
+
+    categories.forEach(cat=>{
+      const catData = products.filter(p=>p.Category===cat);
+      if(catData.length===0) return;
+
+      const sec=document.createElement('section'); sec.id=normalizeId(cat);
+      const title=document.createElement('div'); title.className='section-title'; title.innerText=cat.toUpperCase(); sec.appendChild(title);
+
+      let row=document.createElement('div'); row.className='product-row';
+
+      catData.forEach((prod,idx)=>{
+        const baseZAR = parseZAR(prod.Price);
+        const converted = Math.round(baseZAR * (userCurrency==='ZAR'?1:exchangeRate));
+        const display = `${currencySymbol}${converted}`;
+
+        const div=document.createElement('div'); div.className='product'; div.tabIndex=0; div.__product=prod;
+        div.innerHTML=`<img src="${prod.ImageURL}" alt="${escapeHtml(prod.ProductName)}"><div class="product-name">${escapeHtml(prod.ProductName)}</div><div class="product-price">${display}</div>`;
+        row.appendChild(div);
+
+        // insert ad after every 2 products
+        if((idx+1)%2===0){
+          sec.appendChild(row);
+          const ad=document.createElement('div'); ad.className='ad'; ad.innerText='Advertisement';
+          sec.appendChild(ad);
+          row=document.createElement('div'); row.className='product-row';
+        }
+      });
+
+      // Append last row even if not full
+      sec.appendChild(row);
+      main.appendChild(sec);
+    });
+
+    setupProductClicks();
+    setupRowDrag();
+  }
+
+  /* ====== MODAL ====== */
+  const modal=document.getElementById('productModal');
+  const modalImage=document.getElementById('modalImage');
+  const modalName=document.getElementById('modalName');
+  const modalPrice=document.getElementById('modalPrice');
+  const modalClose=document.getElementById('modalClose');
+  const similarRow=document.getElementById('similarRow');
+
+  function setupProductClicks(){
+    document.querySelectorAll('.product').forEach(el=>{
+      el.onclick=()=>openModalWithProduct(el.__product);
+    });
+  }
+
+  function openModalWithProduct(prod){
+    currentProduct = prod;
+    modalImage.src=prod.ImageURL; modalImage.alt=prod.ProductName;
+    modalName.innerText=prod.ProductName;
+    // compute converted price for modal
+    const baseZAR = parseZAR(prod.Price);
+    const converted = Math.round(baseZAR * (userCurrency==='ZAR'?1:exchangeRate));
+    modalPrice.innerText = `${currencySymbol}${converted}`;
+
+    modal.style.display='flex'; modal.setAttribute('aria-hidden','false');
+    populateSimilar(prod);
+  }
+
+  modalClose.addEventListener('click', ()=>{ modal.style.display='none'; modal.setAttribute('aria-hidden','true'); similarRow.innerHTML=''; });
+  modal.addEventListener('click', e=>{ if(e.target===modal) { modal.style.display='none'; similarRow.innerHTML=''; }});
+  document.getElementById('buyButton').addEventListener('click', ()=>{ openCheckout(); });
+
+  function populateSimilar(prod){
+    similarRow.innerHTML='';
+    const same=allProducts.filter(p=>p.Category===prod.Category && p.ProductName!==prod.ProductName);
+    if(same.length===0){ similarRow.innerHTML='<div style="color:#fff; padding:6px;">No similar products</div>'; return;}
+    const inner=document.createElement('div'); inner.className='similar-row-inner';
+    same.concat(same).forEach(s=>{
+      const d=document.createElement('div'); d.className='similar-product'; d.__product=s;
+      const baseZAR = parseZAR(s.Price);
+      const converted = Math.round(baseZAR * (userCurrency==='ZAR'?1:exchangeRate));
+      const disp = `${currencySymbol}${converted}`;
+      d.innerHTML=`<img src="${s.ImageURL}" alt="${escapeHtml(s.ProductName)}"><div class="name">${escapeHtml(s.ProductName)}</div><div 
